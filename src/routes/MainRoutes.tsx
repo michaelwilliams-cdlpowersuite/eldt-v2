@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import DailyPlanner from "../pages/DailyPlanner";
-import Students from "../pages/Students";
+import Students from "../pages/Students/Students";
 import Schedule from "../pages/Schedule";
 
 const mainRoutes = createBrowserRouter([
@@ -23,7 +23,6 @@ const mainRoutes = createBrowserRouter([
       },
     ],
   },
-  //   {path: '*', element: <NotFound />}
 ]);
 
 export default mainRoutes;
