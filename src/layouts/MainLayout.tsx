@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { Outlet, Link as RouterLink } from "react-router-dom";
 import mainNavItems from "./mainNavItems";
-import { brandColors } from "../shared/brandColors";
+import { brandColors } from "../styles/brandColors";
 
 const drawerWidth = 250;
 const toolbarHeight = 100;
