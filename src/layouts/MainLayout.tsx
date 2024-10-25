@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { Outlet, Link as RouterLink } from "react-router-dom";
 import mainNavItems from "./mainNavItems";
+import { brandColors } from "../shared/brandColors";
 
 const drawerWidth = 250;
 const toolbarHeight = 100;
@@ -28,7 +29,7 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
         sx={{
           width: `calc(100% - ${drawerWidth}px)`,
           ml: `${drawerWidth}px`,
-          backgroundColor: "#01384b",
+          backgroundColor: brandColors.cdlDarkBlue,
         }}
       >
         <Toolbar sx={{ height: toolbarHeight }}>
@@ -44,7 +45,7 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
-            backgroundColor: "#00557c",
+            backgroundColor: brandColors.cdlLightBlue,
           },
         }}
         variant="permanent"
@@ -53,6 +54,7 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
         <Toolbar sx={{ bgcolor: "pink", height: toolbarHeight }} />
         <Divider />
         <List>
+          {/* Loop over the nav items */}
           {mainNavItems.map((nav, index) => (
             <React.Fragment key={index}>
               <ListItem
@@ -85,6 +87,7 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
                 </ListItemButton>
               </ListItem>
 
+              {/* Loop over the subnav items */}
               {nav.subNav && (
                 <List component="div" disablePadding>
                   {nav.subNav.map((subNavItem, subIndex) => (
@@ -104,7 +107,11 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
                 </List>
               )}
 
-              <Divider />
+              <Divider
+                sx={{
+                  border: 1,
+                }}
+              />
             </React.Fragment>
           ))}
         </List>
