@@ -1,6 +1,5 @@
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -12,12 +11,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { Outlet, Link as RouterLink } from "react-router-dom";
-import mainNavItems from "./mainNavItems";
 import { brandColors } from "../styles/brandColors";
-import { Paper } from "@mui/material";
+import mainNavItems from "./mainNavItems";
 
 const drawerWidth = 250;
 const toolbarHeight = 100;
+const textShadow = "rgba(0, 0, 0, 0.5) 1px 1px 2px";
 
 interface MainLayoutProps {}
 
@@ -54,7 +53,7 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            padding: "0 1rem",
+            padding: "1rem",
             bgcolor: "white",
           }}
         >
@@ -78,11 +77,15 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
                 component={RouterLink}
                 to={nav.path}
                 disablePadding
+                sx={{
+                  textShadow: textShadow,
+                }}
               >
                 <ListItemButton>
                   <ListItemIcon
                     sx={{
                       color: "white",
+                      minWidth: "38px",
                       "& .MuiSvgIcon-root": {
                         fontSize: "1.5rem",
                       },
@@ -96,6 +99,7 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
                       "& .MuiListItemText-primary": {
                         color: "white",
                         textTransform: "uppercase",
+                        fontSize: "1.1rem",
                         fontWeight: 700,
                       },
                     }}
@@ -115,10 +119,10 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
+                        textShadow: textShadow,
                       }}
                     >
                       <ListItemText
-                        inset
                         primary={subNavItem.label}
                         sx={{
                           "& .MuiListItemText-primary": {
