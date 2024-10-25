@@ -5,10 +5,10 @@ interface DailyPlannerProps {}
 
 const DailyPlanner: React.FC<DailyPlannerProps> = () => {
   const handleSnack = () => {
-    enqueueSnackbar("That was easy!", {
+    enqueueSnackbar("Saved successfully!", {
       anchorOrigin: { horizontal: "right", vertical: "bottom" },
       variant: "success",
-      autoHideDuration: 2000,
+      autoHideDuration: 1000,
     });
   };
   return (

@@ -1,13 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
-import MainLayout from "../layouts/MainLayout";
+import Layout2 from "../layouts/MainLayout";
 import DailyPlanner from "../pages/DailyPlanner";
-import Students from "../pages/Students/Students";
 import Schedule from "../pages/Schedule";
+import Students from "../pages/Students/Students";
 
 const mainRoutes = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: <Layout2 />,
     children: [
       {
         path: "students",
