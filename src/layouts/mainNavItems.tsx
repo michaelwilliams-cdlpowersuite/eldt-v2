@@ -1,8 +1,12 @@
-// src/config/mainNavItems.js
 import PersonIcon from "@mui/icons-material/Person";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { ReactNode } from "react";
+import ForumIcon from "@mui/icons-material/Forum";
+import StarIcon from "@mui/icons-material/Star";
+import SearchIcon from "@mui/icons-material/Search";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 
 export interface NavItemsProps {
   label: string;
@@ -37,7 +41,7 @@ const mainNavItems = [
   {
     label: "Schedule",
     path: "/schedule",
-    icon: <CalendarMonthIcon />,
+    icon: <CalendarTodayIcon />,
     subNav: [
       {
         label: "Upcoming",
@@ -58,26 +62,37 @@ const mainNavItems = [
   {
     label: "Conversations",
     path: "",
+    icon: <ForumIcon />,
+    subNav: [
+      {
+        label: "All",
+      },
+    ],
   },
   {
     label: "Testing Schedule",
     path: "",
+    icon: <CalendarTodayIcon />,
   },
   {
     label: "Quizzes",
     path: "",
+    icon: <CheckCircleIcon />,
   },
   {
     label: "Safety History",
     path: "",
+    icon: <SearchIcon />,
   },
   {
     label: "Leads",
     path: "",
+    icon: <StarIcon sx={{ color: "#dee07f" }} />,
   },
   {
     label: "Analytics",
     path: "",
+    icon: <TrendingUpIcon />,
   },
 ];
 

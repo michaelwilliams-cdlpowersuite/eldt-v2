@@ -14,6 +14,7 @@ import * as React from "react";
 import { Outlet, Link as RouterLink } from "react-router-dom";
 import mainNavItems from "./mainNavItems";
 import { brandColors } from "../styles/brandColors";
+import { Paper } from "@mui/material";
 
 const drawerWidth = 250;
 const toolbarHeight = 100;
@@ -23,7 +24,6 @@ interface MainLayoutProps {}
 const MainLayout: React.FC<MainLayoutProps> = () => {
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
@@ -33,9 +33,7 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
         }}
       >
         <Toolbar sx={{ height: toolbarHeight }}>
-          <Typography variant="h6" noWrap component="div">
-            Permanent drawer
-          </Typography>
+          <Typography variant="h6" noWrap component="div"></Typography>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -51,7 +49,25 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
         variant="permanent"
         anchor="left"
       >
-        <Toolbar sx={{ bgcolor: "pink", height: toolbarHeight }} />
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "0 1rem",
+            bgcolor: "white",
+          }}
+        >
+          <Box
+            component="img"
+            sx={{
+              height: toolbarHeight,
+              width: drawerWidth,
+            }}
+            alt="CDL Professional Solutions Logo"
+            src="cdl_ps_logo_720.png"
+          />
+        </Toolbar>
         <Divider />
         <List>
           {/* Loop over the nav items */}
@@ -80,7 +96,7 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
                       "& .MuiListItemText-primary": {
                         color: "white",
                         textTransform: "uppercase",
-                        fontWeight: "bold",
+                        fontWeight: 700,
                       },
                     }}
                   />
@@ -91,7 +107,16 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
               {nav.subNav && (
                 <List component="div" disablePadding>
                   {nav.subNav.map((subNavItem, subIndex) => (
-                    <ListItem key={subIndex} sx={{ pl: 4 }}>
+                    <ListItem
+                      key={subIndex}
+                      sx={{
+                        pl: 4,
+                        py: 0,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
                       <ListItemText
                         inset
                         primary={subNavItem.label}
@@ -99,6 +124,17 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
                           "& .MuiListItemText-primary": {
                             color: "white",
                             fontWeight: "normal",
+                          },
+                        }}
+                      />
+                      <ListItemText
+                        inset
+                        primary={Math.floor(Math.random() * 2001)}
+                        sx={{
+                          "& .MuiListItemText-primary": {
+                            color: "white",
+                            fontWeight: "normal",
+                            textAlign: "right",
                           },
                         }}
                       />
@@ -110,6 +146,7 @@ const MainLayout: React.FC<MainLayoutProps> = () => {
               <Divider
                 sx={{
                   border: 1,
+                  borderColor: brandColors.cdlDarkBlue,
                 }}
               />
             </React.Fragment>
