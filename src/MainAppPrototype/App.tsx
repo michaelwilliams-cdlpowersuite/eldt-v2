@@ -1,27 +1,25 @@
 import { RouterProvider } from "react-router-dom";
-import mainRoutes from "./MainAppPrototype/routes/MainRoutes";
+import mainRoutes from "./routes/MainRoutes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
 import { ThemeProvider } from "@emotion/react";
-import { theme } from "./styles/theme";
+import { theme } from "../styles/theme";
 import { CssBaseline } from "@mui/material";
-import HorizontalLinearStepper from "./Registration/HorizontalLinearStepper";
-import Registration from "./Registration/Registration";
 
 function App() {
   const queryClient = new QueryClient();
 
   return (
-    <div className="App">
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className="App">
         <SnackbarProvider>
           <QueryClientProvider client={queryClient}>
-            <Registration />
+            <RouterProvider router={mainRoutes} />
           </QueryClientProvider>
         </SnackbarProvider>
-      </ThemeProvider>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }
 

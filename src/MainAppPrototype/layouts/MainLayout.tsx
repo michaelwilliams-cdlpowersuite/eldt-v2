@@ -11,7 +11,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { Outlet, Link as RouterLink } from "react-router-dom";
-import { brandColors } from "../styles/brandColors";
+import { brandColors } from "../../styles/brandColors";
 import mainNavItems from "./mainNavItems";
 
 const drawerWidth = 250;
