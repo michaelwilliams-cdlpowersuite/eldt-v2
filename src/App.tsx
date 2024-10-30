@@ -1,12 +1,9 @@
-import { RouterProvider } from "react-router-dom";
-import mainRoutes from "./MainAppPrototype/routes/MainRoutes";
+import { ThemeProvider } from "@emotion/react";
+import { CssBaseline } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
-import { ThemeProvider } from "@emotion/react";
-import { theme } from "./styles/theme";
-import { CssBaseline } from "@mui/material";
-import HorizontalLinearStepper from "./Registration/HorizontalLinearStepper";
 import Registration from "./Registration/Registration";
+import { theme } from "./styles/theme";
 
 function App() {
   const queryClient = new QueryClient();

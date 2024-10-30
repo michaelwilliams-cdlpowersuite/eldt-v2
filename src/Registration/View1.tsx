@@ -1,17 +1,18 @@
 import { Card, CardContent, Typography, Box, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { viewTitleStyles } from "./enums/styles";
 
-interface SelectClassProps {}
+interface View1Props {}
 
-const SelectClass: React.FC<SelectClassProps> = () => {
+const View1: React.FC<View1Props> = () => {
   return (
     <Box>
-      <Typography variant="h4" textAlign="center">
-        Select Class
+      <Typography variant="h5" sx={viewTitleStyles}>
+        Choose your CDL Class
       </Typography>
       <Grid container spacing={2}>
-        {classes.map((c) => (
-          <Grid size={4}>
+        {classes.map((c, index) => (
+          <Grid size={4} key={index}>
             <Card>
               <CardContent>
                 <Typography variant="h6" textAlign="center">
@@ -25,12 +26,12 @@ const SelectClass: React.FC<SelectClassProps> = () => {
           </Grid>
         ))}
       </Grid>
-      <Typography variant="h4" textAlign="center">
-        Select Endorsement
+      <Typography variant="h5" sx={viewTitleStyles}>
+        Add Endorsements
       </Typography>
       <Grid container spacing={2}>
-        {endorsements.map((e) => (
-          <Grid size={4}>
+        {endorsements.map((e, index) => (
+          <Grid size={4} key={index}>
             <Card>
               <CardContent>
                 <Typography variant="h6" textAlign="center">
@@ -46,7 +47,7 @@ const SelectClass: React.FC<SelectClassProps> = () => {
   );
 };
 
-export default SelectClass;
+export default View1;
 
 const classes = [
   { title: "Class B CDL Training", description: "Single Vehicle" },

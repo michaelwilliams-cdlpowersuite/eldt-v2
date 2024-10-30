@@ -1,15 +1,29 @@
 import { Box, Container } from "@mui/system";
-import HorizontalLinearStepper from "./HorizontalLinearStepper";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { Form, Formik } from "formik";
+import { initialValues, validationSchema } from "./enums/validationSchema";
+import Stepper from "./Stepper";
 
 interface RegistrationProps {}
 
 const Registration: React.FC<RegistrationProps> = () => {
   return (
-    <Container maxWidth="md">
-      <Box sx={{ height: "100vh" }}>
-        <HorizontalLinearStepper />
-      </Box>
-    </Container>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Container maxWidth="md" disableGutters sx={{ bgcolor: "yellow" }}>
+        <Box sx={{ height: "100vh" }}>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={(values) => console.log(values)}
+          >
+            <Form>
+              <Stepper />
+            </Form>
+          </Formik>
+        </Box>
+      </Container>
+    </LocalizationProvider>
   );
 };
 

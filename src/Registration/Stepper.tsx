@@ -1,15 +1,17 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
+import Button from "@mui/material/Button";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
+import Stepper from "@mui/material/Stepper";
 import Typography from "@mui/material/Typography";
-import { steps } from "./steps";
+import * as React from "react";
+import { steps } from "./enums/steps";
 
-interface HorizontalLinearStepperProps {}
+interface StepperOrchestrationProps {}
 
-const HorizontalLinearStepper: React.FC<HorizontalLinearStepperProps> = () => {
+// This code is lifted from the MUI Stepper example
+// https://mui.com/material-ui/react-stepper/#linear
+const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
 
@@ -51,6 +53,8 @@ const HorizontalLinearStepper: React.FC<HorizontalLinearStepperProps> = () => {
       return newSkipped;
     });
   };
+
+  const isLastStep = activeStep === steps.length - 1;
 
   const handleReset = () => {
     setActiveStep(0);
@@ -104,8 +108,11 @@ const HorizontalLinearStepper: React.FC<HorizontalLinearStepperProps> = () => {
                 Skip
               </Button>
             )}
-            <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? "Finish" : "Next"}
+            <Button
+              onClick={handleNext}
+              //   disabled={isLastStep || !isValid || !dirty}
+            >
+              {isLastStep ? "Finish" : "Next"}
             </Button>
           </Box>
         </React.Fragment>
@@ -114,4 +121,4 @@ const HorizontalLinearStepper: React.FC<HorizontalLinearStepperProps> = () => {
   );
 };
 
-export default HorizontalLinearStepper;
+export default StepperOrchestration;

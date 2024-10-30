@@ -1,0 +1,128 @@
+const studentData = {
+  locationId: props.location.id, // location is always auto-set for ELDT.com customers
+  // todo: always persist what they are interested in, don't let them remove it without history?
+  haz,
+  schoolBus,
+  passenger,
+  cdlClass: node.value.package
+    ? props.packages.find((p) => p.id === node.value.package)?.cdlClass ??
+      "None"
+    : undefined,
+  firstName: node.value.firstName ?? undefined,
+  lastName: node.value.lastName ?? undefined,
+  dob: node.value.dob ?? undefined, // todo: check format
+  phone: node.value.phone ?? undefined,
+  driversLicense: node.value.driversLicense,
+  confirmDriversLicense: node.value.confirmDriversLicense,
+  // languageId: createFormControl(student.languageId), // todo
+  city: node.value.city,
+  state: node.value.state,
+  zip: node.value.zip,
+  paymentStatus: "pending", // todo: this is always pending I believe. We shouldn't need to submit this
+  automatic_transmission: node.value.automaticTransmission,
+
+  enrollmentClassAComplete:
+    node.value.cdlTrainingType?.contains("Class A") ?? undefined,
+  enrollmentClassBComplete:
+    node.value.cdlTrainingType?.contains("Class B") ?? undefined,
+  enrollmentEndorsementHazComplete:
+    node.value.cdlEndorsements?.contains("HAZ") ?? undefined,
+  enrollmentEndorsementPassengerComplete:
+    node.value.cdlEndorsements?.contains("Passenger") ?? undefined,
+  enrollmentEndorsementSchoolBusComplete:
+    node.value.cdlEndorsements?.contains("School Bus") ?? undefined,
+  enrollmentDesiredWorkLocal:
+    node.value.typeOfWork?.contains("Local") ?? undefined,
+  enrollmentDesiredWorkOTR: node.value.typeOfWork?.contains("OTR") ?? undefined,
+  enrollmentDesiredWorkRegional:
+    node.value.typeOfWork?.contains("Regional") ?? undefined,
+  enrollmentDesiredWorkIDC: node.value.typeOfWork?.contains("IDC") ?? undefined,
+  personalInfoReleased: node.value.personalInfoReleased,
+  cdlCompletedDate,
+
+  // customAttributes: [
+  //     {
+  //       "groupName": "Thank you for choosing ELDT.com",
+  //       "groupDescription": null,
+  //       "fieldType": "radio",
+  //       "config": {
+  //         "required": true,
+  //         "options": [
+  //           {
+  //             "label": "My CDL School sent me",
+  //             "value": 1,
+  //             "disabled": null,
+  //             "hide": null,
+  //             "groupLabel": null,
+  //             "exportValue": null
+  //           },
+  //           {
+  //             "label": "Facebook Ads",
+  //             "value": 2,
+  //             "disabled": null,
+  //             "hide": null,
+  //             "groupLabel": null,
+  //             "exportValue": null
+  //           },
+  //           {
+  //             "label": "Google Ads",
+  //             "value": 3,
+  //             "disabled": null,
+  //             "hide": null,
+  //             "groupLabel": null,
+  //             "exportValue": null
+  //           },
+  //           {
+  //             "label": "Heard about it from a friend",
+  //             "value": 4,
+  //             "disabled": null,
+  //             "hide": null,
+  //             "groupLabel": null,
+  //             "exportValue": null
+  //           },
+  //           {
+  //             "label": "I found ELDT.com online searching",
+  //             "value": 5,
+  //             "disabled": null,
+  //             "hide": null,
+  //             "groupLabel": null,
+  //             "exportValue": null
+  //           },
+  //           {
+  //             "label": "My Employer sent me",
+  //             "value": 6,
+  //             "disabled": null,
+  //             "hide": null,
+  //             "groupLabel": null,
+  //             "exportValue": null
+  //           }
+  //         ]
+  //       },
+  //       "attributeName": "How did you hear about ELDT.com?",
+  //       "value": 1,
+  //       "adminEditable": false
+  //     },
+  //     {
+  //       "groupName": "Thank you for choosing ELDT.com",
+  //       "groupDescription": null,
+  //       "fieldType": "textarea",
+  //       "config": {
+  //         "required": true,
+  //         "options": null
+  //       },
+  //       "attributeName": "What School or Agency will you be attending for your Public Road and Range Training?",
+  //         "value": node.value.schoolOrAgencyForRoadAndRange,
+  //         "adminEditable": false
+  //     }
+  //   ],
+
+  // todo: only send at the end
+  applicationCompletedAt: new Date(),
+
+  // quiz & driver application doesn't require agreement step, but the system requires this to complete the application
+  // this is the png data of an empty signature box
+  // @see https://gitlab.com/cdl-powersuite/drive509/drive509-client/-/blob/master/src/app/services/students/student-form.service.ts#L804
+  signatrue:
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACWCAYAAABkW7XSAAAAAXNSR0IArs4c6QAABGhJREFUeF7t1IEJADAMAsF2/6EtdIuHywRyBu+2HUeAAIGAwDVYgZZEJEDgCxgsj0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIg8ACBlFZdWYR+vQAAAABJRU5ErkJggg==",
+  customAgreementTerms: true,
+};
