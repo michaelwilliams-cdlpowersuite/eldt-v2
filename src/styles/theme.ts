@@ -1,12 +1,13 @@
 import { createTheme } from "@mui/material/styles";
+import { brandColors } from "./brandColors";
 
 export const theme = createTheme({
   palette: {
     primary: {
-      main: "#1976d2",
+      main: brandColors.cdlDarkBlue,
     },
     secondary: {
-      main: "#9c27b0",
+      main: brandColors.cdlLightBlue,
     },
   },
   typography: {

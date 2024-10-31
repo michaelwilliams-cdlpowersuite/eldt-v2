@@ -1,19 +1,19 @@
 import { Card, CardContent, Typography, Box, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { viewTitleStyles } from "./enums/styles";
+import { pxContainer, viewTitleStyles } from "./enums/styles";
 
 interface View1Props {}
 
 const View1: React.FC<View1Props> = () => {
   return (
-    <Box>
+    <Box sx={{ px: pxContainer }}>
       <Typography variant="h5" sx={viewTitleStyles}>
         Choose your CDL Class
       </Typography>
       <Grid container spacing={2}>
         {classes.map((c, index) => (
           <Grid size={4} key={index}>
-            <Card>
+            <Card variant="outlined">
               <CardContent>
                 <Typography variant="h6" textAlign="center">
                   {c.title}
@@ -32,7 +32,7 @@ const View1: React.FC<View1Props> = () => {
       <Grid container spacing={2}>
         {endorsements.map((e, index) => (
           <Grid size={4} key={index}>
-            <Card>
+            <Card variant="outlined">
               <CardContent>
                 <Typography variant="h6" textAlign="center">
                   {e.title}

@@ -25,6 +25,6 @@ export const initialValues = {
   isPlanningHazmat: "",
   funding: "",
   automaticTransmission: "",
-  language: "",
+  language: { label: "English", code: "en" },
   startDate: "",
 };

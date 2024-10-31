@@ -4,14 +4,16 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Form, Formik } from "formik";
 import { initialValues, validationSchema } from "./enums/validationSchema";
 import Stepper from "./Stepper";
+import RegistrationAppBar from "./components/AppBar";
 
 interface RegistrationProps {}
 
 const Registration: React.FC<RegistrationProps> = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Container maxWidth="md" disableGutters sx={{ bgcolor: "yellow" }}>
-        <Box sx={{ height: "100vh" }}>
+      <RegistrationAppBar />
+      <Container maxWidth="md" disableGutters sx={{ pt: 1 }}>
+        <Box sx={{ height: "calc(100vh - 64px)" }}>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}

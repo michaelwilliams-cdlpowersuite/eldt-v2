@@ -1,15 +1,16 @@
-import { Grid2, Typography } from "@mui/material";
+import { Box, Grid2, Typography } from "@mui/material";
 import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikDatePicker from "./components/FormikDatePicker";
 import FormikTextField from "./components/FormikTextField";
 import { states } from "./enums/statesList";
-import { viewTitleStyles } from "./enums/styles";
+import { pxContainer, viewTitleStyles } from "./enums/styles";
+import { languages } from "./enums/languages";
 
 interface View2Props {}
 
 const View2: React.FC<View2Props> = () => {
   return (
-    <>
+    <Box sx={{ px: pxContainer }}>
       <Typography variant="h5" sx={viewTitleStyles}>
         Personal Info
       </Typography>
@@ -52,8 +53,16 @@ const View2: React.FC<View2Props> = () => {
             textFieldProps={{ label: "State" }}
           />
         </Grid2>
+        <Grid2 size={6}>
+          <FormikAutocomplete
+            name="language"
+            options={languages}
+            getOptionLabel={(option: { label: any }) => option.label}
+            textFieldProps={{ label: "Language" }}
+          />
+        </Grid2>
       </Grid2>
-    </>
+    </Box>
   );
 };
 

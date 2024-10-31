@@ -6,10 +6,13 @@ import FormikDatePicker from "./components/FormikDatePicker";
 import {
   cdlTypes,
   endorsements,
+  referralSources,
   transmissions,
   workTypes,
 } from "./enums/optionsLists";
-import { viewTitleStyles } from "./enums/styles";
+import { pxContainer, viewTitleStyles } from "./enums/styles";
+import { Grid } from "@mui/system";
+import FormikTextField from "./components/FormikTextField";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -19,10 +22,10 @@ interface View3Props {}
 const View3: React.FC<View3Props> = () => {
   return (
     <>
-      <Typography variant="h5" sx={viewTitleStyles}>
+      <Typography variant="h6" sx={{ px: pxContainer, ...viewTitleStyles }}>
         Additional Details
       </Typography>
-      <Grid2 container spacing={2}>
+      <Grid2 container spacing={2} sx={{ px: pxContainer }}>
         <Grid2 size={6}>
           <FormikAutocomplete
             name="transmission"
@@ -36,11 +39,8 @@ const View3: React.FC<View3Props> = () => {
           <FormikDatePicker name="cdlDate" />
         </Grid2>
       </Grid2>
-      <Paper
-        elevation={1}
-        sx={{ width: "100%", padding: 2, bgcolor: "salmon" }}
-      >
-        <Typography variant="h5" textAlign="center">
+      <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 4 }}>
+        <Typography variant="h6" sx={viewTitleStyles}>
           Once your training is complete...
         </Typography>
         <Grid2 container spacing={2}>
@@ -122,6 +122,37 @@ const View3: React.FC<View3Props> = () => {
           </Grid2>
         </Grid2>
       </Paper>
+      <Grid container spacing={2} sx={{ px: pxContainer, mt: 4 }}>
+        <Grid2 size={6}>
+          <FormikAutocomplete
+            name="referralSource"
+            options={referralSources}
+            getOptionLabel={(option: { label: any }) => option.label}
+            textFieldProps={{
+              label: "How did you hear about us?",
+            }}
+            disableCloseOnSelect
+            multiple
+            renderOption={(props, option, { selected }) => {
+              const { key, ...optionProps } = props;
+              return (
+                <li key={key} {...optionProps}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {option.label}
+                </li>
+              );
+            }}
+          />
+        </Grid2>
+        <Grid2 size={6}>
+          <FormikTextField name="where" label="Where will you be training?" />
+        </Grid2>
+      </Grid>
     </>
   );
 };
