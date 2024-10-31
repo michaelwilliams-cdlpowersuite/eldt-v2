@@ -27,4 +27,6 @@ export const initialValues = {
   automaticTransmission: "",
   language: { label: "English", code: "en" },
   startDate: "",
+  selectedCourse: "",
+  selectedEndorsements: [""],
 };
