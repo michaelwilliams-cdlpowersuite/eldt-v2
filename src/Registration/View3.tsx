@@ -25,6 +25,9 @@ const View3: React.FC<View3Props> = () => {
       <Typography variant="h6" sx={{ px: pxContainer, ...viewTitleStyles }}>
         Additional Details
       </Typography>
+      <Typography variant="body2" sx={{ px: pxContainer }}>
+        This is a description.
+      </Typography>
       <Grid2 container spacing={2} sx={{ px: pxContainer }}>
         <Grid2 size={6}>
           <FormikAutocomplete
@@ -36,7 +39,10 @@ const View3: React.FC<View3Props> = () => {
         </Grid2>
 
         <Grid2 size={6}>
-          <FormikDatePicker name="cdlDate" />
+          <FormikDatePicker
+            name="cdlDate"
+            label="When will you complete your training?"
+          />
         </Grid2>
       </Grid2>
       <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 4 }}>
@@ -124,6 +130,9 @@ const View3: React.FC<View3Props> = () => {
       </Paper>
       <Grid container spacing={2} sx={{ px: pxContainer, mt: 4 }}>
         <Grid2 size={6}>
+          <FormikTextField name="where" label="Where will you be training?" />
+        </Grid2>
+        <Grid2 size={6}>
           <FormikAutocomplete
             name="referralSource"
             options={referralSources}
@@ -148,9 +157,6 @@ const View3: React.FC<View3Props> = () => {
               );
             }}
           />
-        </Grid2>
-        <Grid2 size={6}>
-          <FormikTextField name="where" label="Where will you be training?" />
         </Grid2>
       </Grid>
     </>

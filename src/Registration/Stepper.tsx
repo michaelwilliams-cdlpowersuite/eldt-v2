@@ -3,9 +3,10 @@ import Button from "@mui/material/Button";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
-import Typography from "@mui/material/Typography";
 import * as React from "react";
+import FormActionButtons from "./components/FormActionButtons";
 import { steps } from "./enums/steps";
+import View4 from "./View4";
 
 interface StepperOrchestrationProps {}
 
@@ -61,7 +62,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", pt: 2 }}>
       <Stepper activeStep={activeStep}>
         {steps.map((step, index) => {
           const stepProps: { completed?: boolean } = {};
@@ -80,9 +81,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
+          <View4 />
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Box sx={{ flex: "1 1 auto" }} />
             <Button onClick={handleReset}>Reset</Button>
@@ -93,28 +92,14 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
           <Box sx={{ mt: 2, mb: 1 }}>
             {React.createElement(steps[activeStep].component)}
           </Box>
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Button
-              color="inherit"
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              sx={{ mr: 1 }}
-            >
-              Back
-            </Button>
-            <Box sx={{ flex: "1 1 auto" }} />
-            {isStepOptional(activeStep) && (
-              <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                Skip
-              </Button>
-            )}
-            <Button
-              onClick={handleNext}
-              //   disabled={isLastStep || !isValid || !dirty}
-            >
-              {isLastStep ? "Finish" : "Next"}
-            </Button>
-          </Box>
+          <FormActionButtons
+            handleBack={handleBack}
+            handleNext={handleNext}
+            handleSkip={handleSkip}
+            activeStep={activeStep}
+            isStepOptional={isStepOptional}
+            isLastStep={isLastStep}
+          />
         </React.Fragment>
       )}
     </Box>

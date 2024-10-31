@@ -26,10 +26,10 @@ const View1: React.FC<View1Props> = () => {
 
   return (
     <Box sx={{ px: pxContainer }}>
-      <Typography variant="h5" sx={viewTitleStyles}>
+      <Typography variant="h6" sx={viewTitleStyles}>
         Choose your CDL Class
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} sx={{ mt: 2 }}>
         {courses.map((course, index) => (
           <Grid size={4} key={index}>
             <CourseCard
@@ -40,7 +40,7 @@ const View1: React.FC<View1Props> = () => {
           </Grid>
         ))}
       </Grid>
-      <Typography variant="h5" sx={viewTitleStyles}>
+      <Typography variant="h6" sx={{ my: 2, ...viewTitleStyles }}>
         Add Endorsements
       </Typography>
       <Grid container spacing={2}>

@@ -1,5 +1,13 @@
-import { Card, CardActionArea, CardContent, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  Checkbox,
+  Typography,
+} from "@mui/material";
 import { Course, Endorsement } from "../enums/products";
+import { Stack } from "@mui/system";
 
 interface CourseCardProps {
   course: Course;
@@ -17,10 +25,13 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     <Card
       variant="outlined"
       onClick={onSelect}
-      sx={{ border: selected ? "2px solid blue" : "" }}
+      sx={{ border: selected ? "primary.main" : "" }}
     >
       <CardActionArea>
         <CardContent>
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Checkbox checked={selected} onChange={onSelect} />
+          </Box>
           <Typography variant="h6" textAlign="center">
             {course.title}
           </Typography>
@@ -48,13 +59,23 @@ export const EndorsementCard: React.FC<EndorsementCardProps> = ({
     <Card
       variant="outlined"
       onClick={onSelect}
-      sx={{ border: selected ? "2px solid green" : "" }}
+      sx={{ border: selected ? "2px solid primary.main" : "" }}
     >
-      <CardContent>
-        <Typography variant="h6" textAlign="center">
-          {endorsement.title}
-        </Typography>
-      </CardContent>
+      <CardActionArea>
+        <CardContent>
+          <Stack
+            spacing={2}
+            direction="row"
+            alignItems="center"
+            justifyContent="start"
+          >
+            <Checkbox checked={selected} onChange={onSelect} />
+            <Typography variant="h6" textAlign="center">
+              {endorsement.title}
+            </Typography>
+          </Stack>
+        </CardContent>
+      </CardActionArea>
     </Card>
   );
 };

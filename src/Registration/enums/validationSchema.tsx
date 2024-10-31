@@ -28,5 +28,5 @@ export const initialValues = {
   language: { label: "English", code: "en" },
   startDate: "",
   selectedCourse: "",
-  selectedEndorsements: [""],
+  selectedEndorsements: [],
 };

@@ -11,7 +11,7 @@ interface View2Props {}
 const View2: React.FC<View2Props> = () => {
   return (
     <Box sx={{ px: pxContainer }}>
-      <Typography variant="h5" sx={viewTitleStyles}>
+      <Typography variant="h6" sx={viewTitleStyles}>
         Personal Info
       </Typography>
       <Grid2 container spacing={2}>
@@ -25,7 +25,7 @@ const View2: React.FC<View2Props> = () => {
           <FormikTextField name="phone" />
         </Grid2>
         <Grid2 size={6}>
-          <FormikDatePicker name="birthday" />
+          <FormikDatePicker name="birthday" label="DOB" />
         </Grid2>
         <Grid2 size={6}>
           <FormikTextField name="driversLicense" label="Driver's License" />
