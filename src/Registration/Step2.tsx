@@ -2,10 +2,9 @@ import { Box, Grid2, Typography } from "@mui/material";
 import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikDatePicker from "./components/FormikDatePicker";
 import FormikTextField from "./components/FormikTextField";
+import { languages } from "./enums/languages";
 import { states } from "./enums/statesList";
 import { pxContainer, viewTitleStyles } from "./enums/styles";
-import { languages } from "./enums/languages";
-import useValidateCurrentStep from "./enums/useValidateCurrentStep";
 
 interface Step2Props {}
 
@@ -23,32 +22,35 @@ const Step2: React.FC<Step2Props> = () => {
           <FormikTextField name="step2.lastName" label="Last Name" />
         </Grid2>
         <Grid2 size={6}>
-          <FormikTextField name="phone" />
+          <FormikTextField name="step2.phone" label="phone" />
         </Grid2>
         <Grid2 size={6}>
-          <FormikDatePicker name="dob" label="DOB" />
-        </Grid2>
-        <Grid2 size={6}>
-          <FormikTextField name="driversLicense" label="Driver's License" />
+          <FormikDatePicker name="step2.dob" label="DOB" />
         </Grid2>
         <Grid2 size={6}>
           <FormikTextField
-            name="confirmDriversLicense"
+            name="step2.driversLicense"
+            label="Driver's License"
+          />
+        </Grid2>
+        <Grid2 size={6}>
+          <FormikTextField
+            name="step2.confirmDriversLicense"
             label="Confirm Driver's License"
           />
         </Grid2>
         <Grid2 size={12}>
-          <FormikTextField name="streetAddress" label="Address" />
+          <FormikTextField name="step2.streetAddress" label="Address" />
         </Grid2>
         <Grid2 size={4}>
-          <FormikTextField name="zip" />
+          <FormikTextField name="step2.zip" label="Zip" />
         </Grid2>
         <Grid2 size={4}>
-          <FormikTextField name="city" />
+          <FormikTextField name="step2.city" label="City" />
         </Grid2>
         <Grid2 size={4}>
           <FormikAutocomplete
-            name="state"
+            name="step2.state"
             options={states}
             getOptionLabel={(option: { label: any }) => option.label}
             textFieldProps={{ label: "State" }}
@@ -56,7 +58,7 @@ const Step2: React.FC<Step2Props> = () => {
         </Grid2>
         <Grid2 size={6}>
           <FormikAutocomplete
-            name="language"
+            name="step2.language"
             options={languages}
             getOptionLabel={(option: { label: any }) => option.label}
             textFieldProps={{ label: "Language" }}

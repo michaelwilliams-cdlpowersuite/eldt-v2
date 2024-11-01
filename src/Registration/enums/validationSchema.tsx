@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 
 export const validationSchema = Yup.object({
+  step1: Yup.object({}),
   step2: Yup.object({
     firstName: Yup.string().required("Required"),
     lastName: Yup.string().required("Required"),
@@ -18,6 +19,7 @@ export const validationSchema = Yup.object({
       .matches(/^\d{5}$/, "Zipcode must be exactly 5 digits"),
     language: Yup.object().required("Required"),
   }),
+  step3: Yup.object({}),
 });
 
 export const initialValues = {

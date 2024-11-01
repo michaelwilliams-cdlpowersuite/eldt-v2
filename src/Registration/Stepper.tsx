@@ -7,6 +7,9 @@ import * as React from "react";
 import FormActionButtons from "./components/FormActionButtons";
 import { steps } from "./enums/steps";
 import Step4 from "./Step4";
+import useValidateCurrentStep from "./enums/useValidateCurrentStep";
+import { enqueueSnackbar } from "notistack";
+import { snackOptions } from "./enums/snackOptions";
 
 interface StepperOrchestrationProps {}
 
@@ -15,6 +18,7 @@ interface StepperOrchestrationProps {}
 const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
+  const validateCurrentStep = useValidateCurrentStep();
 
   const isStepOptional = (step: number) => {
     // return step === 1;
@@ -57,6 +61,17 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
 
   const isLastStep = activeStep === steps.length - 1;
 
+  const handleNextStep = async () => {
+    const stepKey = `step${activeStep + 1}`; // step1, step2, step3, step4
+    const isStepValid = await validateCurrentStep(stepKey);
+
+    if (isStepValid) {
+      setActiveStep((prev) => prev + 1);
+    } else {
+      enqueueSnackbar("You must fix errors before moving on.", snackOptions);
+    }
+  };
+
   const handleReset = () => {
     setActiveStep(0);
   };
@@ -94,7 +109,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
           </Box>
           <FormActionButtons
             handleBack={handleBack}
-            handleNext={handleNext}
+            handleNext={handleNextStep}
             handleSkip={handleSkip}
             activeStep={activeStep}
             isStepOptional={isStepOptional}
