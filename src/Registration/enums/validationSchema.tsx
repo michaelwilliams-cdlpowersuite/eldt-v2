@@ -1,10 +1,11 @@
+import dayjs from "dayjs";
 import * as Yup from "yup";
 
 export const validationSchema = Yup.object({
   firstName: Yup.string().required("Required"),
   lastName: Yup.string().required("Required"),
   phone: Yup.string().required("Required"),
-  birthday: Yup.string().required("Required"),
+  dob: Yup.date().required("Required"),
   driversLicense: Yup.string().required("Required"),
   confirmDriversLicense: Yup.string()
     .oneOf([Yup.ref("driversLicense"), undefined], "Must match")
@@ -21,7 +22,7 @@ export const initialValues = {
   firstName: "",
   lastName: "",
   phone: "",
-  birthday: "",
+  dob: "",
   driversLicense: "",
   confirmDriversLicense: "",
   streetAddress: "",

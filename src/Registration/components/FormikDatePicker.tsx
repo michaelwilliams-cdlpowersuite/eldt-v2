@@ -18,11 +18,15 @@ const FormikDatePicker: React.FC<FormikDatePickerProps> = ({
   ...props
 }) => {
   const [field, meta] = useField(name);
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue, setFieldTouched } = useFormikContext();
 
   const handleChange = (value: Dayjs | null) => {
     setFieldValue(name, value); // Update Formik's state
   };
+
+  console.log("touched: ", meta.touched);
+  console.log("error: ", meta.error);
+  console.log("value: ", field.value);
 
   return (
     <DatePicker
@@ -36,6 +40,7 @@ const FormikDatePicker: React.FC<FormikDatePickerProps> = ({
           helperText: meta.touched && meta.error,
           fullWidth: true,
           margin: "normal",
+          onBlur: () => setFieldTouched(name, true, true),
         },
       }}
     />
