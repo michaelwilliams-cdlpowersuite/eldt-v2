@@ -37,7 +37,7 @@ const View2: React.FC<View2Props> = () => {
           />
         </Grid2>
         <Grid2 size={12}>
-          <FormikTextField name="address" />
+          <FormikTextField name="streetAddress" label="Address" />
         </Grid2>
         <Grid2 size={4}>
           <FormikTextField name="zip" />

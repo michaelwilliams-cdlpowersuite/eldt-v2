@@ -1,8 +1,20 @@
 import * as Yup from "yup";
 
 export const validationSchema = Yup.object({
-  email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string().min(8, "At least 8 characters").required("Required"),
+  firstName: Yup.string().required("Required"),
+  lastName: Yup.string().required("Required"),
+  phone: Yup.string().required("Required"),
+  birthday: Yup.string().required("Required"),
+  driversLicense: Yup.string().required("Required"),
+  confirmDriversLicense: Yup.string()
+    .oneOf([Yup.ref("driversLicense"), undefined], "Must match")
+    .required("Required"),
+  streetAddress: Yup.string().required("Required"),
+  city: Yup.string().required("Required"),
+  state: Yup.string().required("Required"),
+  zip: Yup.string()
+    .required("Required")
+    .matches(/^\d{5}$/, "Zipcode must be exactly 5 digits"),
 });
 
 export const initialValues = {
@@ -16,14 +28,6 @@ export const initialValues = {
   city: "",
   state: "",
   zip: "",
-  socialSecurity: "",
-  race: "",
-  hispanic: "",
-  disabled: "",
-  veteran: "",
-  sex: "",
-  isPlanningHazmat: "",
-  funding: "",
   automaticTransmission: "",
   language: { label: "English", code: "en" },
   startDate: "",

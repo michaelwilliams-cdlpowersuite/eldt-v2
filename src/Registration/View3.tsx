@@ -57,7 +57,6 @@ const View3: React.FC<View3Props> = () => {
               getOptionLabel={(option: { label: any }) => option.label}
               textFieldProps={{ label: "What type of CDL will you have?" }}
               disableCloseOnSelect
-              multiple
               renderOption={(props, option, { selected }) => {
                 const { key, ...optionProps } = props;
                 return (
