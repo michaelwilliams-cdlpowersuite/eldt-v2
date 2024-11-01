@@ -1,8 +1,8 @@
-import React from "react";
-import { useField, useFormikContext } from "formik";
+import { TextFieldProps } from "@mui/material";
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
-import { TextField, TextFieldProps } from "@mui/material";
 import { Dayjs } from "dayjs";
+import { useField, useFormikContext } from "formik";
+import React from "react";
 
 type FormikDatePickerProps = Omit<
   DatePickerProps<Dayjs, false>,
@@ -23,10 +23,6 @@ const FormikDatePicker: React.FC<FormikDatePickerProps> = ({
   const handleChange = (value: Dayjs | null) => {
     setFieldValue(name, value); // Update Formik's state
   };
-
-  console.log("touched: ", meta.touched);
-  console.log("error: ", meta.error);
-  console.log("value: ", field.value);
 
   return (
     <DatePicker

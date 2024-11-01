@@ -23,7 +23,7 @@ const FormikAutocomplete = <T, Multiple extends boolean = false>({
   ...props
 }: FormikAutocompleteProps<T, Multiple>) => {
   const [field, meta] = useField(name);
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue, setFieldTouched } = useFormikContext();
 
   const handleChange = (event: React.SyntheticEvent, value: T | T[] | null) => {
     setFieldValue(name, value); // Update Formik's state with single or multiple values
@@ -45,6 +45,7 @@ const FormikAutocomplete = <T, Multiple extends boolean = false>({
           helperText={meta.touched && meta.error}
           fullWidth
           margin="normal"
+          onBlur={() => setFieldTouched(name, true, true)}
         />
       )}
     />

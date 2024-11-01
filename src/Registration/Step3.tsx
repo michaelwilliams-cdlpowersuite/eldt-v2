@@ -17,9 +17,9 @@ import FormikTextField from "./components/FormikTextField";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-interface View3Props {}
+interface Step3Props {}
 
-const View3: React.FC<View3Props> = () => {
+const Step3: React.FC<Step3Props> = () => {
   return (
     <>
       <Typography variant="h6" sx={{ px: pxContainer, ...viewTitleStyles }}>
@@ -162,4 +162,4 @@ const View3: React.FC<View3Props> = () => {
   );
 };
 
-export default View3;
+export default Step3;

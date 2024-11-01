@@ -6,7 +6,7 @@ import Stepper from "@mui/material/Stepper";
 import * as React from "react";
 import FormActionButtons from "./components/FormActionButtons";
 import { steps } from "./enums/steps";
-import View4 from "./View4";
+import Step4 from "./Step4";
 
 interface StepperOrchestrationProps {}
 
@@ -81,7 +81,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
       </Stepper>
       {activeStep === steps.length ? (
         <React.Fragment>
-          <View4 />
+          <Step4 />
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Box sx={{ flex: "1 1 auto" }} />
             <Button onClick={handleReset}>Reset</Button>

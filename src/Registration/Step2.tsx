@@ -5,10 +5,11 @@ import FormikTextField from "./components/FormikTextField";
 import { states } from "./enums/statesList";
 import { pxContainer, viewTitleStyles } from "./enums/styles";
 import { languages } from "./enums/languages";
+import useValidateCurrentStep from "./enums/useValidateCurrentStep";
 
-interface View2Props {}
+interface Step2Props {}
 
-const View2: React.FC<View2Props> = () => {
+const Step2: React.FC<Step2Props> = () => {
   return (
     <Box sx={{ px: pxContainer }}>
       <Typography variant="h6" sx={viewTitleStyles}>
@@ -16,10 +17,10 @@ const View2: React.FC<View2Props> = () => {
       </Typography>
       <Grid2 container spacing={2}>
         <Grid2 size={6}>
-          <FormikTextField name="firstName" label="First Name" />
+          <FormikTextField name="step2.firstName" label="First Name" />
         </Grid2>
         <Grid2 size={6}>
-          <FormikTextField name="lastName" label="Last Name" />
+          <FormikTextField name="step2.lastName" label="Last Name" />
         </Grid2>
         <Grid2 size={6}>
           <FormikTextField name="phone" />
@@ -66,4 +67,4 @@ const View2: React.FC<View2Props> = () => {
   );
 };
 
-export default View2;
+export default Step2;

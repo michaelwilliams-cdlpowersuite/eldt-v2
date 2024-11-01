@@ -5,9 +5,9 @@ import { Course, courses, Endorsement, endorsements } from "./enums/products";
 import { pxContainer, viewTitleStyles } from "./enums/styles";
 import { useFormikContext } from "formik";
 
-interface View1Props {}
+interface Step1Props {}
 
-const View1: React.FC<View1Props> = () => {
+const Step1: React.FC<Step1Props> = () => {
   const { values, setFieldValue } = useFormikContext<{
     selectedCourse: string;
     selectedEndorsements: string[];
@@ -59,4 +59,4 @@ const View1: React.FC<View1Props> = () => {
   );
 };
 
-export default View1;
+export default Step1;
