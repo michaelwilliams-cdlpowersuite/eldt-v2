@@ -21,16 +21,16 @@ const Step1: React.FC<Step1Props> = () => {
 
   const handleSelectCourse = (id: Course["id"]) => {
     const newValue = values.step1.selectedCourse === id ? "" : id;
-    setFieldValue("step1.selectedCourse", newValue);
 
-    // Only set as touched after the first interaction
-    if (!touched.step1?.selectedCourse) {
-      setFieldTouched("step1.selectedCourse", true);
-    }
-
-    // Validate if clearing the selection
-    if (!newValue) {
+    // Set the selected course without forcing touched
+    setFieldValue("step1.selectedCourse", newValue).then(() => {
+      // Validate immediately after setting the new value
       validateField("step1.selectedCourse");
+    });
+
+    // Show the error message if the user deselects the course
+    if (values.step1.selectedCourse !== id) {
+      setFieldTouched("step1.selectedCourse", true);
     }
   };
 
