@@ -5,7 +5,6 @@ import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikDatePicker from "./components/FormikDatePicker";
 import {
   cdlTypes,
-  endorsements,
   referralSources,
   transmissions,
   workTypes,
@@ -13,6 +12,7 @@ import {
 import { pxContainer, viewTitleStyles } from "./enums/styles";
 import { Grid } from "@mui/system";
 import FormikTextField from "./components/FormikTextField";
+import { endorsements } from "./enums/products";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -76,8 +76,9 @@ const Step3: React.FC<Step3Props> = () => {
           <Grid2 size={6}>
             <FormikAutocomplete
               name="endorsements"
+              dependentAnswer="step1.endorsements"
               options={endorsements}
-              getOptionLabel={(option: { label: any }) => option.label}
+              getOptionLabel={(option) => option.title}
               textFieldProps={{
                 label: "What type of endorsements will you have?",
               }}
@@ -93,7 +94,7 @@ const Step3: React.FC<Step3Props> = () => {
                       style={{ marginRight: 8 }}
                       checked={selected}
                     />
-                    {option.label}
+                    {option.title}
                   </li>
                 );
               }}

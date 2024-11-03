@@ -1,19 +1,37 @@
 import { Box, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { useFormikContext } from "formik";
 import { CourseCard, EndorsementCard } from "./components/ProductCards";
 import { Course, courses, Endorsement, endorsements } from "./enums/products";
 import { pxContainer, viewTitleStyles } from "./enums/styles";
-import { useFormikContext } from "formik";
 
 interface Step1Props {}
 
 const Step1: React.FC<Step1Props> = () => {
-  const { values, setFieldValue } = useFormikContext<{
+  const {
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    setFieldTouched,
+    validateField,
+  } = useFormikContext<{
     step1: { selectedCourse: string; selectedEndorsements: string[] };
   }>();
 
   const handleSelectCourse = (id: Course["id"]) => {
-    setFieldValue("step1.selectedCourse", id);
+    const newValue = values.step1.selectedCourse === id ? "" : id;
+    setFieldValue("step1.selectedCourse", newValue);
+
+    // Only set as touched after the first interaction
+    if (!touched.step1?.selectedCourse) {
+      setFieldTouched("step1.selectedCourse", true);
+    }
+
+    // Validate if clearing the selection
+    if (!newValue) {
+      validateField("step1.selectedCourse");
+    }
   };
 
   const handleSelectEndorsement = (id: Endorsement["id"]) => {
@@ -30,6 +48,11 @@ const Step1: React.FC<Step1Props> = () => {
       <Typography variant="h6" sx={viewTitleStyles}>
         Choose your CDL Class
       </Typography>
+      {touched.step1?.selectedCourse && errors.step1?.selectedCourse && (
+        <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+          {errors.step1.selectedCourse}
+        </Typography>
+      )}
       <Grid container spacing={2} sx={{ mt: 2 }}>
         {courses.map((course, index) => (
           <Grid size={4} key={index}>

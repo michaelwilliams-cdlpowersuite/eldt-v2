@@ -1,5 +1,5 @@
-import React from "react";
-import { useField, useFormikContext } from "formik";
+import React, { useEffect } from "react";
+import { getIn, useField, useFormikContext } from "formik";
 import {
   Autocomplete,
   AutocompleteProps,
@@ -12,24 +12,49 @@ type FormikAutocompleteProps<T, Multiple extends boolean = false> = Omit<
   "renderInput"
 > & {
   name: string;
+  dependentAnswer?: string;
   textFieldProps?: TextFieldProps;
   multiple?: Multiple;
 };
 
 const FormikAutocomplete = <T, Multiple extends boolean = false>({
   name,
+  dependentAnswer,
   textFieldProps,
   multiple = false as Multiple, // Default to false
   ...props
 }: FormikAutocompleteProps<T, Multiple>) => {
   const [field, meta] = useField(name);
-  const { setFieldValue, setFieldTouched } = useFormikContext();
+  const { values, setFieldValue, setFieldTouched } = useFormikContext();
 
   const handleChange = (event: React.SyntheticEvent, value: T | T[] | null) => {
     setFieldValue(name, value); // Update Formik's state with single or multiple values
   };
 
   const value = multiple ? field.value || [] : field.value || null;
+
+  // TODO Preselect answers that have already been provided
+  //   useEffect(() => {
+  //     if (!dependentAnswer) {
+  //       return;
+  //     }
+  //     // Access the dependent answer dynamically
+  //     const dependentValue = getIn(values, dependentAnswer);
+
+  //     if (dependentValue) {
+  //       console.log("props.options", props.options);
+  //       console.log("dependentAnswer value", dependentValue);
+
+  //       // Find the matching option based on the dependent value
+  //       const initialValue = props.options.find(
+  //         (option) => option === dependentValue
+  //       );
+
+  //       if (initialValue) {
+  //         setFieldValue(name, initialValue);
+  //       }
+  //     }
+  //   }, [dependentAnswer, values, props.options, setFieldValue, name]);
 
   return (
     <Autocomplete
