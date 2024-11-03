@@ -68,7 +68,10 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
     if (isStepValid) {
       setActiveStep((prev) => prev + 1);
     } else {
-      enqueueSnackbar("You must fix errors before moving on.", snackOptions);
+      enqueueSnackbar(
+        "Please complete and validate the form before proceeding.",
+        snackOptions
+      );
     }
   };
 

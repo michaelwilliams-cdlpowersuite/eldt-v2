@@ -29,9 +29,8 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     >
       <CardActionArea>
         <CardContent>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Checkbox checked={selected} onChange={onSelect} />
-          </Box>
+          {course.icon && <course.icon style={{ fill: "black" }} />}
+
           <Typography variant="h6" textAlign="center">
             {course.title}
           </Typography>
@@ -39,6 +38,9 @@ export const CourseCard: React.FC<CourseCardProps> = ({
             {course.description}
           </Typography>
         </CardContent>
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Checkbox checked={selected} onChange={onSelect} />
+        </Box>
       </CardActionArea>
     </Card>
   );
@@ -74,6 +76,7 @@ export const EndorsementCard: React.FC<EndorsementCardProps> = ({
               {endorsement.title}
             </Typography>
           </Stack>
+          {endorsement.icon && <endorsement.icon />}
         </CardContent>
       </CardActionArea>
     </Card>

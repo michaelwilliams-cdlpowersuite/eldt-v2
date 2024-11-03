@@ -22,7 +22,7 @@ const Step2: React.FC<Step2Props> = () => {
           <FormikTextField name="step2.lastName" label="Last Name" />
         </Grid2>
         <Grid2 size={6}>
-          <FormikTextField name="step2.phone" label="phone" />
+          <FormikTextField name="step2.phone" label="Phone" />
         </Grid2>
         <Grid2 size={6}>
           <FormikDatePicker name="step2.dob" label="DOB" />

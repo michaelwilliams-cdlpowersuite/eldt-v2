@@ -9,19 +9,20 @@ interface Step1Props {}
 
 const Step1: React.FC<Step1Props> = () => {
   const { values, setFieldValue } = useFormikContext<{
-    selectedCourse: string;
-    selectedEndorsements: string[];
+    step1: { selectedCourse: string; selectedEndorsements: string[] };
   }>();
 
   const handleSelectCourse = (id: Course["id"]) => {
-    setFieldValue("selectedCourse", id);
+    setFieldValue("step1.selectedCourse", id);
   };
 
   const handleSelectEndorsement = (id: Endorsement["id"]) => {
-    const newSelections = values.selectedEndorsements.includes(id)
-      ? values.selectedEndorsements.filter((selectedId) => selectedId !== id)
-      : [...values.selectedEndorsements, id];
-    setFieldValue("selectedEndorsements", newSelections);
+    const newSelections = values.step1.selectedEndorsements.includes(id)
+      ? values.step1.selectedEndorsements.filter(
+          (selectedId) => selectedId !== id
+        )
+      : [...values.step1.selectedEndorsements, id];
+    setFieldValue("step1.selectedEndorsements", newSelections);
   };
 
   return (
@@ -34,7 +35,7 @@ const Step1: React.FC<Step1Props> = () => {
           <Grid size={4} key={index}>
             <CourseCard
               course={course}
-              selected={values.selectedCourse === course.id}
+              selected={values.step1.selectedCourse === course.id}
               onSelect={() => handleSelectCourse(course.id)}
             />
           </Grid>
@@ -48,7 +49,9 @@ const Step1: React.FC<Step1Props> = () => {
           <Grid size={4} key={index}>
             <EndorsementCard
               endorsement={endorsement}
-              selected={values.selectedEndorsements.includes(endorsement.id)}
+              selected={values.step1.selectedEndorsements.includes(
+                endorsement.id
+              )}
               onSelect={() => handleSelectEndorsement(endorsement.id)}
             />
           </Grid>
