@@ -1,14 +1,25 @@
-import { Box, Grid2, Typography } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  Grid2,
+  Input,
+  InputLabel,
+  Typography,
+} from "@mui/material";
 import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikDatePicker from "./components/FormikDatePicker";
 import FormikTextField from "./components/FormikTextField";
 import { languages } from "./enums/languages";
 import { states } from "./enums/statesList";
 import { pxContainer, viewTitleStyles } from "./enums/styles";
+import React from "react";
+import { IMaskInput } from "react-imask";
+import { useField } from "formik";
 
 interface Step2Props {}
 
 const Step2: React.FC<Step2Props> = () => {
+  const [field, meta] = useField("step2.phone");
   return (
     <Box sx={{ px: pxContainer }}>
       <Typography variant="h6" sx={viewTitleStyles}>
@@ -22,7 +33,15 @@ const Step2: React.FC<Step2Props> = () => {
           <FormikTextField name="step2.lastName" label="Last Name" />
         </Grid2>
         <Grid2 size={6}>
-          <FormikTextField name="step2.phone" label="Phone" />
+          <FormikTextField
+            name="step2.phone"
+            label="Phone"
+            slotProps={{
+              input: {
+                inputComponent: TextMaskCustom as any,
+              },
+            }}
+          />
         </Grid2>
         <Grid2 size={6}>
           <FormikDatePicker name="step2.dob" label="DOB" />
@@ -70,3 +89,31 @@ const Step2: React.FC<Step2Props> = () => {
 };
 
 export default Step2;
+
+// This code is for the phone mask
+// it is lifted from the docs, here:
+//https://mui.com/material-ui/react-text-field/#integration-with-3rd-party-input-libraries
+interface CustomProps {
+  onChange: (event: { target: { name: string; value: string } }) => void;
+  name: string;
+}
+
+const TextMaskCustom = React.forwardRef<HTMLInputElement, CustomProps>(
+  function TextMaskCustom(props, ref) {
+    const { onChange, ...other } = props;
+    return (
+      <IMaskInput
+        {...other}
+        mask="(#00) 000-0000"
+        definitions={{
+          "#": /[1-9]/,
+        }}
+        inputRef={ref}
+        onAccept={(value: any) =>
+          onChange({ target: { name: props.name, value } })
+        }
+        overwrite
+      />
+    );
+  }
+);
