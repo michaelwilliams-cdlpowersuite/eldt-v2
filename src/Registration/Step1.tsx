@@ -4,6 +4,7 @@ import { useFormikContext } from "formik";
 import { CourseCard, EndorsementCard } from "./components/ProductCards";
 import { Course, courses, Endorsement, endorsements } from "./enums/products";
 import { pxContainer, viewTitleStyles } from "./enums/styles";
+import { brandColors } from "../styles/brandColors";
 
 interface Step1Props {}
 
@@ -45,7 +46,16 @@ const Step1: React.FC<Step1Props> = () => {
 
   return (
     <Box sx={{ px: pxContainer }}>
-      <Typography variant="h6" sx={viewTitleStyles}>
+      <Typography
+        variant="h6"
+        sx={{
+          color:
+            touched.step1?.selectedCourse && errors.step1?.selectedCourse
+              ? brandColors.cdlRed
+              : "inherit",
+          ...viewTitleStyles,
+        }}
+      >
         Choose your CDL Class
       </Typography>
       {touched.step1?.selectedCourse && errors.step1?.selectedCourse && (
