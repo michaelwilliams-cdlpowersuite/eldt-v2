@@ -30,7 +30,7 @@ export const validationSchema = Yup.object({
   step3: Yup.object({}),
 });
 
-export const initialValues = {
+export const initialValues: RegistrationFormUIValues = {
   step1: { selectedCourse: "", selectedEndorsements: [] },
   step2: {
     firstName: "",
@@ -43,8 +43,29 @@ export const initialValues = {
     city: "",
     state: "",
     zip: "",
-    automaticTransmission: "",
     language: { label: "English", code: "en" },
-    startDate: "",
   },
+  step3: {},
 };
+
+export interface RegistrationFormUIValues {
+  step1: {
+    selectedCourse: string;
+    selectedEndorsements: string[];
+  };
+  step2: {
+    firstName: string;
+    lastName: string;
+    phone: string;
+    dob: string;
+    driversLicense: string;
+    confirmDriversLicense: string;
+    streetAddress: string;
+    city: string;
+    state: string;
+    zip: string;
+    language: { label: string; code: string };
+  };
+  step3: {};
+  // Add additional steps as needed
+}

@@ -10,6 +10,8 @@ import Step4 from "./Step4";
 import useValidateCurrentStep from "./enums/useValidateCurrentStep";
 import { enqueueSnackbar } from "notistack";
 import { snackOptions } from "./enums/snackOptions";
+import { setIn, useFormikContext } from "formik";
+import { RegistrationFormUIValues } from "./enums/validationSchema";
 
 interface StepperOrchestrationProps {}
 
@@ -19,6 +21,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const validateCurrentStep = useValidateCurrentStep();
+  const { values, setTouched } = useFormikContext<RegistrationFormUIValues>();
 
   const isStepOptional = (step: number) => {
     // return step === 1;
@@ -62,7 +65,18 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
   const isLastStep = activeStep === steps.length - 1;
 
   const handleNextStep = async () => {
-    const stepKey = `step${activeStep + 1}`; // step1, step2, step3, step4
+    const stepKey = `step${activeStep + 1}` as keyof RegistrationFormUIValues; // step1, step2, step3, etc.
+
+    // Create touched object for all fields in the step
+    const touchedFields = Object.keys(values[stepKey]).reduce(
+      (acc, field) => setIn(acc, `${stepKey}.${field}`, true),
+      {}
+    );
+
+    // Set all fields in the current step as touched
+    setTouched(touchedFields, true);
+
+    // Validate the step after marking fields as touched
     const isStepValid = await validateCurrentStep(stepKey);
 
     if (isStepValid) {
@@ -74,11 +88,9 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
       );
     }
   };
-
   const handleReset = () => {
     setActiveStep(0);
   };
-
   return (
     <Box sx={{ width: "100%", pt: 2 }}>
       <Stepper activeStep={activeStep}>
