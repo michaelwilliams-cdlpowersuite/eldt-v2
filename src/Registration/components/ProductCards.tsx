@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Course, Endorsement } from "../enums/products";
-import { Stack } from "@mui/system";
+import { maxWidth, Stack } from "@mui/system";
 
 interface CourseCardProps {
   course: Course;
@@ -29,7 +29,16 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     >
       <CardActionArea>
         <CardContent>
-          {course.icon && <course.icon style={{ fill: "black" }} />}
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              pb: 2,
+            }}
+          >
+            {course.icon && <course.icon style={{ maxHeight: "70" }} />}
+          </Box>
 
           <Typography variant="h6" textAlign="center">
             {course.title}
@@ -75,8 +84,17 @@ export const EndorsementCard: React.FC<EndorsementCardProps> = ({
             <Typography variant="h6" textAlign="center">
               {endorsement.title}
             </Typography>
+            {endorsement.icon && (
+              <endorsement.icon
+                style={
+                  endorsement.iconStyles || {
+                    maxHeight: "23px",
+                    maxWidth: "50px",
+                  }
+                }
+              />
+            )}
           </Stack>
-          {endorsement.icon && <endorsement.icon />}
         </CardContent>
       </CardActionArea>
     </Card>

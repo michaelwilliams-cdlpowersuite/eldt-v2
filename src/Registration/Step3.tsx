@@ -1,6 +1,6 @@
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import { Checkbox, Grid2, Paper, Typography } from "@mui/material";
+import { Box, Checkbox, Grid2, Paper, Typography } from "@mui/material";
 import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikDatePicker from "./components/FormikDatePicker";
 import {
@@ -10,7 +10,7 @@ import {
   workTypes,
 } from "./enums/optionsLists";
 import { pxContainer, viewTitleStyles } from "./enums/styles";
-import { Grid } from "@mui/system";
+import { Grid, Stack } from "@mui/system";
 import FormikTextField from "./components/FormikTextField";
 import { endorsements } from "./enums/products";
 
@@ -25,9 +25,18 @@ const Step3: React.FC<Step3Props> = () => {
       <Typography variant="h6" sx={{ px: pxContainer, ...viewTitleStyles }}>
         Additional Details
       </Typography>
-      <Typography variant="body2" sx={{ px: pxContainer }}>
-        This is a description.
-      </Typography>
+
+      <Stack direction="row" alignItems="flex-start">
+        <Checkbox checked />
+        <Typography variant="body2" sx={{ px: pxContainer }}>
+          ELDT.com is connected with hundreds of trucking companies across
+          America to help connect quality drivers with potential employment
+          opportunities. To create the best experience, recruiters use text,
+          phone, or email to communicate. If getting connected with employment
+          opportunities is something that interests you, let us know by clicking
+          the checkbox provided.
+        </Typography>
+      </Stack>
       <Grid2 container spacing={2} sx={{ px: pxContainer }}>
         <Grid2 size={6}>
           <FormikAutocomplete
