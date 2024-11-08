@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import PaymentForm from "./components/Stripe";
+import PaymentForm from "./components/PaymentForm";
 
 interface Step4Props {}
 
