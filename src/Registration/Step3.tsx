@@ -1,18 +1,18 @@
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import { Box, Checkbox, Grid2, Paper, Typography } from "@mui/material";
+import { Checkbox, Grid2, Paper, Typography } from "@mui/material";
+import { Grid, Stack } from "@mui/system";
 import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikDatePicker from "./components/FormikDatePicker";
+import FormikTextField from "./components/FormikTextField";
 import {
   cdlTypes,
   referralSources,
   transmissions,
   workTypes,
 } from "./enums/optionsLists";
-import { pxContainer, viewTitleStyles } from "./enums/styles";
-import { Grid, Stack } from "@mui/system";
-import FormikTextField from "./components/FormikTextField";
 import { endorsements } from "./enums/products";
+import { pxContainer, titleStyles } from "./enums/styles";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -22,13 +22,17 @@ interface Step3Props {}
 const Step3: React.FC<Step3Props> = () => {
   return (
     <>
-      <Typography variant="h6" sx={{ px: pxContainer, ...viewTitleStyles }}>
+      <Typography variant="h6" sx={{ px: pxContainer, ...titleStyles }}>
         Additional Details
       </Typography>
 
-      <Stack direction="row" alignItems="flex-start">
-        <Checkbox checked />
-        <Typography variant="body2" sx={{ px: pxContainer }}>
+      <Stack
+        direction="row"
+        alignItems="flex-start"
+        sx={{ py: 4, px: pxContainer }}
+      >
+        <Checkbox checked sx={{ alignSelf: "flex-start" }} />
+        <Typography variant="body2">
           ELDT.com is connected with hundreds of trucking companies across
           America to help connect quality drivers with potential employment
           opportunities. To create the best experience, recruiters use text,
@@ -55,7 +59,7 @@ const Step3: React.FC<Step3Props> = () => {
         </Grid2>
       </Grid2>
       <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 4 }}>
-        <Typography variant="h6" sx={viewTitleStyles}>
+        <Typography variant="h6" sx={titleStyles}>
           Once your training is complete...
         </Typography>
         <Grid2 container spacing={2}>

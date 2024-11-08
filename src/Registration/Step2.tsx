@@ -1,20 +1,13 @@
-import {
-  Box,
-  FormControl,
-  Grid2,
-  Input,
-  InputLabel,
-  Typography,
-} from "@mui/material";
+import { Box, Grid2, Typography } from "@mui/material";
+import { useField } from "formik";
+import React from "react";
+import { IMaskInput } from "react-imask";
 import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikDatePicker from "./components/FormikDatePicker";
 import FormikTextField from "./components/FormikTextField";
 import { languages } from "./enums/languages";
 import { states } from "./enums/statesList";
-import { pxContainer, viewTitleStyles } from "./enums/styles";
-import React from "react";
-import { IMaskInput } from "react-imask";
-import { useField } from "formik";
+import { pxContainer, titleStyles } from "./enums/styles";
 
 interface Step2Props {}
 
@@ -22,7 +15,7 @@ const Step2: React.FC<Step2Props> = () => {
   const [field, meta] = useField("step2.phone");
   return (
     <Box sx={{ px: pxContainer }}>
-      <Typography variant="h6" sx={viewTitleStyles}>
+      <Typography variant="h6" sx={titleStyles}>
         Personal Info
       </Typography>
       <Grid2 container spacing={2}>

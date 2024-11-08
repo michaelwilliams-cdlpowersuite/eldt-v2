@@ -1,5 +1,6 @@
 import { Box, Button } from "@mui/material";
 import { useFormikContext } from "formik";
+import { brandColors } from "../../styles/brandColors";
 
 interface FormActionButtonsProps {
   handleBack: () => void;
@@ -28,6 +29,8 @@ const FormActionButtons: React.FC<FormActionButtonsProps> = ({
   return (
     <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
       <Button
+        variant="contained"
+        disableElevation
         color="inherit"
         disabled={activeStep === 0}
         onClick={handleBack}
@@ -37,13 +40,28 @@ const FormActionButtons: React.FC<FormActionButtonsProps> = ({
       </Button>
       <Box sx={{ flex: "1 1 auto" }} />
       {isStepOptional(activeStep) && (
-        <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
+        <Button
+          sx={{
+            mr: 1,
+            backgroundColor: brandColors.goGreen,
+            color: "#fff",
+            "&:hover": { backgroundColor: "#e68900" },
+          }}
+          onClick={handleSkip}
+        >
           Skip
         </Button>
       )}
       <Button
         onClick={handleSubmit}
-        // disabled={isLastStep ? !isValid || !dirty : false}
+        variant="contained"
+        disableElevation
+        sx={{
+          mr: 1,
+          backgroundColor: brandColors.goGreen,
+          color: "#fff",
+          "&:hover": { backgroundColor: brandColors.goGreenHover },
+        }}
       >
         {isLastStep ? "Finish" : "Next"}
       </Button>

@@ -1,10 +1,10 @@
 import { Box, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useFormikContext } from "formik";
+import { brandColors } from "../styles/brandColors";
 import { CourseCard, EndorsementCard } from "./components/ProductCards";
 import { Course, courses, Endorsement, endorsements } from "./enums/products";
-import { pxContainer, viewTitleStyles } from "./enums/styles";
-import { brandColors } from "../styles/brandColors";
+import { pxContainer, titleStyles } from "./enums/styles";
 
 interface Step1Props {}
 
@@ -53,7 +53,7 @@ const Step1: React.FC<Step1Props> = () => {
             touched.step1?.selectedCourse && errors.step1?.selectedCourse
               ? brandColors.cdlRed
               : "inherit",
-          ...viewTitleStyles,
+          ...titleStyles,
         }}
       >
         Choose your CDL Class
@@ -74,7 +74,7 @@ const Step1: React.FC<Step1Props> = () => {
           </Grid>
         ))}
       </Grid>
-      <Typography variant="h6" sx={{ my: 2, ...viewTitleStyles }}>
+      <Typography variant="h6" sx={{ my: 2, ...titleStyles }}>
         Add Endorsements
       </Typography>
       <Grid container spacing={2}>

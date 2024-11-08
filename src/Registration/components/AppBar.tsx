@@ -6,7 +6,7 @@ interface RegistrationAppBarProps {}
 
 const RegistrationAppBar: React.FC<RegistrationAppBarProps> = () => {
   return (
-    <AppBar position="static" elevation={0} sx={{ bgcolor: "primary.main" }}>
+    <AppBar position="fixed" elevation={0} sx={{ bgcolor: "primary.main" }}>
       <Toolbar>
         <Container
           maxWidth="md"

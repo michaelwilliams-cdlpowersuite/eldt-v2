@@ -12,6 +12,7 @@ import { enqueueSnackbar } from "notistack";
 import { snackOptions } from "./enums/snackOptions";
 import { setIn, useFormikContext } from "formik";
 import { RegistrationFormUIValues } from "./enums/validationSchema";
+import { Toolbar } from "@mui/material";
 
 interface StepperOrchestrationProps {}
 
@@ -93,6 +94,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
   };
   return (
     <Box sx={{ width: "100%", pt: 2 }}>
+      <Toolbar />
       <Stepper activeStep={activeStep}>
         {steps.map((step, index) => {
           const stepProps: { completed?: boolean } = {};
