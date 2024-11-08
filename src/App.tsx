@@ -1,10 +1,15 @@
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
+import { Elements } from "@stripe/react-stripe-js";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
+import { useEffect } from "react";
 import Registration from "./Registration/Registration";
 import { theme } from "./styles/theme";
-import { useEffect } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+
+// Load Stripe with your public key
+const stripePromise = loadStripe("your-publishable-key-here");
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -29,14 +34,16 @@ const App = () => {
 
   return (
     <div className="App">
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <SnackbarProvider>
-          <QueryClientProvider client={queryClient}>
-            <Registration />
-          </QueryClientProvider>
-        </SnackbarProvider>
-      </ThemeProvider>
+      <Elements stripe={stripePromise}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <SnackbarProvider>
+            <QueryClientProvider client={queryClient}>
+              <Registration />
+            </QueryClientProvider>
+          </SnackbarProvider>
+        </ThemeProvider>
+      </Elements>
     </div>
   );
 };

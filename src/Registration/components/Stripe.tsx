@@ -1,14 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { loadStripe } from "@stripe/stripe-js";
-import {
-  Elements,
-  useStripe,
-  useElements,
-  CardElement,
-} from "@stripe/react-stripe-js";
-
-// Load Stripe with your public key
-const stripePromise = loadStripe("your-publishable-key-here");
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import React, { useEffect, useState } from "react";
 
 const PaymentForm = () => {
   const stripe = useStripe();
@@ -63,3 +54,5 @@ const PaymentForm = () => {
     </form>
   );
 };
+
+export default PaymentForm;
