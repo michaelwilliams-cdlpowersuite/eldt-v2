@@ -5,9 +5,9 @@ import { IMaskInput } from "react-imask";
 import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikDatePicker from "./components/FormikDatePicker";
 import FormikTextField from "./components/FormikTextField";
-import { languages } from "./enums/languages";
-import { states } from "./enums/statesList";
-import { pxContainer, titleStyles } from "./enums/styles";
+import { languages } from "./utilities/languages";
+import { states } from "./utilities/statesList";
+import { pxContainer, titleStyles } from "./utilities/styles";
 
 interface Step2Props {}
 

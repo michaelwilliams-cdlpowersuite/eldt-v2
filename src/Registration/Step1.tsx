@@ -3,8 +3,13 @@ import Grid from "@mui/material/Grid2";
 import { useFormikContext } from "formik";
 import { brandColors } from "../styles/brandColors";
 import { CourseCard, EndorsementCard } from "./components/ProductCards";
-import { Course, courses, Endorsement, endorsements } from "./enums/products";
-import { pxContainer, titleStyles } from "./enums/styles";
+import {
+  Course,
+  courses,
+  Endorsement,
+  endorsements,
+} from "./utilities/products";
+import { pxContainer, titleStyles } from "./utilities/styles";
 
 interface Step1Props {}
 

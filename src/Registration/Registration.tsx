@@ -2,7 +2,7 @@ import { Box, Container } from "@mui/system";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Form, Formik } from "formik";
-import { initialValues, validationSchema } from "./enums/validationSchema";
+import { initialValues, validationSchema } from "./utilities/validationSchema";
 import Stepper from "./Stepper";
 import RegistrationAppBar from "./components/AppBar";
 

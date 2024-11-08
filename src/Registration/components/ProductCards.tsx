@@ -6,7 +6,7 @@ import {
   Checkbox,
   Typography,
 } from "@mui/material";
-import { Course, Endorsement } from "../enums/products";
+import { Course, Endorsement } from "../utilities/products";
 import { maxWidth, Stack } from "@mui/system";
 
 interface CourseCardProps {

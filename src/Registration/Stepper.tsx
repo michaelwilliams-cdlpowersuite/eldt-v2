@@ -5,13 +5,13 @@ import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 import * as React from "react";
 import FormActionButtons from "./components/FormActionButtons";
-import { steps } from "./enums/steps";
+import { steps } from "./utilities/steps";
 import Step4 from "./Step4";
-import useValidateCurrentStep from "./enums/useValidateCurrentStep";
+import useValidateCurrentStep from "./utilities/useValidateCurrentStep";
 import { enqueueSnackbar } from "notistack";
-import { snackOptions } from "./enums/snackOptions";
+import { snackOptions } from "./utilities/snackOptions";
 import { setIn, useFormikContext } from "formik";
-import { RegistrationFormUIValues } from "./enums/validationSchema";
+import { RegistrationFormUIValues } from "./utilities/validationSchema";
 import { Toolbar } from "@mui/material";
 
 interface StepperOrchestrationProps {}

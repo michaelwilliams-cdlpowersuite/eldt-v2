@@ -10,9 +10,9 @@ import {
   referralSources,
   transmissions,
   workTypes,
-} from "./enums/optionsLists";
-import { endorsements } from "./enums/products";
-import { pxContainer, titleStyles } from "./enums/styles";
+} from "./utilities/optionsLists";
+import { endorsements } from "./utilities/products";
+import { pxContainer, titleStyles } from "./utilities/styles";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
