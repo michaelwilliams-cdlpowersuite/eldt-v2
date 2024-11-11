@@ -4,10 +4,15 @@ import {
   CardActionArea,
   CardContent,
   Checkbox,
+  Divider,
+  List,
+  ListItem,
+  ListItemIcon,
   Typography,
 } from "@mui/material";
-import { Course, Endorsement } from "../utilities/products";
-import { maxWidth, Stack } from "@mui/system";
+import { Stack } from "@mui/system";
+import { Course, Endorsement, ProductType } from "../utilities/products";
+import React from "react";
 
 interface CourseCardProps {
   course: Course;
@@ -96,6 +101,49 @@ export const EndorsementCard: React.FC<EndorsementCardProps> = ({
               />
             )}
           </Stack>
+        </CardContent>
+      </CardActionArea>
+    </Card>
+  );
+};
+
+interface ProductTypeCardProps {
+  productType: ProductType;
+}
+
+export const ProductTypeCard: React.FC<ProductTypeCardProps> = ({
+  productType,
+}) => {
+  return (
+    <Card variant="outlined">
+      <CardActionArea>
+        <CardContent>
+          <Typography variant="h6" textAlign="center">
+            {productType.title}
+          </Typography>
+          <Typography variant="h3" textAlign="center">
+            ${productType.price}
+          </Typography>
+          <Typography variant="body1" textAlign="center">
+            {productType.description}
+          </Typography>
+          <List>
+            {productType.benefits?.map((benefit, index) => (
+              <React.Fragment key={index}>
+                <Divider />
+                <ListItem key={index}>
+                  {benefit.icon && (
+                    <ListItemIcon>
+                      <benefit.icon
+                        style={{ maxHeight: "23px", maxWidth: "50px" }}
+                      />
+                    </ListItemIcon>
+                  )}
+                  <Typography variant="body1">{benefit.title}</Typography>
+                </ListItem>
+              </React.Fragment>
+            ))}
+          </List>
         </CardContent>
       </CardActionArea>
     </Card>
