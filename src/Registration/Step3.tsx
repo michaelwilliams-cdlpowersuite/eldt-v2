@@ -42,7 +42,7 @@ const Step3: React.FC<Step3Props> = () => {
         </Typography>
       </Stack>
       <Grid2 container spacing={2} sx={{ px: pxContainer }}>
-        <Grid2 size={6}>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikAutocomplete
             name="transmission"
             options={transmissions}
@@ -51,7 +51,7 @@ const Step3: React.FC<Step3Props> = () => {
           />
         </Grid2>
 
-        <Grid2 size={6}>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikDatePicker
             name="cdlDate"
             label="When will you complete your training?"
@@ -63,7 +63,7 @@ const Step3: React.FC<Step3Props> = () => {
           Once your training is complete...
         </Typography>
         <Grid2 container spacing={2}>
-          <Grid2 size={6}>
+          <Grid2 size={{ xs: 12, sm: 6 }}>
             <FormikAutocomplete
               name="cdlType"
               options={cdlTypes}
@@ -86,7 +86,7 @@ const Step3: React.FC<Step3Props> = () => {
               }}
             />
           </Grid2>
-          <Grid2 size={6}>
+          <Grid2 size={{ xs: 12, sm: 6 }}>
             <FormikAutocomplete
               name="endorsements"
               dependentAnswer="step1.endorsements"
@@ -113,7 +113,7 @@ const Step3: React.FC<Step3Props> = () => {
               }}
             />
           </Grid2>
-          <Grid2 size={6}>
+          <Grid2 size={{ xs: 12, sm: 6 }}>
             <FormikAutocomplete
               name="workTypes"
               options={workTypes}
@@ -142,10 +142,10 @@ const Step3: React.FC<Step3Props> = () => {
         </Grid2>
       </Paper>
       <Grid container spacing={2} sx={{ px: pxContainer, mt: 4 }}>
-        <Grid2 size={6}>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikTextField name="where" label="Where will you be training?" />
         </Grid2>
-        <Grid2 size={6}>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikAutocomplete
             name="referralSource"
             options={referralSources}

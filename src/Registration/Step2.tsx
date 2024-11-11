@@ -1,5 +1,4 @@
 import { Box, Grid2, Typography } from "@mui/material";
-import { useField } from "formik";
 import React from "react";
 import { IMaskInput } from "react-imask";
 import FormikAutocomplete from "./components/FormikAutocomplete";
@@ -12,20 +11,19 @@ import { pxContainer, titleStyles } from "./utilities/styles";
 interface Step2Props {}
 
 const Step2: React.FC<Step2Props> = () => {
-  const [field, meta] = useField("step2.phone");
   return (
     <Box sx={{ px: pxContainer }}>
       <Typography variant="h6" sx={titleStyles}>
         Personal Info
       </Typography>
       <Grid2 container spacing={2}>
-        <Grid2 size={6}>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikTextField name="step2.firstName" label="First Name" />
         </Grid2>
-        <Grid2 size={6}>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikTextField name="step2.lastName" label="Last Name" />
         </Grid2>
-        <Grid2 size={6}>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikTextField
             name="step2.phone"
             label="Phone"
@@ -36,16 +34,16 @@ const Step2: React.FC<Step2Props> = () => {
             }}
           />
         </Grid2>
-        <Grid2 size={6}>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikDatePicker name="step2.dob" label="DOB" />
         </Grid2>
-        <Grid2 size={6}>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikTextField
             name="step2.driversLicense"
             label="Driver's License"
           />
         </Grid2>
-        <Grid2 size={6}>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikTextField
             name="step2.confirmDriversLicense"
             label="Confirm Driver's License"
@@ -54,13 +52,13 @@ const Step2: React.FC<Step2Props> = () => {
         <Grid2 size={12}>
           <FormikTextField name="step2.streetAddress" label="Address" />
         </Grid2>
-        <Grid2 size={4}>
+        <Grid2 size={{ xs: 12, sm: 4 }}>
           <FormikTextField name="step2.zip" label="Zip" />
         </Grid2>
-        <Grid2 size={4}>
+        <Grid2 size={{ xs: 12, sm: 4 }}>
           <FormikTextField name="step2.city" label="City" />
         </Grid2>
-        <Grid2 size={4}>
+        <Grid2 size={{ xs: 12, sm: 4 }}>
           <FormikAutocomplete
             name="step2.state"
             options={states}
@@ -68,7 +66,7 @@ const Step2: React.FC<Step2Props> = () => {
             textFieldProps={{ label: "State" }}
           />
         </Grid2>
-        <Grid2 size={6}>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikAutocomplete
             name="step2.language"
             options={languages}
