@@ -78,7 +78,7 @@ export const EndorsementCard: React.FC<EndorsementCardProps> = ({
             spacing={2}
             direction="row"
             alignItems="center"
-            justifyContent="start"
+            sx={{ justifyContent: { xs: "center", sm: "flex-start" } }}
           >
             <Checkbox checked={selected} onChange={onSelect} />
             <Typography variant="h6" textAlign="center">
