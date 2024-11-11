@@ -16,6 +16,7 @@ export interface Course {
   description: string;
   icon?: React.ElementType;
   iconStyles?: React.CSSProperties;
+  type: string;
 }
 
 export const courses: Course[] = [
@@ -24,33 +25,51 @@ export const courses: Course[] = [
     title: "Class B CDL Training",
     description: "Single Vehicle",
     icon: ClassB,
+    type: "Class B",
   },
   {
     id: "2",
     title: "Class A CDL Training",
     description: "Combination Vehicle",
     icon: ClassA,
+    type: "Class A",
   },
   {
     id: "3",
     title: "Class B-A CDL Training",
     description: "Comination Vehicle",
     icon: ClassBA,
+    type: "Class B-A",
   },
 ];
+
+export const getCourseById = (id: string): Course | undefined => {
+  return courses.find((course) => course.id === id);
+};
 
 export interface Endorsement {
   id: string;
   title: string;
   icon?: React.ElementType;
   iconStyles?: React.CSSProperties;
+  price?: number;
 }
 
 export const endorsements: Endorsement[] = [
-  { id: "1", title: "Hazmat", icon: Hazmat, iconStyles: { maxHeight: "30px" } },
-  { id: "2", title: "Passenger", icon: Passenger },
-  { id: "3", title: "School Bus", icon: Schoolbus },
+  {
+    id: "1",
+    title: "Hazmat",
+    icon: Hazmat,
+    iconStyles: { maxHeight: "30px" },
+    price: 50,
+  },
+  { id: "2", title: "Passenger", icon: Passenger, price: 25 },
+  { id: "3", title: "School Bus", icon: Schoolbus, price: 25 },
 ];
+
+export const getEndorsementsByIds = (ids: string[]): Endorsement[] => {
+  return endorsements.filter((endorsement) => ids.includes(endorsement.id));
+};
 
 export interface ProductType {
   id: string;

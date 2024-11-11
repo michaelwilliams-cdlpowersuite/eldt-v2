@@ -11,8 +11,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
+import React from "react";
 import { Course, Endorsement, ProductType } from "../utilities/products";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 interface CourseCardProps {
   course: Course;
@@ -65,12 +65,14 @@ interface EndorsementCardProps {
   endorsement: Endorsement;
   selected: boolean;
   onSelect: () => void;
+  showPrice?: boolean;
 }
 
 export const EndorsementCard: React.FC<EndorsementCardProps> = ({
   endorsement,
   selected,
   onSelect,
+  showPrice = false,
 }) => {
   return (
     <Card
@@ -84,21 +86,28 @@ export const EndorsementCard: React.FC<EndorsementCardProps> = ({
             spacing={2}
             direction="row"
             alignItems="center"
-            sx={{ justifyContent: { xs: "center", sm: "flex-start" } }}
+            sx={{ justifyContent: { xs: "center", sm: "space-between" } }}
           >
-            <Checkbox checked={selected} onChange={onSelect} />
-            <Typography variant="h6" textAlign="center">
-              {endorsement.title}
-            </Typography>
-            {endorsement.icon && (
-              <endorsement.icon
-                style={
-                  endorsement.iconStyles || {
-                    maxHeight: "23px",
-                    maxWidth: "50px",
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <Checkbox checked={selected} onChange={onSelect} />
+              <Typography variant="h6" textAlign="center">
+                {endorsement.title}
+              </Typography>
+              {endorsement.icon && (
+                <endorsement.icon
+                  style={
+                    endorsement.iconStyles || {
+                      maxHeight: "23px",
+                      maxWidth: "50px",
+                    }
                   }
-                }
-              />
+                />
+              )}
+            </Box>
+            {showPrice && (
+              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                ${endorsement.price}
+              </Typography>
             )}
           </Stack>
         </CardContent>
