@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import { Course, Endorsement, ProductType } from "../utilities/products";
-import React from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 interface CourseCardProps {
   course: Course;
@@ -115,23 +115,51 @@ export const ProductTypeCard: React.FC<ProductTypeCardProps> = ({
   productType,
 }) => {
   return (
-    <Card variant="outlined">
-      <CardActionArea>
-        <CardContent>
-          <Typography variant="h6" textAlign="center">
-            {productType.title}
-          </Typography>
-          <Typography variant="h3" textAlign="center">
-            ${productType.price}
-          </Typography>
-          <Typography variant="body1" textAlign="center">
+    <Card
+      variant="outlined"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+      }}
+    >
+      <CardActionArea
+        sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+      >
+        <CardContent
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <div>
+            <Typography variant="h6" textAlign="center">
+              {productType.title}
+            </Typography>
+            <Typography variant="h3" textAlign="center">
+              ${productType.price}
+            </Typography>
+          </div>
+
+          <Typography
+            variant="body1"
+            textAlign="center"
+            sx={{
+              display: "flex",
+              textAlign: "center",
+              minHeight: "130px",
+              py: 2,
+            }}
+          >
             {productType.description}
           </Typography>
+
           <List>
             {productType.benefits?.map((benefit, index) => (
               <React.Fragment key={index}>
                 <Divider />
-                <ListItem key={index}>
+                <ListItem>
                   {benefit.icon && (
                     <ListItemIcon>
                       <benefit.icon

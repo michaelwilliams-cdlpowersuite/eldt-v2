@@ -116,7 +116,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
           <Step4 />
           <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
             <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Reset</Button>
+            <Button onClick={handleReset}>Checkout</Button>
           </Box>
         </React.Fragment>
       ) : (
