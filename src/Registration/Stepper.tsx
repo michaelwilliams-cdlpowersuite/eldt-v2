@@ -7,7 +7,7 @@ import * as React from "react";
 import FormActionButtons from "./components/FormActionButtons";
 import { steps } from "./utilities/steps";
 import Step4 from "./Step4";
-import useValidateCurrentStep from "./utilities/useValidateCurrentStep";
+import useValidateCurrentStep from "./hooks/useValidateCurrentStep";
 import { enqueueSnackbar } from "notistack";
 import { snackOptions } from "./utilities/snackOptions";
 import { setIn, useFormikContext } from "formik";

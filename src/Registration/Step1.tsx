@@ -3,6 +3,8 @@ import Grid from "@mui/material/Grid2";
 import { useFormikContext } from "formik";
 import { brandColors } from "../styles/brandColors";
 import { CourseCard, EndorsementCard } from "./components/ProductCards";
+import { useSelectCourse } from "./hooks/useSelectCourse";
+import { useSelectEndorsement } from "./hooks/useSelectEndorsement";
 import {
   Course,
   courses,
@@ -25,28 +27,15 @@ const Step1: React.FC<Step1Props> = () => {
     step1: { selectedCourse: string; selectedEndorsements: string[] };
   }>();
 
+  const selectCourse = useSelectCourse();
+  const selectEndorsement = useSelectEndorsement();
+
   const handleSelectCourse = (id: Course["id"]) => {
-    const newValue = values.step1.selectedCourse === id ? "" : id;
-
-    // Set the selected course without forcing touched
-    setFieldValue("step1.selectedCourse", newValue).then(() => {
-      // Validate immediately after setting the new value
-      validateField("step1.selectedCourse");
-    });
-
-    // Show the error message if the user deselects the course
-    if (values.step1.selectedCourse !== id) {
-      setFieldTouched("step1.selectedCourse", true);
-    }
+    selectCourse(id);
   };
 
   const handleSelectEndorsement = (id: Endorsement["id"]) => {
-    const newSelections = values.step1.selectedEndorsements.includes(id)
-      ? values.step1.selectedEndorsements.filter(
-          (selectedId) => selectedId !== id
-        )
-      : [...values.step1.selectedEndorsements, id];
-    setFieldValue("step1.selectedEndorsements", newSelections);
+    selectEndorsement(id);
   };
 
   return (

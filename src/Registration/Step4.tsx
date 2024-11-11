@@ -9,6 +9,7 @@ import {
 } from "./utilities/products";
 import { pxContainer } from "./utilities/styles";
 import { useField } from "formik";
+import { useSelectEndorsement } from "./hooks/useSelectEndorsement";
 
 interface Step4Props {}
 
@@ -19,11 +20,12 @@ const Step4: React.FC<Step4Props> = () => {
   const selectedEndorsements = getEndorsementsByIds(
     selectedEndorsementsField.value
   );
+  const selectEndorsement = useSelectEndorsement();
 
   console.log(selectedEndorsements);
 
   const handleSelectEndorsement = (id: Endorsement["id"]) => {
-    console.log(id);
+    selectEndorsement(id);
   };
 
   return (
