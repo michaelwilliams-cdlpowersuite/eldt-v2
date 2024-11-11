@@ -8,8 +8,7 @@ import Registration from "./Registration/Registration";
 import { theme } from "./styles/theme";
 import { loadStripe } from "@stripe/stripe-js";
 
-// Load Stripe with your public key
-const stripePromise = loadStripe("your-publishable-key-here");
+const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -32,9 +31,14 @@ const App = () => {
     if (token) verifyToken(token);
   }, []);
 
+  const options = {
+    // passing the client secret obtained from the server
+    //   clientSecret: "{{CLIENT_SECRET}}",
+  };
+
   return (
     <div className="App">
-      <Elements stripe={stripePromise}>
+      <Elements stripe={stripePromise} options={options}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <SnackbarProvider>
