@@ -35,6 +35,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
               justifyContent: "center",
               alignItems: "center",
               pb: 2,
+              pt: { xs: 2, sm: 0 },
             }}
           >
             {course.icon && <course.icon style={{ maxHeight: "70" }} />}
