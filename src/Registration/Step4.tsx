@@ -11,6 +11,7 @@ import { pxContainer } from "./utilities/styles";
 import { useField } from "formik";
 import { useSelectEndorsement } from "./hooks/useSelectEndorsement";
 import OrderSummary from "./components/OrderSummary";
+import CheckoutForm from "./components/CheckoutForm";
 
 interface Step4Props {}
 
@@ -60,7 +61,7 @@ const Step4: React.FC<Step4Props> = () => {
         ))}
       </Grid2>
       <OrderSummary />
-      {/* <CheckoutForm /> */}
+      <CheckoutForm />
     </Container>
   );
 };

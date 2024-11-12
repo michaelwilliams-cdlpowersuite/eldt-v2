@@ -8,7 +8,9 @@ import Registration from "./Registration/Registration";
 import { theme } from "./styles/theme";
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+const stripePromise = loadStripe(
+  "pk_test_51KVilWEqooDHZwmck4VuUymwm3Bw75Fuyryrd0o3MiIlhowWiYpgJg0RgyrNIKufGU4lwTGYZxoIcsSSgP2ZaDmJ00Lb7M2O9G"
+);
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -33,7 +35,9 @@ const App = () => {
 
   const options = {
     // passing the client secret obtained from the server
-    //   clientSecret: "{{CLIENT_SECRET}}",
+    // clientSecret: "{{CLIENT_SECRET}}",
+    mode: "setup" as "setup",
+    currency: "usd",
   };
 
   return (
