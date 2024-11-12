@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
-import { Course, Endorsement, ProductType } from "../utilities/products";
+import { Course, Endorsement, CourseType } from "../utilities/products";
 
 interface CourseCardProps {
   course: Course;
@@ -125,19 +125,25 @@ export const EndorsementCard: React.FC<EndorsementCardProps> = ({
 };
 
 interface ProductTypeCardProps {
-  productType: ProductType;
+  productType: CourseType;
+  selected: boolean;
+  onSelect: () => void;
 }
 
 export const ProductTypeCard: React.FC<ProductTypeCardProps> = ({
   productType,
+  onSelect,
+  selected,
 }) => {
   return (
     <Card
       variant="outlined"
+      onClick={onSelect}
       sx={{
         display: "flex",
         flexDirection: "column",
         height: "100%",
+        border: selected ? "primary.main" : "",
       }}
     >
       <CardActionArea

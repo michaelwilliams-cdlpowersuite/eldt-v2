@@ -13,7 +13,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = () => {
   return (
     <Grid2 container sx={{ pt: 2 }}>
       <Grid2 size={12}>
-        <Card>
+        <Card elevation={0} variant="outlined">
           <CardHeader title="Order Summary" />
           <CardContent>
             <Typography variant="body1">FCMSA Approved Training</Typography>

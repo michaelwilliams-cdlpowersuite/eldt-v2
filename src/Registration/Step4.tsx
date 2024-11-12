@@ -5,27 +5,34 @@ import {
   endorsements,
   getCourseById,
   getEndorsementsByIds,
-  productTypes,
+  courseTypes,
 } from "./utilities/products";
 import { pxContainer } from "./utilities/styles";
 import { useField } from "formik";
 import { useSelectEndorsement } from "./hooks/useSelectEndorsement";
 import OrderSummary from "./components/OrderSummary";
 import CheckoutForm from "./components/CheckoutForm";
+import { useSelectCourseType } from "./hooks/useSelectCourseType";
 
 interface Step4Props {}
 
 const Step4: React.FC<Step4Props> = () => {
   const [selectedCourseField] = useField("step1.selectedCourse");
   const [selectedEndorsementsField] = useField("step1.selectedEndorsements");
+  const [selectedCourseType] = useField("step4.selectedCourseType");
   const selectedCourse = getCourseById(selectedCourseField.value);
   const selectedEndorsements = getEndorsementsByIds(
     selectedEndorsementsField.value
   );
   const selectEndorsement = useSelectEndorsement();
+  const selectCourseType = useSelectCourseType();
 
   const handleSelectEndorsement = (id: Endorsement["id"]) => {
     selectEndorsement(id);
+  };
+
+  const handleSelectCourseType = (id: string) => {
+    selectCourseType(id);
   };
 
   return (
@@ -37,9 +44,14 @@ const Step4: React.FC<Step4Props> = () => {
         Select FCMSA Approved Training for {selectedCourse?.type}
       </Typography>
       <Grid2 container spacing={2} sx={{ mt: 2 }}>
-        {productTypes.map((productType, index) => (
+        {courseTypes.map((courseType, index) => (
           <Grid2 size={{ xs: 12, sm: 6 }} key={index}>
-            <ProductTypeCard key={productType.id} productType={productType} />
+            <ProductTypeCard
+              key={courseType.id}
+              productType={courseType}
+              selected={selectedCourseType.value === courseType.id}
+              onSelect={() => handleSelectCourseType(courseType.id)}
+            />
           </Grid2>
         ))}
       </Grid2>
@@ -61,7 +73,11 @@ const Step4: React.FC<Step4Props> = () => {
         ))}
       </Grid2>
       <OrderSummary />
-      <CheckoutForm />
+      <Grid2 container spacing={2} sx={{ mt: 2 }}>
+        <Grid2 size={12}>
+          <CheckoutForm />
+        </Grid2>
+      </Grid2>
     </Container>
   );
 };

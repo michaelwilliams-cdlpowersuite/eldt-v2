@@ -27,6 +27,9 @@ export const validationSchema = Yup.object({
     language: Yup.object().required("Required"),
   }),
   step3: Yup.object({}),
+  step4: Yup.object({
+    selectedCourseType: Yup.string().required("Required"),
+  }),
 });
 
 export const initialValues: RegistrationFormUIValues = {
@@ -45,6 +48,7 @@ export const initialValues: RegistrationFormUIValues = {
     language: { label: "English", code: "en" },
   },
   step3: {},
+  step4: { selectedCourseType: "" },
 };
 
 export interface RegistrationFormUIValues {
@@ -66,5 +70,8 @@ export interface RegistrationFormUIValues {
     language: { label: string; code: string };
   };
   step3: {};
+  step4: {
+    selectedCourseType: string;
+  };
   // Add additional steps as needed
 }
