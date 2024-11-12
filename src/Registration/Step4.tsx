@@ -22,8 +22,6 @@ const Step4: React.FC<Step4Props> = () => {
   );
   const selectEndorsement = useSelectEndorsement();
 
-  console.log(selectedEndorsements);
-
   const handleSelectEndorsement = (id: Endorsement["id"]) => {
     selectEndorsement(id);
   };
