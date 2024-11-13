@@ -51,27 +51,37 @@ export const initialValues: RegistrationFormUIValues = {
   step4: { selectedCourseType: "" },
 };
 
+interface Step1 {
+  selectedCourse: string;
+  selectedEndorsements: string[];
+}
+
+interface Step2 {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  dob: string;
+  driversLicense: string;
+  confirmDriversLicense: string;
+  streetAddress: string;
+  city: string;
+  state: string;
+  zip: string;
+  language: { label: string; code: string };
+}
+
+interface Step3 {
+  // TODO: Add fields per Connor => if checked, all required
+}
+
+interface Step4 {
+  selectedCourseType: string;
+}
+
 export interface RegistrationFormUIValues {
-  step1: {
-    selectedCourse: string;
-    selectedEndorsements: string[];
-  };
-  step2: {
-    firstName: string;
-    lastName: string;
-    phone: string;
-    dob: string;
-    driversLicense: string;
-    confirmDriversLicense: string;
-    streetAddress: string;
-    city: string;
-    state: string;
-    zip: string;
-    language: { label: string; code: string };
-  };
-  step3: {};
-  step4: {
-    selectedCourseType: string;
-  };
+  step1: Step1;
+  step2: Step2;
+  step3: Step3;
+  step4: Step4;
   // Add additional steps as needed
 }

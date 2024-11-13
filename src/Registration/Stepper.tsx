@@ -14,6 +14,7 @@ import { setIn, useFormikContext } from "formik";
 import { RegistrationFormUIValues } from "./utilities/validationSchema";
 import { Toolbar } from "@mui/material";
 import { useStudentMutation } from "./hooks/useStudentMutation";
+import { transformFormikToApi } from "./utilities/transformData";
 
 interface StepperOrchestrationProps {}
 
@@ -72,8 +73,11 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
     const isStepValid = await validateCurrentStep(stepKey);
 
     if (isStepValid) {
+      const apiData = transformFormikToApi({
+        [stepKey]: values[stepKey],
+      } as Partial<RegistrationFormUIValues>);
       // Submit the step if it is valid
-      submitStep.mutate(values[stepKey], {
+      submitStep.mutate(apiData, {
         // Go to next step if successful
         onSuccess: () => setActiveStep((prev) => prev + 1),
       });
