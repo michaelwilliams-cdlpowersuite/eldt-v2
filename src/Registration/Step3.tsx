@@ -59,9 +59,7 @@ const Step3: React.FC<Step3Props> = () => {
         </Grid2>
       </Grid2>
       <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 4 }}>
-        <Typography variant="h6" sx={titleStyles}>
-          Once your training is complete...
-        </Typography>
+        <Typography variant="h6">Once your training is complete...</Typography>
         <Grid2 container spacing={2}>
           <Grid2 size={{ xs: 12, sm: 6 }}>
             <FormikAutocomplete
