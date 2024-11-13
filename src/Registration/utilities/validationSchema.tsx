@@ -26,7 +26,9 @@ export const validationSchema = Yup.object({
       .matches(/^\d{5}$/, "Zipcode must be exactly 5 digits"),
     language: Yup.object().required("Required"),
   }),
-  step3: Yup.object({}),
+  step3: Yup.object({
+    optIn: Yup.boolean().required("Required"),
+  }),
   step4: Yup.object({
     selectedCourseType: Yup.string().required("Required"),
   }),
@@ -47,7 +49,9 @@ export const initialValues: RegistrationFormUIValues = {
     zip: "",
     language: { label: "English", code: "en" },
   },
-  step3: {},
+  step3: {
+    optIn: true,
+  },
   step4: { selectedCourseType: "" },
 };
 

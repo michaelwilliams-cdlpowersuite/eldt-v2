@@ -33,29 +33,6 @@ const FormikAutocomplete = <T, Multiple extends boolean = false>({
 
   const value = multiple ? field.value || [] : field.value || null;
 
-  // TODO Preselect answers that have already been provided
-  //   useEffect(() => {
-  //     if (!dependentAnswer) {
-  //       return;
-  //     }
-  //     // Access the dependent answer dynamically
-  //     const dependentValue = getIn(values, dependentAnswer);
-
-  //     if (dependentValue) {
-  //       console.log("props.options", props.options);
-  //       console.log("dependentAnswer value", dependentValue);
-
-  //       // Find the matching option based on the dependent value
-  //       const initialValue = props.options.find(
-  //         (option) => option === dependentValue
-  //       );
-
-  //       if (initialValue) {
-  //         setFieldValue(name, initialValue);
-  //       }
-  //     }
-  //   }, [dependentAnswer, values, props.options, setFieldValue, name]);
-
   return (
     <Autocomplete
       {...props}

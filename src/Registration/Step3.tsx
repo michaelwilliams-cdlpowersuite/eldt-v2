@@ -1,6 +1,12 @@
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import { Checkbox, Grid2, Paper, Typography } from "@mui/material";
+import {
+  Checkbox,
+  FormControlLabel,
+  Grid2,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { Grid, Stack } from "@mui/system";
 import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikDatePicker from "./components/FormikDatePicker";
@@ -13,6 +19,7 @@ import {
 } from "./utilities/optionsLists";
 import { endorsements } from "./utilities/products";
 import { pxContainer, titleStyles } from "./utilities/styles";
+import { useField } from "formik";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -20,6 +27,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 interface Step3Props {}
 
 const Step3: React.FC<Step3Props> = () => {
+  const [field] = useField("step3.optIn");
   return (
     <>
       <Typography variant="h6" sx={{ px: pxContainer, ...titleStyles }}>
@@ -31,7 +39,14 @@ const Step3: React.FC<Step3Props> = () => {
         alignItems="flex-start"
         sx={{ py: 4, px: pxContainer }}
       >
-        <Checkbox checked sx={{ alignSelf: "flex-start" }} />
+        <FormControlLabel
+          control={
+            <Checkbox checked={field.value} sx={{ alignSelf: "flex-start" }} />
+          }
+          label=""
+          name="step3.optIn"
+          onChange={field.onChange}
+        />
         <Typography variant="body2">
           ELDT.com is connected with hundreds of trucking companies across
           America to help connect quality drivers with potential employment
