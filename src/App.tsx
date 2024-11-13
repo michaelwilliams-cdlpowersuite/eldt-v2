@@ -7,10 +7,7 @@ import { useEffect } from "react";
 import Registration from "./Registration/Registration";
 import { theme } from "./styles/theme";
 import { loadStripe } from "@stripe/stripe-js";
-
-const stripePromise = loadStripe(
-  "pk_test_51KVilWEqooDHZwmck4VuUymwm3Bw75Fuyryrd0o3MiIlhowWiYpgJg0RgyrNIKufGU4lwTGYZxoIcsSSgP2ZaDmJ00Lb7M2O9G"
-);
+import { AmountProvider } from "./Registration/context/AmountContext";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -33,25 +30,18 @@ const App = () => {
     if (token) verifyToken(token);
   }, []);
 
-  const options = {
-    // passing the client secret obtained from the server
-    // clientSecret: "{{CLIENT_SECRET}}",
-    mode: "setup" as "setup",
-    currency: "usd",
-  };
-
   return (
     <div className="App">
-      <Elements stripe={stripePromise} options={options}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <SnackbarProvider>
-            <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <SnackbarProvider>
+          <QueryClientProvider client={queryClient}>
+            <AmountProvider>
               <Registration />
-            </QueryClientProvider>
-          </SnackbarProvider>
-        </ThemeProvider>
-      </Elements>
+            </AmountProvider>
+          </QueryClientProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
     </div>
   );
 };
