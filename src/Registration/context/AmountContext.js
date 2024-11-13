@@ -1,4 +1,3 @@
-// AmountContext.js
 import React, { createContext, useContext, useState } from "react";
 
 // Create the context
@@ -21,7 +20,7 @@ export const AmountProvider = ({ children }) => {
 
   // Function to reset the amount
   const resetAmount = () => {
-    setAmount(0);
+    setAmount(1);
   };
 
   return (

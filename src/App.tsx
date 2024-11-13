@@ -1,13 +1,11 @@
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
-import { Elements } from "@stripe/react-stripe-js";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
 import { useEffect } from "react";
+import { AmountProvider } from "./Registration/context/AmountContext";
 import Registration from "./Registration/Registration";
 import { theme } from "./styles/theme";
-import { loadStripe } from "@stripe/stripe-js";
-import { AmountProvider } from "./Registration/context/AmountContext";
 
 const App = () => {
   const queryClient = new QueryClient();

@@ -8,6 +8,7 @@ import RegistrationAppBar from "./components/AppBar";
 import { Elements } from "@stripe/react-stripe-js";
 import { useAmount } from "./context/AmountContext";
 import { loadStripe } from "@stripe/stripe-js";
+import { useMemo } from "react";
 
 const stripePromise = loadStripe(
   "pk_test_51KVilWEqooDHZwmck4VuUymwm3Bw75Fuyryrd0o3MiIlhowWiYpgJg0RgyrNIKufGU4lwTGYZxoIcsSSgP2ZaDmJ00Lb7M2O9G"
@@ -17,21 +18,25 @@ interface RegistrationProps {}
 
 const Registration: React.FC<RegistrationProps> = () => {
   const { amount } = useAmount();
+  console.log("Amount:", amount); // TODO delete after testing
 
   // These were taken from stripe-payment.component.ts in the original project
-  const options = {
-    mode: "payment" as "payment",
-    amount: amount,
-    currency: "usd",
-    paymentMethodCreation: "manual" as "manual",
-    paymentMethodTypes: ["card"],
-    appearance: {
-      theme: "stripe" as "stripe",
-      variables: {
-        iconColor: "#0C567D",
+  const options = useMemo(
+    () => ({
+      mode: "payment" as "payment",
+      amount: amount * 100,
+      currency: "usd",
+      paymentMethodCreation: "manual" as "manual",
+      paymentMethodTypes: ["card"],
+      appearance: {
+        theme: "stripe" as "stripe",
+        variables: {
+          iconColor: "#0C567D",
+        },
       },
-    },
-  };
+    }),
+    [amount]
+  );
 
   return (
     <Elements stripe={stripePromise} options={options}>
