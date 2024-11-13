@@ -59,7 +59,7 @@ const Step3: React.FC<Step3Props> = () => {
       <Grid2 container spacing={2} sx={{ px: pxContainer }}>
         <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikAutocomplete
-            name="transmission"
+            name="step3.transmission"
             options={transmissions}
             getOptionLabel={(option: { label: any }) => option.label}
             textFieldProps={{ label: "Choose your transmission" }}
@@ -68,7 +68,7 @@ const Step3: React.FC<Step3Props> = () => {
 
         <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikDatePicker
-            name="cdlDate"
+            name="step3.cdlDate"
             label="When will you complete your training?"
           />
         </Grid2>
@@ -78,7 +78,7 @@ const Step3: React.FC<Step3Props> = () => {
         <Grid2 container spacing={2}>
           <Grid2 size={{ xs: 12, sm: 6 }}>
             <FormikAutocomplete
-              name="cdlType"
+              name="step3.cdlType"
               options={cdlTypes}
               getOptionLabel={(option: { label: any }) => option.label}
               textFieldProps={{ label: "What type of CDL will you have?" }}
@@ -101,7 +101,7 @@ const Step3: React.FC<Step3Props> = () => {
           </Grid2>
           <Grid2 size={{ xs: 12, sm: 6 }}>
             <FormikAutocomplete
-              name="endorsements"
+              name="step3.endorsements"
               dependentAnswer="step1.endorsements"
               options={endorsements}
               getOptionLabel={(option) => option.title}
@@ -128,7 +128,7 @@ const Step3: React.FC<Step3Props> = () => {
           </Grid2>
           <Grid2 size={{ xs: 12, sm: 6 }}>
             <FormikAutocomplete
-              name="workTypes"
+              name="step3.workTypes"
               options={workTypes}
               getOptionLabel={(option: { label: any }) => option.label}
               textFieldProps={{
@@ -156,11 +156,14 @@ const Step3: React.FC<Step3Props> = () => {
       </Paper>
       <Grid container spacing={2} sx={{ px: pxContainer, mt: 4 }}>
         <Grid2 size={{ xs: 12, sm: 6 }}>
-          <FormikTextField name="where" label="Where will you be training?" />
+          <FormikTextField
+            name="step3.where"
+            label="Where will you be training?"
+          />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikAutocomplete
-            name="referralSource"
+            name="step3.referralSource"
             options={referralSources}
             getOptionLabel={(option: { label: any }) => option.label}
             textFieldProps={{
