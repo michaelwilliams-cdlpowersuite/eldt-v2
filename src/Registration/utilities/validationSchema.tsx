@@ -2,6 +2,8 @@ import * as Yup from "yup";
 
 const phoneRegExp = /^\(\d{3}\) \d{3}-\d{4}$/;
 
+//TODO Add validation for step 1 per Connor and Michael convo => must select a course OR endorsement
+
 export const validationSchema = Yup.object({
   step1: Yup.object({
     selectedCourse: Yup.string(),
