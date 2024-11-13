@@ -10,7 +10,7 @@ import { theme } from "./styles/theme";
 const App = () => {
   const queryClient = new QueryClient();
 
-  // Verify Google auth token
+  // Verify Google auth token //TODO: Move this to a hook or use a library
   const verifyToken = async (token: string) => {
     try {
       const response = await fetch(

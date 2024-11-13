@@ -4,7 +4,7 @@ const phoneRegExp = /^\(\d{3}\) \d{3}-\d{4}$/;
 
 export const validationSchema = Yup.object({
   step1: Yup.object({
-    selectedCourse: Yup.string().required("Required"),
+    selectedCourse: Yup.string(),
     selectedEndorsements: Yup.array(),
   }),
   step2: Yup.object({

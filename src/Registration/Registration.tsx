@@ -11,7 +11,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useMemo } from "react";
 
 const stripePromise = loadStripe(
-  "pk_test_51KVilWEqooDHZwmck4VuUymwm3Bw75Fuyryrd0o3MiIlhowWiYpgJg0RgyrNIKufGU4lwTGYZxoIcsSSgP2ZaDmJ00Lb7M2O9G"
+  "pk_test_51KVilWEqooDHZwmck4VuUymwm3Bw75Fuyryrd0o3MiIlhowWiYpgJg0RgyrNIKufGU4lwTGYZxoIcsSSgP2ZaDmJ00Lb7M2O9G" // TODO: Move to .env
 );
 
 interface RegistrationProps {}
@@ -20,7 +20,7 @@ const Registration: React.FC<RegistrationProps> = () => {
   const { amount } = useAmount();
   console.log("Amount:", amount); // TODO delete after testing
 
-  // These were taken from stripe-payment.component.ts in the original project
+  // Options were taken from stripe-payment.component.ts in the original project
   const options = useMemo(
     () => ({
       mode: "payment" as "payment",

@@ -69,7 +69,7 @@ const Step1: React.FC<Step1Props> = () => {
         ))}
       </Grid>
       <Typography variant="h6" sx={{ my: 2, ...titleStyles }}>
-        Add Endorsements
+        Choose your Endorsements
       </Typography>
       <Grid container spacing={2}>
         {endorsements.map((endorsement, index) => (

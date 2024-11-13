@@ -13,16 +13,18 @@ import { snackOptions } from "./utilities/snackOptions";
 import { setIn, useFormikContext } from "formik";
 import { RegistrationFormUIValues } from "./utilities/validationSchema";
 import { Toolbar } from "@mui/material";
+import { useStudentMutation } from "./hooks/useStudentMutation";
 
 interface StepperOrchestrationProps {}
 
 // This code is lifted from the MUI Stepper example
 // https://mui.com/material-ui/react-stepper/#linear
 const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
-  const [activeStep, setActiveStep] = React.useState(3);
+  const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const validateCurrentStep = useValidateCurrentStep();
   const { values, setTouched } = useFormikContext<RegistrationFormUIValues>();
+  const submitStep = useStudentMutation();
 
   const isStepOptional = (step: number) => {
     // return step === 1;
@@ -31,17 +33,6 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
-  };
-
-  const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
   };
 
   const handleBack = () => {
@@ -81,8 +72,13 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
     const isStepValid = await validateCurrentStep(stepKey);
 
     if (isStepValid) {
-      setActiveStep((prev) => prev + 1);
+      // Submit the step if it is valid
+      submitStep.mutate(values[stepKey], {
+        // Go to next step if successful
+        onSuccess: () => setActiveStep((prev) => prev + 1),
+      });
     } else {
+      // step was not valid
       enqueueSnackbar(
         "Please complete and validate the form before proceeding.",
         snackOptions
