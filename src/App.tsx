@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { AmountProvider } from "./Registration/context/AmountContext";
 import Registration from "./Registration/Registration";
 import { theme } from "./styles/theme";
+import SignInSide from "./Templates/sign-in-side/SignInSide";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -35,7 +36,7 @@ const App = () => {
         <SnackbarProvider>
           <QueryClientProvider client={queryClient}>
             <AmountProvider>
-              <Registration />
+              <SignInSide disableCustomTheme />
             </AmountProvider>
           </QueryClientProvider>
         </SnackbarProvider>
