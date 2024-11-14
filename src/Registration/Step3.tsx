@@ -128,7 +128,7 @@ const Step3: React.FC<Step3Props> = () => {
           </Grid2>
           <Grid2 size={{ xs: 12, sm: 6 }}>
             <FormikAutocomplete
-              name="step3.workTypes"
+              name="step3.workType"
               options={workTypes}
               getOptionLabel={(option: { label: any }) => option.label}
               textFieldProps={{
@@ -170,7 +170,6 @@ const Step3: React.FC<Step3Props> = () => {
               label: "How did you hear about us?",
             }}
             disableCloseOnSelect
-            multiple
             renderOption={(props, option, { selected }) => {
               const { key, ...optionProps } = props;
               return (

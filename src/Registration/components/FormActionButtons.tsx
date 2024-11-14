@@ -22,7 +22,6 @@ const FormActionButtons: React.FC<FormActionButtonsProps> = ({
   const { submitForm, values } = useFormikContext();
 
   const handleSubmit = () => {
-    console.log(values);
     handleNext();
   };
 

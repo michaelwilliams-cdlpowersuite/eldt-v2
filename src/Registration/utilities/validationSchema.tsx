@@ -1,4 +1,6 @@
 import * as Yup from "yup";
+import { Endorsement, endorsements } from "./products";
+import { cdlTypes, referralSources } from "./optionsLists";
 
 const phoneRegExp = /^\(\d{3}\) \d{3}-\d{4}$/;
 
@@ -38,7 +40,42 @@ export const validationSchema = Yup.object({
     language: Yup.object().required("Required"),
   }),
   step3: Yup.object({
-    optIn: Yup.boolean().required("Required"),
+    optIn: Yup.boolean().required("Required").default(true),
+    transmission: Yup.object().when("optIn", {
+      is: true,
+      then: (schema: any) => schema.required("Required"),
+      otherwise: (schema: any) => schema.nullable(),
+    }),
+    cdlDate: Yup.string().when("optIn", {
+      is: true,
+      then: (schema: any) => schema.required("Required"),
+      otherwise: (schema: any) => schema,
+    }),
+    cdlType: Yup.object().when("optIn", {
+      is: true,
+      then: (schema: any) => schema.required("Required"),
+      otherwise: (schema: any) => schema.nullable(),
+    }),
+    endorsements: Yup.array().when("optIn", {
+      is: true,
+      then: (schema: any) => schema.required("Required"),
+      otherwise: (schema: any) => schema.nullable(),
+    }),
+    workType: Yup.array().when("optIn", {
+      is: true,
+      then: (schema: any) => schema.required("Required"),
+      otherwise: (schema: any) => schema.nullable(),
+    }),
+    where: Yup.string().when("optIn", {
+      is: true,
+      then: (schema: any) => schema.required("Required"),
+      otherwise: (schema: any) => schema,
+    }),
+    referralSource: Yup.object().when("optIn", {
+      is: true,
+      then: (schema: any) => schema.required("Required"),
+      otherwise: (schema: any) => schema.nullable(),
+    }),
   }),
   step4: Yup.object({
     selectedCourseType: Yup.string().required("Required"),
@@ -62,6 +99,13 @@ export const initialValues: RegistrationFormUIValues = {
   },
   step3: {
     optIn: true,
+    transmission: null,
+    cdlDate: "",
+    cdlType: null,
+    endorsements: null,
+    workType: null,
+    where: "",
+    referralSource: null,
   },
   step4: { selectedCourseType: "" },
 };
@@ -86,7 +130,14 @@ interface Step2 {
 }
 
 interface Step3 {
-  // TODO: Add fields per Connor => if checked, all required
+  optIn: boolean;
+  transmission: { label: string } | null;
+  cdlDate: string;
+  cdlType: { label: string } | null;
+  endorsements: Endorsement[] | null;
+  workType: { label: string } | null;
+  where: string;
+  referralSource: { label: string } | null;
 }
 
 interface Step4 {
