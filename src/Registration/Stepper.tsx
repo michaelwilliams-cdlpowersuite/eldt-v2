@@ -85,7 +85,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
       // step was not valid
       enqueueSnackbar(
         "Please complete and validate the form before proceeding.",
-        snackOptions
+        snackOptions("error")
       );
     }
   };

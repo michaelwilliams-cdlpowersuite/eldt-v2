@@ -25,7 +25,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("google_auth_token");
+    const token = localStorage.getItem("apiToken");
     if (token) verifyToken(token);
   }, []);
 

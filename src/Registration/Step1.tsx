@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Alert, Box, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useFormikContext } from "formik";
 import { brandColors } from "../styles/brandColors";
@@ -16,14 +16,7 @@ import { pxContainer, titleStyles } from "./utilities/styles";
 interface Step1Props {}
 
 const Step1: React.FC<Step1Props> = () => {
-  const {
-    values,
-    errors,
-    touched,
-    setFieldValue,
-    setFieldTouched,
-    validateField,
-  } = useFormikContext<{
+  const { values, errors, touched } = useFormikContext<{
     step1: { selectedCourse: string; selectedEndorsements: string[] };
   }>();
 
@@ -51,6 +44,9 @@ const Step1: React.FC<Step1Props> = () => {
         }}
       >
         Choose your CDL Class
+        {errors.step1 && (
+          <Alert severity="error">{errors.step1 as string}</Alert>
+        )}
       </Typography>
       {touched.step1?.selectedCourse && errors.step1?.selectedCourse && (
         <Typography color="error" variant="body2" sx={{ mt: 1 }}>

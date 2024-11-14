@@ -1,6 +1,7 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import { submitStepData } from "../api/api";
+import { snackOptions } from "../utilities/snackOptions";
 
 export const useStudentMutation = (): UseMutationResult<
   any,
@@ -12,12 +13,13 @@ export const useStudentMutation = (): UseMutationResult<
       return await submitStepData(stepData);
     },
     onSuccess: () => {
-      enqueueSnackbar("Step submitted successfully!", { variant: "success" });
+      enqueueSnackbar("Step submitted successfully!", snackOptions("success"));
     },
     onError: (error) => {
-      enqueueSnackbar("An error occurred while submitting the data.", {
-        variant: "error",
-      });
+      enqueueSnackbar(
+        "An error occurred while submitting the data.",
+        snackOptions("error")
+      );
     },
   });
 };

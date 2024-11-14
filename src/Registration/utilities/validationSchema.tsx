@@ -8,7 +8,16 @@ export const validationSchema = Yup.object({
   step1: Yup.object({
     selectedCourse: Yup.string(),
     selectedEndorsements: Yup.array(),
-  }),
+  }).test(
+    "course-or-endorsement",
+    "You must select at least one course or endorsement.",
+    (value) => {
+      return !!(
+        value?.selectedCourse ||
+        (value?.selectedEndorsements && value.selectedEndorsements.length > 0)
+      );
+    }
+  ),
   step2: Yup.object({
     firstName: Yup.string().required("Required"),
     lastName: Yup.string().required("Required"),

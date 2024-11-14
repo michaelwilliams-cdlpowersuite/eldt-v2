@@ -23,8 +23,8 @@ apiClient.interceptors.request.use(
 );
 
 export const submitStepData = async (stepData: Record<string, any>) => {
-  const companyId = "1"; // TODO: grab this somehow and create an application context
-  const studentId = "1"; // TODO: grab this somehow and create an application context
+  const companyId = "1"; // TODO: change to 22, for now I'm getting 403 forbidden
+  const studentId = "1"; // TODO: grab this somehow from sign up process
 
   try {
     const response = await apiClient.patch(
