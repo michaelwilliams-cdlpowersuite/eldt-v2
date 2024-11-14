@@ -36,7 +36,7 @@ const App = () => {
         <SnackbarProvider>
           <QueryClientProvider client={queryClient}>
             <AmountProvider>
-              <SignInSide disableCustomTheme />
+              <Registration />
             </AmountProvider>
           </QueryClientProvider>
         </SnackbarProvider>
