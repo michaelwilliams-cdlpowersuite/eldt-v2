@@ -3,10 +3,10 @@ import { CssBaseline } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
 import { useEffect } from "react";
+import { RouterProvider } from "react-router-dom";
 import { AmountProvider } from "./Registration/context/AmountContext";
-import Registration from "./Registration/Registration";
+import mainRoutes from "./routes/MainRoutes";
 import { theme } from "./styles/theme";
-import SignInSide from "./Templates/sign-in-side/SignInSide";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -36,7 +36,7 @@ const App = () => {
         <SnackbarProvider>
           <QueryClientProvider client={queryClient}>
             <AmountProvider>
-              <Registration />
+              <RouterProvider router={mainRoutes} />
             </AmountProvider>
           </QueryClientProvider>
         </SnackbarProvider>
