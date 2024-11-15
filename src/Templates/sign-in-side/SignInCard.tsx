@@ -15,6 +15,8 @@ import { styled } from "@mui/material/styles";
 
 import ForgotPassword from "./ForgotPassword";
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from "./CustomIcons";
+import LogoIcon from "../../assets/LogoIconELDT";
+import { brandColors } from "../../styles/brandColors";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -91,7 +93,13 @@ export default function SignInCard() {
   return (
     <Card variant="outlined">
       <Box sx={{ display: { xs: "flex", md: "none" } }}>
-        <SitemarkIcon />
+        <LogoIcon
+          sx={{
+            width: "250px",
+            height: "55px",
+            color: brandColors.cdlDarkBlue,
+          }}
+        />
       </Box>
       <Typography
         component="h1"

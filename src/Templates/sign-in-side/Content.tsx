@@ -1,39 +1,41 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 import AutoFixHighRoundedIcon from "@mui/icons-material/AutoFixHighRounded";
 import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
-import SettingsSuggestRoundedIcon from "@mui/icons-material/SettingsSuggestRounded";
 import ThumbUpAltRoundedIcon from "@mui/icons-material/ThumbUpAltRounded";
-import { ReactComponent as Logo } from "assets/eldt.svg";
-import { SitemarkIcon } from "./CustomIcons";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import LogoIcon from "../../assets/LogoIconELDT";
+import { brandColors } from "../../styles/brandColors";
+import SchoolIcon from "@mui/icons-material/School";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import DevicesIcon from "@mui/icons-material/Devices";
 
 const items = [
   {
-    icon: <SettingsSuggestRoundedIcon sx={{ color: "text.secondary" }} />,
-    title: "Adaptable performance",
+    icon: <VerifiedIcon sx={{ color: "text.secondary" }} />,
+    title: "FMCSA-Compliant Training",
     description:
-      "Our product effortlessly adjusts to your needs, boosting efficiency and simplifying your tasks.",
+      "Get certified with courses that meet all federal requirements for Entry-Level Driver Training.",
   },
   {
-    icon: <ConstructionRoundedIcon sx={{ color: "text.secondary" }} />,
-    title: "Built to last",
+    icon: <SchoolIcon sx={{ color: "text.secondary" }} />,
+    title: "Expert-Instructor Designed",
     description:
-      "Experience unmatched durability that goes above and beyond with lasting investment.",
+      "Courses created by certified CDL instructors to ensure you get the best training.",
   },
   {
-    icon: <ThumbUpAltRoundedIcon sx={{ color: "text.secondary" }} />,
-    title: "Great user experience",
+    icon: <AttachMoneyIcon sx={{ color: "text.secondary" }} />,
+    title: "Affordable and Flexible",
     description:
-      "Integrate our product into your routine with an intuitive and easy-to-use interface.",
+      "Complete your training starting at just $25, with courses available 24/7 to fit your schedule.",
   },
   {
-    icon: <AutoFixHighRoundedIcon sx={{ color: "text.secondary" }} />,
-    title: "Innovative functionality",
+    icon: <DevicesIcon sx={{ color: "text.secondary" }} />,
+    title: "Convenient and Mobile-Friendly",
     description:
-      "Stay ahead with features that set new standards, addressing your evolving needs better than the rest.",
+      "Access and complete your training anytime, anywhere, on any device.",
   },
 ];
 
@@ -48,7 +50,13 @@ export default function Content() {
       }}
     >
       <Box sx={{ display: { xs: "none", md: "flex" } }}>
-        <SitemarkIcon />
+        <LogoIcon
+          sx={{
+            width: "250px",
+            height: "55px",
+            color: brandColors.cdlDarkBlue,
+          }}
+        />
       </Box>
       {items.map((item, index) => (
         <Stack key={index} direction="row" sx={{ gap: 2 }}>
