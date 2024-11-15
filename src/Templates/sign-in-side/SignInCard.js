@@ -10,8 +10,9 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-
+import LogoIcon from "../../assets/LogoIconELDT";
 import { styled } from "@mui/material/styles";
+import { brandColors } from "../../styles/brandColors";
 
 import ForgotPassword from "./ForgotPassword";
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from "./CustomIcons";
@@ -91,7 +92,13 @@ export default function SignInCard() {
   return (
     <Card variant="outlined">
       <Box sx={{ display: { xs: "flex", md: "none" } }}>
-        <SitemarkIcon />
+        <LogoIcon
+          sx={{
+            width: "250px",
+            height: "55px",
+            color: brandColors.cdlDarkBlue,
+          }}
+        />
       </Box>
       <Typography
         component="h1"

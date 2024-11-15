@@ -1,6 +1,6 @@
 import { AppBar, Box, Container, Toolbar, Typography } from "@mui/material";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
-import { ReactComponent as Logo } from "../../assets/eldt.svg";
+import { ReactComponent as Logo } from "../../assets/eldt_white.svg";
 
 interface RegistrationAppBarProps {}
 

@@ -1,5 +1,4 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import Layout2 from "../MainAppPrototype/layouts/MainLayout";
 import DailyPlanner from "../MainAppPrototype/pages/DailyPlanner";
 import Schedule from "../MainAppPrototype/pages/Schedule";
 import Students from "../MainAppPrototype/pages/Students/Students";
