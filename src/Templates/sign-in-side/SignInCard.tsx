@@ -1,22 +1,24 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import MuiCard from "@mui/material/Card";
 import Checkbox from "@mui/material/Checkbox";
 import Divider from "@mui/material/Divider";
-import FormLabel from "@mui/material/FormLabel";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import * as React from "react";
 
 import { styled } from "@mui/material/styles";
 
-import ForgotPassword from "./ForgotPassword";
-import { GoogleIcon, FacebookIcon, SitemarkIcon } from "./CustomIcons";
 import LogoIcon from "../../assets/LogoIconELDT";
 import { brandColors } from "../../styles/brandColors";
+import { GoogleIcon } from "./CustomIcons";
+import ForgotPassword from "./ForgotPassword";
+import { useLoginMutation } from "../../Registration/hooks/useLogin";
+import { apiClient } from "../../Registration/api/api";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -37,11 +39,15 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 export default function SignInCard() {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
+
+  const loginMutation = useLoginMutation();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -51,25 +57,49 @@ export default function SignInCard() {
     setOpen(false);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
-    }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  //   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  //     if (emailError || passwordError) {
+  //       event.preventDefault();
+  //       return;
+  //     }
+  //     const data = new FormData(event.currentTarget);
+  //     console.log({
+  //       email: data.get("email"),
+  //       password: data.get("password"),
+  //     });
+  //   };
+
+  //   const validateInputs = () => {
+  //     const email = document.getElementById("email") as HTMLInputElement;
+  //     const password = document.getElementById("password") as HTMLInputElement;
+
+  //     let isValid = true;
+
+  //     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+  //       setEmailError(true);
+  //       setEmailErrorMessage("Please enter a valid email address.");
+  //       isValid = false;
+  //     } else {
+  //       setEmailError(false);
+  //       setEmailErrorMessage("");
+  //     }
+
+  //     if (!password.value || password.value.length < 6) {
+  //       setPasswordError(true);
+  //       setPasswordErrorMessage("Password must be at least 6 characters long.");
+  //       isValid = false;
+  //     } else {
+  //       setPasswordError(false);
+  //       setPasswordErrorMessage("");
+  //     }
+
+  //     return isValid;
+  //   };
 
   const validateInputs = () => {
-    const email = document.getElementById("email") as HTMLInputElement;
-    const password = document.getElementById("password") as HTMLInputElement;
-
     let isValid = true;
 
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
       setEmailError(true);
       setEmailErrorMessage("Please enter a valid email address.");
       isValid = false;
@@ -78,7 +108,7 @@ export default function SignInCard() {
       setEmailErrorMessage("");
     }
 
-    if (!password.value || password.value.length < 6) {
+    if (!password || password.length < 6) {
       setPasswordError(true);
       setPasswordErrorMessage("Password must be at least 6 characters long.");
       isValid = false;
@@ -89,6 +119,15 @@ export default function SignInCard() {
 
     return isValid;
   };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!validateInputs()) return;
+
+    loginMutation.mutate({ email, password });
+  };
+
+  console.log("Axios Base URL:", apiClient.defaults.baseURL);
 
   return (
     <Card variant="outlined">
@@ -117,11 +156,13 @@ export default function SignInCard() {
         <FormControl>
           <FormLabel htmlFor="email">Email</FormLabel>
           <TextField
+            id="email"
+            name="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             error={emailError}
             helperText={emailErrorMessage}
-            id="email"
-            type="email"
-            name="email"
             placeholder="your@email.com"
             autoComplete="email"
             autoFocus
@@ -145,12 +186,14 @@ export default function SignInCard() {
             </Link>
           </Box>
           <TextField
+            id="password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             error={passwordError}
             helperText={passwordErrorMessage}
-            name="password"
             placeholder="••••••"
-            type="password"
-            id="password"
             autoComplete="current-password"
             autoFocus
             required
@@ -169,7 +212,9 @@ export default function SignInCard() {
           fullWidth
           variant="contained"
           onClick={validateInputs}
+          //   disabled={loginMutation.isLoading}
         >
+          {/* {loginMutation.isLoading ? "Signing in..." : "Sign in"} */}
           Sign in
         </Button>
         <Typography sx={{ textAlign: "center" }}>
