@@ -44,7 +44,7 @@ const Step1: React.FC<Step1Props> = () => {
         }}
       >
         Choose your CDL Class
-        {errors.step1 && (
+        {errors.step1 && !values.step1?.selectedCourse && (
           <Alert severity="error">{errors.step1 as string}</Alert>
         )}
       </Typography>

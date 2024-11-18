@@ -11,16 +11,12 @@ export const validationSchema = Yup.object({
     "course-or-endorsement",
     "You must select at least one course or endorsement.",
     (value) => {
-      const selectedCourse = value?.selectedCourse;
-      const selectedEndorsements = value?.selectedEndorsements;
-      console.log(selectedCourse, selectedEndorsements);
-      if (selectedCourse) {
-        return true;
-      }
-      if (selectedEndorsements && selectedEndorsements.length > 0) {
-        return true;
-      }
-      return false;
+      const selectedCourse = value?.selectedCourse || null;
+      const selectedEndorsements = value?.selectedEndorsements || [];
+      return (
+        Boolean(selectedCourse) ||
+        (Array.isArray(selectedEndorsements) && selectedEndorsements.length > 0)
+      );
     }
   ),
   step2: Yup.object({
