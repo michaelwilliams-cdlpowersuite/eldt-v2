@@ -41,7 +41,7 @@ export default function SignInSide(props: { disableCustomTheme?: boolean }) {
           sx={{
             justifyContent: "center",
             gap: { xs: 6, sm: 12 },
-            p: 2,
+            p: { sm: 2 },
             mx: "auto",
           }}
         >
@@ -50,7 +50,7 @@ export default function SignInSide(props: { disableCustomTheme?: boolean }) {
             sx={{
               justifyContent: "center",
               gap: { xs: 6, sm: 12 },
-              p: { xs: 2, sm: 4 },
+              p: { sm: 4 },
               m: "auto",
             }}
           >
