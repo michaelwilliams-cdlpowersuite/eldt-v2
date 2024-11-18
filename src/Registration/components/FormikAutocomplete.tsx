@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { getIn, useField, useFormikContext } from "formik";
 import {
   Autocomplete,
   AutocompleteProps,
   TextField,
   TextFieldProps,
 } from "@mui/material";
+import { useField, useFormikContext } from "formik";
+import React from "react";
 
 type FormikAutocompleteProps<T, Multiple extends boolean = false> = Omit<
   AutocompleteProps<T, Multiple, false, false>,

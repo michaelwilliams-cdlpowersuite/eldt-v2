@@ -1,10 +1,7 @@
 import * as Yup from "yup";
-import { Endorsement, endorsements } from "./products";
-import { cdlTypes, referralSources } from "./optionsLists";
+import { Endorsement } from "./products";
 
 const phoneRegExp = /^\(\d{3}\) \d{3}-\d{4}$/;
-
-//TODO Add validation for step 1 per Connor and Michael convo => must select a course OR endorsement
 
 export const validationSchema = Yup.object({
   step1: Yup.object({
@@ -14,10 +11,16 @@ export const validationSchema = Yup.object({
     "course-or-endorsement",
     "You must select at least one course or endorsement.",
     (value) => {
-      return !!(
-        value?.selectedCourse ||
-        (value?.selectedEndorsements && value.selectedEndorsements.length > 0)
-      );
+      const selectedCourse = value?.selectedCourse;
+      const selectedEndorsements = value?.selectedEndorsements;
+      console.log(selectedCourse, selectedEndorsements);
+      if (selectedCourse) {
+        return true;
+      }
+      if (selectedEndorsements && selectedEndorsements.length > 0) {
+        return true;
+      }
+      return false;
     }
   ),
   step2: Yup.object({
