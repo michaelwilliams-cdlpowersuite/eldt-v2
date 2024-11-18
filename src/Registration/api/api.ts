@@ -80,3 +80,33 @@ export const loginUser = async ({
     throw error;
   }
 };
+
+// Sign Up API
+export const signUpUser = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  const companyId = process.env.REACT_APP_DEFAULT_COMPANY_ID; // TODO: set env variables to correct values
+  const studentType = "quiz"; // TODO: set to "quiz" for now
+  const code = null; // TODO: Shrug
+
+  try {
+    const response = await apiClient.post(
+      `/student-register`,
+      { email, password, companyId, studentType, code },
+      {
+        // Override default headers for this request
+        headers: {
+          Authorization: undefined,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error logging in:", error);
+    throw error;
+  }
+};
