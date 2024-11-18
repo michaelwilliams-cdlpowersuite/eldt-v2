@@ -7,6 +7,7 @@ import { RouterProvider } from "react-router-dom";
 import { AmountProvider } from "./Registration/context/AmountContext";
 import mainRoutes from "./routes/MainRoutes";
 import { theme } from "./styles/theme";
+import RouterWrapper from "./routes/MainRoutes";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -18,7 +19,7 @@ const App = () => {
         <SnackbarProvider>
           <QueryClientProvider client={queryClient}>
             <AmountProvider>
-              <RouterProvider router={mainRoutes} />
+              <RouterWrapper />
             </AmountProvider>
           </QueryClientProvider>
         </SnackbarProvider>

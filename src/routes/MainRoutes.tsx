@@ -1,12 +1,12 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
-import DailyPlanner from "../MainAppPrototype/pages/DailyPlanner";
-import Schedule from "../MainAppPrototype/pages/Schedule";
-import Students from "../MainAppPrototype/pages/Students/Students";
+import React, { useEffect, useState } from "react";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
+import Registration from "../Registration/Registration";
 import SignInSide from "../Templates/sign-in-side/SignInSide";
 import SignUp from "../Templates/sign-up/SignUp";
-import Registration from "../Registration/Registration";
-
-const isAuthenticated = !!localStorage.getItem("apiToken");
 
 const ProtectedRoute = ({
   isAuthenticated,
@@ -18,37 +18,69 @@ const ProtectedRoute = ({
   return isAuthenticated ? children : <Navigate to="/sign-in" />;
 };
 
-const mainRoutes = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <ProtectedRoute isAuthenticated={isAuthenticated}>
-        <Registration />
-      </ProtectedRoute>
-    ),
-    children: [
-      {
-        path: "students",
-        element: <Students />,
-      },
-      {
-        path: "schedule",
-        element: <Schedule />,
-      },
-      {
-        path: "daily-planner",
-        element: <DailyPlanner />,
-      },
-    ],
-  },
-  {
-    path: "/sign-in",
-    element: <SignInSide disableCustomTheme />,
-  },
-  {
-    path: "/sign-up",
-    element: <SignUp disableCustomTheme />,
-  },
-]);
+const RouterWrapper = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem("apiToken")
+  );
 
-export default mainRoutes;
+  // Manually update `isAuthenticated` on login/logout
+  const updateAuthState = () => {
+    setIsAuthenticated(!!localStorage.getItem("apiToken"));
+  };
+
+  // Listen for manual changes in localStorage
+  useEffect(() => {
+    // Event listener for other tabs/windows
+    const handleStorageChange = () => {
+      updateAuthState();
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  // Trigger state update directly on token change within the same tab
+  useEffect(() => {
+    const originalSetItem = localStorage.setItem;
+
+    localStorage.setItem = function (key: string, value: string) {
+      // Explicitly cast arguments to the required tuple type
+      originalSetItem.apply(this, [key, value] as [string, string]); // Cast to [string, string]
+      if (key === "apiToken") {
+        updateAuthState(); // Update state when apiToken changes
+      }
+    };
+
+    return () => {
+      // Restore the original method
+      localStorage.setItem = originalSetItem;
+    };
+  }, []);
+
+  // Define routes
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <ProtectedRoute isAuthenticated={isAuthenticated}>
+          <Registration />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/sign-in",
+      element: <SignInSide disableCustomTheme />,
+    },
+    {
+      path: "/sign-up",
+      element: <SignUp disableCustomTheme />,
+    },
+  ]);
+
+  return <RouterProvider router={router} />;
+};
+
+export default RouterWrapper;
