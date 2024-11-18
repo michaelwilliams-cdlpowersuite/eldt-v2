@@ -14,11 +14,10 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 
 import LogoIcon from "../../assets/LogoIconELDT";
+import { useLoginMutation } from "../../Registration/hooks/useLogin";
 import { brandColors } from "../../styles/brandColors";
 import { GoogleIcon } from "./CustomIcons";
 import ForgotPassword from "./ForgotPassword";
-import { useLoginMutation } from "../../Registration/hooks/useLogin";
-import { apiClient } from "../../Registration/api/api";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -57,45 +56,6 @@ export default function SignInCard() {
     setOpen(false);
   };
 
-  //   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //     if (emailError || passwordError) {
-  //       event.preventDefault();
-  //       return;
-  //     }
-  //     const data = new FormData(event.currentTarget);
-  //     console.log({
-  //       email: data.get("email"),
-  //       password: data.get("password"),
-  //     });
-  //   };
-
-  //   const validateInputs = () => {
-  //     const email = document.getElementById("email") as HTMLInputElement;
-  //     const password = document.getElementById("password") as HTMLInputElement;
-
-  //     let isValid = true;
-
-  //     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-  //       setEmailError(true);
-  //       setEmailErrorMessage("Please enter a valid email address.");
-  //       isValid = false;
-  //     } else {
-  //       setEmailError(false);
-  //       setEmailErrorMessage("");
-  //     }
-
-  //     if (!password.value || password.value.length < 6) {
-  //       setPasswordError(true);
-  //       setPasswordErrorMessage("Password must be at least 6 characters long.");
-  //       isValid = false;
-  //     } else {
-  //       setPasswordError(false);
-  //       setPasswordErrorMessage("");
-  //     }
-
-  //     return isValid;
-  //   };
-
   const validateInputs = () => {
     let isValid = true;
 
@@ -126,8 +86,6 @@ export default function SignInCard() {
 
     loginMutation.mutate({ email, password });
   };
-
-  console.log("Axios Base URL:", apiClient.defaults.baseURL);
 
   return (
     <Card variant="outlined">

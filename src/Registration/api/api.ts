@@ -63,9 +63,20 @@ export const loginUser = async ({
   email: string;
   password: string;
 }) => {
-  const response = await apiClient.post("/login", {
-    email,
-    password,
-  });
-  return response.data;
+  try {
+    const response = await apiClient.post(
+      "/login",
+      { email, password },
+      {
+        // Override default headers for this request
+        headers: {
+          Authorization: undefined,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error logging in:", error);
+    throw error;
+  }
 };
