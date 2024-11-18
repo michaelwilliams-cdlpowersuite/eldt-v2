@@ -124,6 +124,9 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     });
   };
 
+  const showPasswordValidator =
+    password.length > 0 || confirmPassword.length > 0;
+
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
@@ -202,10 +205,12 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </FormControl>
-            <PasswordValidator
-              password={password}
-              confirmPassword={confirmPassword}
-            />
+            {showPasswordValidator && (
+              <PasswordValidator
+                password={password}
+                confirmPassword={confirmPassword}
+              />
+            )}
             <Button
               type="submit"
               fullWidth
