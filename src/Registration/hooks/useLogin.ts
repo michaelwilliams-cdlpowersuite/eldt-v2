@@ -19,7 +19,7 @@ export const useLoginMutation = (): UseMutationResult<
     mutationFn: loginUser,
     onSuccess: (data) => {
       // Handle success
-      localStorage.setItem("authToken", data.token);
+      localStorage.setItem("apiToken", data.accessToken);
       console.log("Login successful!", data);
     },
     onError: (error) => {
