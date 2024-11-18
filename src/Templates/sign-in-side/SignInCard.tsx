@@ -66,15 +66,6 @@ export default function SignInCard() {
       setEmailErrorMessage("");
     }
 
-    if (!password || password.length < 8) {
-      setPasswordError(true);
-      setPasswordErrorMessage("Password must be at least 8 characters long.");
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage("");
-    }
-
     return isValid;
   };
 
@@ -93,6 +84,7 @@ export default function SignInCard() {
             width: "250px",
             height: "55px",
             color: brandColors.cdlDarkBlue,
+            margin: "0 auto",
           }}
         />
       </Box>

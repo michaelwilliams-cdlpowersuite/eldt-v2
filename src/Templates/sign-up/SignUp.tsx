@@ -116,6 +116,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               width: "250px",
               height: "55px",
               color: brandColors.cdlDarkBlue,
+              margin: "0 auto",
             }}
           />
           <Typography
