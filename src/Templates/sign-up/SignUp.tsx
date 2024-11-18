@@ -113,7 +113,8 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     event.preventDefault();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevent the default form submission behavior
     signUpMutation.mutate({ email, password });
   };
 
@@ -208,7 +209,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 name="password"
                 placeholder="••••••"
                 type={showConfirmPassword ? "text" : "password"}
-                id="password"
+                id="confirm-password"
                 autoComplete="new-password"
                 variant="outlined"
                 error={passwordError}
@@ -252,7 +253,6 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={handleSubmit}
               disabled={!isPasswordValid && !isEmailValid}
             >
               Sign up
