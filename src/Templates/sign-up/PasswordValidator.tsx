@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Typography, Box, Grid2 } from "@mui/material";
 
 interface PasswordValidatorProps {
   password: string;
   confirmPassword: string;
+  onValidationChange: (isValid: boolean) => void;
 }
 
 const PasswordValidator: React.FC<PasswordValidatorProps> = ({
   password,
   confirmPassword,
+  onValidationChange,
 }) => {
   const rules = [
     {
@@ -36,6 +38,14 @@ const PasswordValidator: React.FC<PasswordValidatorProps> = ({
       isValid: password === confirmPassword,
     },
   ];
+
+  // Determine overall validity
+  const isValid = rules.every((rule) => rule.isValid);
+
+  // Notify parent about validation status
+  useEffect(() => {
+    onValidationChange(isValid);
+  }, [isValid, onValidationChange]);
 
   return (
     <Box sx={{ padding: 2 }}>

@@ -69,8 +69,10 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [email, setEmail] = React.useState("");
+  const [isEmailValid, setIsEmailValid] = React.useState(false);
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
+  const [isPasswordValid, setIsPasswordValid] = React.useState(false);
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const [emailError, setEmailError] = React.useState(false);
@@ -82,8 +84,17 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
 
   const signUpMutation = useSignUpMutation();
 
-  const handleSubmit = () => {
-    signUpMutation.mutate({ email, password });
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+
+    // Simple regex for validating email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsEmailValid(emailRegex.test(value));
+  };
+
+  const handlePasswordValidationChange = (isValid: boolean) => {
+    setIsPasswordValid(isValid);
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -100,6 +111,10 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
+  };
+
+  const handleSubmit = () => {
+    signUpMutation.mutate({ email, password });
   };
 
   const showPasswordValidator =
@@ -230,6 +245,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               <PasswordValidator
                 password={password}
                 confirmPassword={confirmPassword}
+                onValidationChange={handlePasswordValidationChange}
               />
             )}
             <Button
@@ -237,6 +253,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               fullWidth
               variant="contained"
               onClick={handleSubmit}
+              disabled={!isPasswordValid && !isEmailValid}
             >
               Sign up
             </Button>
