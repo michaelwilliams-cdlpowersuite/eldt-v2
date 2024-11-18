@@ -11,24 +11,6 @@ import { theme } from "./styles/theme";
 const App = () => {
   const queryClient = new QueryClient();
 
-  // Verify Google auth token //TODO: Move this to a hook or use a library
-  const verifyToken = async (token: string) => {
-    try {
-      const response = await fetch(
-        `https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${token}`
-      );
-      const userInfo = await response.json();
-      console.log("User info:", userInfo);
-    } catch (error) {
-      console.error("Token verification failed:", error);
-    }
-  };
-
-  useEffect(() => {
-    const token = localStorage.getItem("apiToken");
-    if (token) verifyToken(token);
-  }, []);
-
   return (
     <div className="App">
       <ThemeProvider theme={theme}>

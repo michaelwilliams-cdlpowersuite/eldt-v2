@@ -1,16 +1,12 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-
-import AutoFixHighRoundedIcon from "@mui/icons-material/AutoFixHighRounded";
-import ConstructionRoundedIcon from "@mui/icons-material/ConstructionRounded";
-import ThumbUpAltRoundedIcon from "@mui/icons-material/ThumbUpAltRounded";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import DevicesIcon from "@mui/icons-material/Devices";
+import SchoolIcon from "@mui/icons-material/School";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import LogoIcon from "../../assets/LogoIconELDT";
 import { brandColors } from "../../styles/brandColors";
-import SchoolIcon from "@mui/icons-material/School";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import DevicesIcon from "@mui/icons-material/Devices";
 
 const items = [
   {
