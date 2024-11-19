@@ -7,13 +7,13 @@ import * as React from "react";
 import FormActionButtons from "./components/FormActionButtons";
 import { steps } from "./utilities/steps";
 import Step4 from "./Step4";
-import useValidateCurrentStep from "./hooks/useValidateCurrentStep";
+import useValidateCurrentStep from "../hooks/useValidateCurrentStep";
 import { enqueueSnackbar } from "notistack";
 import { snackOptions } from "./utilities/snackOptions";
 import { setIn, useFormikContext } from "formik";
 import { RegistrationFormUIValues } from "./utilities/validationSchema";
 import { Toolbar } from "@mui/material";
-import { useStudentMutation } from "./hooks/useStudentMutation";
+import { useStudentMutation } from "../hooks/useStudentMutation";
 import { transformFormikToApi } from "./utilities/transformData";
 
 interface StepperOrchestrationProps {}

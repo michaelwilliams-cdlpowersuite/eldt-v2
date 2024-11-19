@@ -1,6 +1,6 @@
 import { useField, useFormikContext } from "formik";
 import { useCallback } from "react";
-import { Course } from "../utilities/products";
+import { Course } from "../Registration/utilities/products";
 
 export const useSelectCourse = () => {
   const [field, meta] = useField("step1.selectedCourse");

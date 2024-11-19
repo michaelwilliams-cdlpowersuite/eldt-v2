@@ -1,6 +1,6 @@
 import { useFormikContext } from "formik";
 import { useCallback } from "react";
-import { Endorsement } from "../utilities/products";
+import { Endorsement } from "../Registration/utilities/products";
 
 export const useSelectEndorsement = () => {
   const { values, setFieldValue } = useFormikContext<any>();

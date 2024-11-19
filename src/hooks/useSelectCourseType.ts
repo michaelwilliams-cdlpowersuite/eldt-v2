@@ -1,6 +1,6 @@
 import { useFormikContext } from "formik";
 import { useCallback } from "react";
-import { CourseType } from "../utilities/products";
+import { CourseType } from "../Registration/utilities/products";
 
 export const useSelectCourseType = () => {
   const { values, setFieldValue, validateField, setFieldTouched } =

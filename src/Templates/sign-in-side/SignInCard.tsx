@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import LogoIcon from "../../assets/LogoIconELDT";
-import { useLoginMutation } from "../../Registration/hooks/useLogin";
+import { useLoginMutation } from "../../hooks/useLogin";
 import { brandColors } from "../../styles/brandColors";
 import { GoogleIcon } from "./CustomIcons";
 import ForgotPassword from "./ForgotPassword";

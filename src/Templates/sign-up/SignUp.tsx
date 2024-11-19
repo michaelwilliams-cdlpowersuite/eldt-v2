@@ -22,7 +22,7 @@ import PasswordValidator from "./PasswordValidator";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { IconButton, InputAdornment } from "@mui/material";
-import { useSignUpMutation } from "../../Registration/hooks/useSignUp";
+import { useSignUpMutation } from "../../hooks/useSignUp";
 import { sign } from "crypto";
 
 const Card = styled(MuiCard)(({ theme }) => ({

@@ -1,7 +1,7 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
-import { forgotPassword } from "../api/api";
 import { enqueueSnackbar } from "notistack";
-import { snackOptions } from "../utilities/snackOptions";
+import { forgotPassword } from "../api/api";
+import { snackOptions } from "../Registration/utilities/snackOptions";
 
 interface ForgotPasswordVariables {
   email: string;
