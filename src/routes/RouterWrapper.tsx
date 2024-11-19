@@ -8,15 +8,24 @@ import Registration from "../views/registration/Registration";
 import SignInSide from "../views/mui-templates/sign-in-side/SignInSide";
 import SignUp from "../views/mui-templates/sign-up/SignUp";
 import { useMe } from "../hooks/useMe";
+import VerifyEmail from "../views/verify-email/VerifyEmail";
 
 const ProtectedRoute = ({
   isAuthenticated,
+  emailVerified,
   children,
 }: {
   isAuthenticated: boolean;
+  emailVerified?: boolean;
   children: JSX.Element;
 }) => {
-  return isAuthenticated ? children : <Navigate to="/sign-in" />;
+  if (!isAuthenticated) {
+    return <Navigate to="/sign-in" />;
+  }
+  if (emailVerified === false) {
+    return <Navigate to="/verify-email" />;
+  }
+  return children;
 };
 
 const RouterWrapper = () => {
@@ -25,6 +34,8 @@ const RouterWrapper = () => {
   );
 
   const { data: me, isLoading, error } = useMe();
+
+  const isEmailVerified = !!me?.emailVerifiedAt;
 
   console.log("verified at", me?.emailVerifiedAt);
 
@@ -70,7 +81,10 @@ const RouterWrapper = () => {
     {
       path: "/",
       element: (
-        <ProtectedRoute isAuthenticated={isAuthenticated}>
+        <ProtectedRoute
+          isAuthenticated={isAuthenticated}
+          emailVerified={isEmailVerified}
+        >
           <Registration />
         </ProtectedRoute>
       ),
@@ -82,6 +96,14 @@ const RouterWrapper = () => {
     {
       path: "/sign-up",
       element: <SignUp disableCustomTheme />,
+    },
+    {
+      path: "/verify-email",
+      element: (
+        <ProtectedRoute isAuthenticated={isAuthenticated}>
+          <VerifyEmail disableCustomTheme />
+        </ProtectedRoute>
+      ),
     },
   ]);
 
