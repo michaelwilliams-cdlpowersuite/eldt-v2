@@ -110,3 +110,18 @@ export const signUpUser = async ({
     throw error;
   }
 };
+
+// Forgot Password API
+export const forgotPassword = async ({ email }: { email: string }) => {
+  const companyId = null; // TODO: make sure this is correct
+  try {
+    const response = await apiClient.post("/forgot-password", {
+      email,
+      companyId,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error sending forgot password email:", error);
+    throw error;
+  }
+};
