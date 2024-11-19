@@ -47,6 +47,7 @@ const Step2: React.FC<Step2Props> = () => {
           <FormikTextField
             name="step2.confirmDriversLicense"
             label="Confirm Driver's License"
+            onPaste={(e) => e.preventDefault()}
           />
         </Grid2>
         <Grid2 size={12}>
