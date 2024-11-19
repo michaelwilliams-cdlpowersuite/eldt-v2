@@ -22,7 +22,6 @@ export const useLoginMutation = (): UseMutationResult<
     onSuccess: (data) => {
       // Handle success
       localStorage.setItem("apiToken", data.accessToken);
-      console.log("navigate");
       navigate("/", { replace: true });
     },
     onError: (error) => {

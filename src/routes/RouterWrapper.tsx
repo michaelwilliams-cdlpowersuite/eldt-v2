@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   createBrowserRouter,
-  RouterProvider,
   Navigate,
+  RouterProvider,
 } from "react-router-dom";
-import Registration from "../views/registration/Registration";
+import { useMe } from "../hooks/useMe";
 import SignInSide from "../views/mui-templates/sign-in-side/SignInSide";
 import SignUp from "../views/mui-templates/sign-up/SignUp";
-import { useMe } from "../hooks/useMe";
+import Registration from "../views/registration/Registration";
 import VerifyEmail from "../views/verify-email/VerifyEmail";
 
 const ProtectedRoute = ({
@@ -33,7 +33,7 @@ const RouterWrapper = () => {
     !!localStorage.getItem("apiToken")
   );
 
-  const { data: me, isLoading, error } = useMe();
+  const { data: me } = useMe();
 
   const isEmailVerified = !!me?.emailVerifiedAt;
 

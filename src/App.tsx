@@ -1,12 +1,11 @@
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SnackbarProvider } from "notistack";
-import { useEffect } from "react";
-import { RouterProvider } from "react-router-dom";
-import { AmountProvider } from "./views/registration/context/AmountContext";
-import { theme } from "./styles/theme";
 import RouterWrapper from "./routes/RouterWrapper";
+import { theme } from "./styles/theme";
+import { AmountProvider } from "./views/registration/context/AmountContext";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -15,13 +14,14 @@ const App = () => {
     <div className="App">
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <SnackbarProvider>
-          <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <SnackbarProvider>
             <AmountProvider>
               <RouterWrapper />
             </AmountProvider>
-          </QueryClientProvider>
-        </SnackbarProvider>
+          </SnackbarProvider>
+        </QueryClientProvider>
       </ThemeProvider>
     </div>
   );
