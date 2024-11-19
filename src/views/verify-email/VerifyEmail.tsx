@@ -1,4 +1,7 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Button,
   CssBaseline,
@@ -16,6 +19,7 @@ import { useMe } from "../../hooks/useMe";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 interface VerifyEmailProps {
   disableCustomTheme?: boolean;
@@ -55,91 +59,160 @@ const VerifyEmail: React.FC<VerifyEmailProps> = (props: {
             complete registration.
           </Typography>
           <Divider />
-          <Typography component="h1" variant="h6" textAlign="center" mb={2}>
-            Didn’t receive the email?
-          </Typography>
-          <ol style={{ margin: "0 0 1rem 1.5rem" }}>
-            <li>Check your spam or junk folders.</li>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              Didn’t receive the email?
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography component="p" variant="body1" mb={2}>
+                If you didn’t receive the email, try these steps:
+                <li>Check your spam or junk folders.</li>
+                <li>
+                  Click "Resend Verification Email" to receive a new link.
+                </li>
+              </Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleResendEmail}
+                fullWidth
+              >
+                Resend Verification Email
+              </Button>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              Wrong email address?
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography component="p" variant="body1" mb={2}>
+                If you entered the wrong email address, you can update it here.
+              </Typography>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={handleUpdateEmail}
+                fullWidth
+              >
+                Update Email
+              </Button>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              Still having trouble?
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography component="p" variant="body1" mb={2}>
+                Contact customer support.
+              </Typography>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                {/* Phone Number */}
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <PhoneIcon sx={{ color: "primary.main" }} />
+                  <Link
+                    href="tel:15092412987"
+                    underline="none"
+                    sx={{
+                      fontSize: "1rem",
+                      fontWeight: 500,
+                      color: "text.primary",
+                      "&:hover": { color: "primary.main" },
+                    }}
+                  >
+                    1.509.241.2987
+                  </Link>
+                </Stack>
+                {/* Email Address */}
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <EmailIcon sx={{ color: "primary.main" }} />
+                  <Link
+                    href="mailto:info@cdlpowersuite.com"
+                    underline="none"
+                    sx={{
+                      fontSize: "1rem",
+                      fontWeight: 500,
+                      color: "text.primary",
+                      "&:hover": { color: "primary.main" },
+                    }}
+                  >
+                    info@cdlpowersuite.com
+                  </Link>
+                </Stack>
+              </Box>
+            </AccordionDetails>
+          </Accordion>
 
-            <li>Click "Resend Verification Email" to receive a new link.</li>
-          </ol>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleResendEmail}
-            fullWidth
-          >
-            Resend Verification Email
-          </Button>
-          <Divider />
-          <Typography component="h1" variant="h6" textAlign="center" mb={2}>
-            Update email address?
-          </Typography>
-          <Typography component="p" variant="body1" textAlign="center" mb={2}>
-            If you entered the wrong email address, you can update it here.
-          </Typography>
-          <Button variant="outlined" onClick={handleUpdateEmail} fullWidth>
-            Update Email
-          </Button>
-          <Divider />
-
-          <Typography component="h1" variant="h6" textAlign="center" mb={2}>
-            Still having trouble?
-          </Typography>
-          <Typography component="p" variant="body1" textAlign="center" mb={2}>
-            Contact customer support.
-          </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <LogoIcon
               sx={{
-                width: "250px",
+                width: "150px",
                 height: "30px",
                 color: brandColors.cdlDarkBlue,
                 margin: "0 auto 1rem",
               }}
             />
-            {/* Phone Number */}
             <Stack
               direction="row"
-              alignItems="center"
-              justifyContent="center"
-              spacing={1}
+              alignContent="center"
+              justifyContent="space-around"
             >
-              <PhoneIcon sx={{ color: "primary.main" }} />
-              <Link
-                href="tel:15092412987"
-                underline="none"
-                sx={{
-                  fontSize: "1rem",
-                  fontWeight: 500,
-                  color: "text.primary",
-                  "&:hover": { color: "primary.main" },
-                }}
+              {/* Phone Number */}
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="center"
+                spacing={1}
               >
-                1.509.241.2987
-              </Link>
-            </Stack>
+                <PhoneIcon sx={{ color: "primary.main" }} />
+                <Link
+                  href="tel:15092412987"
+                  underline="none"
+                  sx={{
+                    fontSize: "1rem",
+                    fontWeight: 500,
+                    color: "text.primary",
+                    "&:hover": { color: "primary.main" },
+                  }}
+                >
+                  1.509.241.2987
+                </Link>
+              </Stack>
 
-            {/* Email Address */}
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="center"
-              spacing={1}
-            >
-              <EmailIcon sx={{ color: "primary.main" }} />
-              <Link
-                href="mailto:info@cdlpowersuite.com"
-                underline="none"
-                sx={{
-                  fontSize: "1rem",
-                  fontWeight: 500,
-                  color: "text.primary",
-                  "&:hover": { color: "primary.main" },
-                }}
+              {/* Email Address */}
+              <Stack
+                direction="row"
+                alignItems="center"
+                justifyContent="center"
+                spacing={1}
               >
-                info@cdlpowersuite.com
-              </Link>
+                <EmailIcon sx={{ color: "primary.main" }} />
+                <Link
+                  href="mailto:info@cdlpowersuite.com"
+                  underline="none"
+                  sx={{
+                    fontSize: "1rem",
+                    fontWeight: 500,
+                    color: "text.primary",
+                    "&:hover": { color: "primary.main" },
+                  }}
+                >
+                  info@cdlpowersuite.com
+                </Link>
+              </Stack>
             </Stack>
           </Box>
         </Card>

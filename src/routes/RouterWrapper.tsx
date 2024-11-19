@@ -37,7 +37,7 @@ const RouterWrapper = () => {
 
   const isEmailVerified = !!me?.emailVerifiedAt;
 
-  console.log("verified at", me?.emailVerifiedAt);
+  console.log("isEmailVerified", isEmailVerified);
 
   // Manually update `isAuthenticated` on login/logout
   const updateAuthState = () => {
