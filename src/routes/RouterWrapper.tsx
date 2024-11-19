@@ -4,9 +4,9 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import Registration from "../Registration/Registration";
-import SignInSide from "../Templates/sign-in-side/SignInSide";
-import SignUp from "../Templates/sign-up/SignUp";
+import Registration from "../views/registration/Registration";
+import SignInSide from "../views/mui-templates/sign-in-side/SignInSide";
+import SignUp from "../views/mui-templates/sign-up/SignUp";
 import { useMe } from "../hooks/useMe";
 
 const ProtectedRoute = ({
@@ -25,7 +25,7 @@ const RouterWrapper = () => {
   );
 
   const { data: me, isLoading, error } = useMe();
-  console.log("me", me);
+
   console.log("verified at", me?.emailVerifiedAt);
 
   // Manually update `isAuthenticated` on login/logout

@@ -16,13 +16,13 @@ import { styled } from "@mui/material/styles";
 import AppTheme from "../shared-theme/AppTheme";
 import { GoogleIcon, FacebookIcon, SitemarkIcon } from "./CustomIcons";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
-import LogoIcon from "../../assets/LogoIconELDT";
-import { brandColors } from "../../styles/brandColors";
+import LogoIcon from "../../../assets/LogoIconELDT";
+import { brandColors } from "../../../styles/brandColors";
 import PasswordValidator from "./PasswordValidator";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { IconButton, InputAdornment } from "@mui/material";
-import { useSignUpMutation } from "../../hooks/useSignUp";
+import { useSignUpMutation } from "../../../hooks/useSignUp";
 import { sign } from "crypto";
 
 const Card = styled(MuiCard)(({ theme }) => ({

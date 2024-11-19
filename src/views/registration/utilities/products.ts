@@ -2,12 +2,12 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import DevicesIcon from "@mui/icons-material/Devices";
 import KeyIcon from "@mui/icons-material/Key";
 import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
-import { ReactComponent as Hazmat } from "../../assets/icons-01.svg";
-import { ReactComponent as Passenger } from "../../assets/icons-02.svg";
-import { ReactComponent as Schoolbus } from "../../assets/icons-03.svg";
-import { ReactComponent as ClassB } from "../../assets/icons-04.svg";
-import { ReactComponent as ClassA } from "../../assets/icons-05.svg";
-import { ReactComponent as ClassBA } from "../../assets/icons-06.svg";
+import { ReactComponent as Hazmat } from "../../../assets/icons-01.svg";
+import { ReactComponent as Passenger } from "../../../assets/icons-02.svg";
+import { ReactComponent as Schoolbus } from "../../../assets/icons-03.svg";
+import { ReactComponent as ClassB } from "../../../assets/icons-04.svg";
+import { ReactComponent as ClassA } from "../../../assets/icons-05.svg";
+import { ReactComponent as ClassBA } from "../../../assets/icons-06.svg";
 
 export interface Course {
   id: string;

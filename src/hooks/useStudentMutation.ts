@@ -1,7 +1,7 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { enqueueSnackbar } from "notistack";
 import { submitStepData } from "../api/api";
-import { snackOptions } from "../Registration/utilities/snackOptions";
+import { snackOptions } from "../views/registration/utilities/snackOptions";
 
 export const useStudentMutation = (): UseMutationResult<
   any,

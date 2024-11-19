@@ -9,10 +9,10 @@ import {
 } from "./utilities/products";
 import { pxContainer } from "./utilities/styles";
 import { useField } from "formik";
-import { useSelectEndorsement } from "../hooks/useSelectEndorsement";
+import { useSelectEndorsement } from "./hooks/useSelectEndorsement";
 import OrderSummary from "./components/OrderSummary";
 import CheckoutForm from "./components/CheckoutForm";
-import { useSelectCourseType } from "../hooks/useSelectCourseType";
+import { useSelectCourseType } from "./hooks/useSelectCourseType";
 
 interface Step4Props {}
 

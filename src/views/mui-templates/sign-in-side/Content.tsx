@@ -5,8 +5,8 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import DevicesIcon from "@mui/icons-material/Devices";
 import SchoolIcon from "@mui/icons-material/School";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import LogoIcon from "../../assets/LogoIconELDT";
-import { brandColors } from "../../styles/brandColors";
+import LogoIcon from "../../../assets/LogoIconELDT";
+import { brandColors } from "../../../styles/brandColors";
 
 const items = [
   {

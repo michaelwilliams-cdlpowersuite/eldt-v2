@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 import { useFormikContext } from "formik";
-import { brandColors } from "../../styles/brandColors";
+import { brandColors } from "../../../styles/brandColors";
 
 interface FormActionButtonsProps {
   handleBack: () => void;

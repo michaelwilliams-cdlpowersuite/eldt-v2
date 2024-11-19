@@ -1,6 +1,6 @@
 import { useFormikContext } from "formik";
 import * as Yup from "yup";
-import { validationSchema } from "../Registration/utilities/validationSchema";
+import { validationSchema } from "../utilities/validationSchema";
 
 const useValidateCurrentStep = () => {
   const { values } = useFormikContext<Record<string, any>>();

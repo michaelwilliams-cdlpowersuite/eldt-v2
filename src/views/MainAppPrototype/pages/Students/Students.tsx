@@ -1,7 +1,7 @@
 import { Box, Skeleton, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
-import { fetchStudents } from "../../../api/studentApi";
+import { fetchStudents } from "../../../../api/studentApi";
 import { columns } from "./gridColDef";
 
 const Students = () => {

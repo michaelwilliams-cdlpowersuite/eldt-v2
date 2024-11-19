@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SnackbarProvider } from "notistack";
 import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
-import { AmountProvider } from "./Registration/context/AmountContext";
+import { AmountProvider } from "./views/registration/context/AmountContext";
 import { theme } from "./styles/theme";
 import RouterWrapper from "./routes/RouterWrapper";
 

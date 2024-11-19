@@ -1,10 +1,10 @@
 import { Alert, Box, Stack, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useFormikContext } from "formik";
-import { brandColors } from "../styles/brandColors";
+import { brandColors } from "../../styles/brandColors";
 import { CourseCard, EndorsementCard } from "./components/ProductCards";
-import { useSelectCourse } from "../hooks/useSelectCourse";
-import { useSelectEndorsement } from "../hooks/useSelectEndorsement";
+import { useSelectCourse } from "./hooks/useSelectCourse";
+import { useSelectEndorsement } from "./hooks/useSelectEndorsement";
 import {
   Course,
   courses,
