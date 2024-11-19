@@ -7,6 +7,7 @@ import {
 import Registration from "../Registration/Registration";
 import SignInSide from "../Templates/sign-in-side/SignInSide";
 import SignUp from "../Templates/sign-up/SignUp";
+import { useMe } from "../hooks/useMe";
 
 const ProtectedRoute = ({
   isAuthenticated,
@@ -22,6 +23,10 @@ const RouterWrapper = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("apiToken")
   );
+
+  const { data: me, isLoading, error } = useMe();
+  console.log("me", me);
+  console.log("verified at", me?.emailVerifiedAt);
 
   // Manually update `isAuthenticated` on login/logout
   const updateAuthState = () => {

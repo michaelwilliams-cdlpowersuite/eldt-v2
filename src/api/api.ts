@@ -125,3 +125,14 @@ export const forgotPassword = async ({ email }: { email: string }) => {
     throw error;
   }
 };
+
+// Me API
+export const getMe = async () => {
+  try {
+    const response = await apiClient.get("user/me");
+    return response.data;
+  } catch (error) {
+    console.error("Error getting user data:", error);
+    throw error;
+  }
+};
