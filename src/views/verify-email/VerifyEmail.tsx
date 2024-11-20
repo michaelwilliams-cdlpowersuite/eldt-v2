@@ -22,6 +22,8 @@ import EmailIcon from "@mui/icons-material/Email";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUpdateEmail } from "../../hooks/useUpdateEmail";
+import { useResendVerificationEmail } from "../../hooks/useResendVerificationEmail";
 
 interface VerifyEmailProps {
   disableCustomTheme?: boolean;
@@ -32,12 +34,18 @@ const VerifyEmail: React.FC<VerifyEmailProps> = (props: {
 }) => {
   const navigate = useNavigate();
   const { data: me } = useMe();
+  const { mutate: resendEmail, isPending: isPendingResendEmail } =
+    useResendVerificationEmail();
+  const { mutate: updateEmail, isPending: isPendingUpdateEmail } =
+    useUpdateEmail();
 
   const handleResendEmail = () => {
+    resendEmail();
     console.log("Resend email");
   };
 
   const handleUpdateEmail = () => {
+    updateEmail();
     console.log("Update email");
   };
 
@@ -108,7 +116,7 @@ const VerifyEmail: React.FC<VerifyEmailProps> = (props: {
                 If you entered the wrong email address, you can update it here.
               </Typography>
               <Button
-                variant="outlined"
+                variant="contained"
                 color="primary"
                 onClick={handleUpdateEmail}
                 fullWidth

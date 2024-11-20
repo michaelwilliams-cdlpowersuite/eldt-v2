@@ -12,7 +12,7 @@ export const useResendVerificationEmail = (): UseMutationResult<
   const { data: me } = useMe();
   const userId = me?.id;
 
-  return useMutation({
+  return useMutation<any, Error, void>({
     mutationFn: async () => {
       if (!userId) {
         throw new Error("User ID is not available.");
