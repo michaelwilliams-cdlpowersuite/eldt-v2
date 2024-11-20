@@ -19,9 +19,17 @@ interface ApiData {
   zip?: string;
   city?: string;
   state?: string;
-
   automatic_transmission?: boolean;
   cdlCompletedDate?: string; // ISO string
+  enrollmentClassAComplete?: boolean;
+  enrollmentClassBComplete?: boolean;
+  enrollmentEndorsementHazComplete?: boolean;
+  enrollmentEndorsementPassengerComplete?: boolean;
+  enrollmentEndorsementSchoolBusComplete?: boolean;
+  enrollmentDesiredWorkLocal?: boolean;
+  enrollmentDesiredWorkOTR?: boolean;
+  enrollmentDesiredWorkRegional?: boolean;
+  enrollmentDesiredWorkIDC?: boolean;
 }
 
 export const transformFormikToApi = (
@@ -83,19 +91,37 @@ export const transformFormikToApi = (
     apiData.automatic_transmission = formikValues.step3.transmission?.apiValue;
 
     apiData.cdlCompletedDate = formikValues.step3.cdlDate
-        ? dayjs(formikValues.step3.cdlDate).toISOString()
-        : undefined;
+      ? dayjs(formikValues.step3.cdlDate).toISOString()
+      : undefined;
 
-    // enrollmentClassAComplete: node.value.cdlTrainingType?.contains('Class A') ?? undefined,
-    // enrollmentClassBComplete: node.value.cdlTrainingType?.contains('Class B') ?? undefined,
-    // enrollmentEndorsementHazComplete: node.value.cdlEndorsements?.contains('HAZ') ?? undefined,
-    // enrollmentEndorsementPassengerComplete: node.value.cdlEndorsements?.contains('Passenger') ?? undefined,
-    // enrollmentEndorsementSchoolBusComplete: node.value.cdlEndorsements?.contains('School Bus') ?? undefined,
-    // enrollmentDesiredWorkLocal: node.value.typeOfWork?.contains('Local') ?? undefined,
-    // enrollmentDesiredWorkOTR: node.value.typeOfWork?.contains('OTR') ?? undefined,
-    // enrollmentDesiredWorkRegional: node.value.typeOfWork?.contains('Regional') ?? undefined,
-    // enrollmentDesiredWorkIDC: node.value.typeOfWork?.contains('IDC') ?? undefined,
-    // personalInfoReleased: node.value.personalInfoReleased,
+    apiData.enrollmentClassAComplete =
+      formikValues.step3.cdlType?.label.includes("Class A");
+    apiData.enrollmentClassBComplete =
+      formikValues.step3.cdlType?.label.includes("Class B");
+    apiData.enrollmentEndorsementHazComplete =
+      formikValues.step3.endorsements?.some((endorsement: { apiKey: string }) =>
+        endorsement.apiKey.includes("haz")
+      );
+    apiData.enrollmentEndorsementPassengerComplete =
+      formikValues.step3.endorsements?.some((endorsement: { apiKey: string }) =>
+        endorsement.apiKey.includes("passenger")
+      );
+    apiData.enrollmentEndorsementSchoolBusComplete =
+      formikValues.step3.endorsements?.some((endorsement: { apiKey: string }) =>
+        endorsement.apiKey.includes("schoolBus")
+      );
+    apiData.enrollmentDesiredWorkLocal = formikValues.step3.workType?.some(
+      (workType: { value: string }) => workType.value.includes("local")
+    );
+    apiData.enrollmentDesiredWorkOTR = formikValues.step3.workType?.some(
+      (workType: { value: string }) => workType.value.includes("otr")
+    );
+    apiData.enrollmentDesiredWorkRegional = formikValues.step3.workType?.some(
+      (workType: { value: string }) => workType.value.includes("regional")
+    );
+    apiData.enrollmentDesiredWorkIDC = formikValues.step3.workType?.some(
+      (workType: { value: string }) => workType.value.includes("idc")
+    );
   }
 
   return apiData;

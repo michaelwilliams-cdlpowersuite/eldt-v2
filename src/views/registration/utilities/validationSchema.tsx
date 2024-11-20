@@ -20,8 +20,7 @@ export const validationSchema = Yup.object({
   step2: Yup.object({
     firstName: Yup.string().required("Required"),
     lastName: Yup.string().required("Required"),
-    phone: Yup.string()
-      .required("Required"),
+    phone: Yup.string().required("Required"),
     dob: Yup.date().required("Required"),
     driversLicense: Yup.string().required("Required"),
     confirmDriversLicense: Yup.string()
@@ -120,18 +119,18 @@ interface Step2 {
   confirmDriversLicense: string;
   streetAddress: string;
   city: string;
-  state: { label: string; abbreviation: string; } | null;
+  state: { label: string; abbreviation: string } | null;
   zip: string;
-  language: { label: string; code: string, apiValue: number, };
+  language: { label: string; code: string; apiValue: number };
 }
 
 interface Step3 {
   optIn: boolean;
-  transmission: { label: string, apiValue: boolean } | null;
+  transmission: { label: string; apiValue: boolean } | null;
   cdlDate: string;
   cdlType: { label: string } | null;
   endorsements: Endorsement[] | null;
-  workType: { label: string } | null;
+  workType: [{ label: string; value: string }] | null;
   where: string;
   referralSource: { label: string } | null;
 }

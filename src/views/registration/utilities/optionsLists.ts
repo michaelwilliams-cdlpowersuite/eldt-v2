@@ -1,14 +1,17 @@
 // TODO Michael, if you need different values, add them here or I can
 
-export const transmissions = [{ label: "Automatic", apiValue: true }, { label: "Manual", apiValue: false }];
+export const transmissions = [
+  { label: "Automatic", apiValue: true },
+  { label: "Manual", apiValue: false },
+];
 
 export const cdlTypes = [{ label: "Class A" }, { label: "Class B" }];
 
 export const workTypes = [
-  { label: "Local" },
-  { label: "OTR (Over-the-Road)" },
-  { label: "Regional" },
-  { label: "I don't care" },
+  { label: "Local", value: "local" },
+  { label: "OTR (Over-the-Road)", value: "otr" },
+  { label: "Regional", value: "regional" },
+  { label: "I don't care", value: "idc" },
 ];
 
 export const referralSources = [
