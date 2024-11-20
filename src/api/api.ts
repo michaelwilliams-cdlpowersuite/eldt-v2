@@ -43,7 +43,8 @@ export const submitStepData = async (
   stepData: Record<string, any>,
   studentId: string
 ) => {
-  const companyId = "1"; // TODO: change to 22, for now I'm getting 403 forbidden
+  const companyId = process.env.REACT_APP_DEFAULT_COMPANY_ID; // TODO: should this be hardcoded or come from me.companies[0].id?
+  console.log("stepData", stepData);
 
   try {
     const response = await apiClient.patch(

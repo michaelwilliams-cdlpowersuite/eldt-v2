@@ -52,6 +52,7 @@ export interface Endorsement {
   icon?: React.ElementType;
   iconStyles?: React.CSSProperties;
   price?: number;
+  apiKey: string;
 }
 
 export const endorsements: Endorsement[] = [
@@ -60,10 +61,23 @@ export const endorsements: Endorsement[] = [
     title: "Hazmat",
     icon: Hazmat,
     iconStyles: { maxHeight: "30px" },
-    price: 50,
+    price: 25,
+    apiKey: "haz",
   },
-  { id: "2", title: "Passenger", icon: Passenger, price: 25 },
-  { id: "3", title: "School Bus", icon: Schoolbus, price: 25 },
+  {
+    id: "2",
+    title: "Passenger",
+    icon: Passenger,
+    price: 25,
+    apiKey: "passenger",
+  },
+  {
+    id: "3",
+    title: "School Bus",
+    icon: Schoolbus,
+    price: 25,
+    apiKey: "schoolBus",
+  },
 ];
 
 export const getEndorsementsByIds = (ids: string[]): Endorsement[] => {

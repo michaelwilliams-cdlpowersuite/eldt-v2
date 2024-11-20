@@ -10,7 +10,7 @@ export const useStudentMutation = (): UseMutationResult<
   Record<string, any>
 > => {
   const { data: me } = useMe();
-  const studentId = me?.student.id;
+  const studentId = me?.student?.id;
   return useMutation({
     mutationFn: async (stepData: Record<string, any>) => {
       return await submitStepData(stepData, studentId);
