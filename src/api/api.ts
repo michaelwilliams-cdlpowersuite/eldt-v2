@@ -39,9 +39,11 @@ export const getAuthToken = () => {
 };
 
 // Student API
-export const submitStepData = async (stepData: Record<string, any>) => {
+export const submitStepData = async (
+  stepData: Record<string, any>,
+  studentId: string
+) => {
   const companyId = "1"; // TODO: change to 22, for now I'm getting 403 forbidden
-  const studentId = "1"; // TODO: grab this somehow from sign up process
 
   try {
     const response = await apiClient.patch(
