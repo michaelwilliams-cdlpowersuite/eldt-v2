@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
 import { RegistrationFormUIValues } from "./validationSchema";
-import { endorsements } from "./products";
+import { courses, endorsements } from "./products";
 
 interface ApiData {
   cdlClass?: string;
-  haz?: boolean; // Can explicitly hold true/false
-  schoolBus?: boolean; // Can explicitly hold true/false
-  passenger?: boolean; // Can explicitly hold true/false
+  haz?: boolean;
+  schoolBus?: boolean;
+  passenger?: boolean;
   user?: {
     firstName?: string;
     lastName?: string;
@@ -24,9 +24,16 @@ export const transformFormikToApi = (
   const apiData: ApiData = {};
 
   if (formikValues.step1) {
-    apiData.cdlClass = formikValues.step1.selectedCourse;
+    // CDL Class
+    const selectedCourseId = formikValues.step1.selectedCourse;
+    const selectedCourse = courses.find(
+      (course) => course.id === selectedCourseId
+    );
+    if (selectedCourse) {
+      apiData.cdlClass = selectedCourse.type;
+    }
 
-    // Initialize all endorsement-related fields to false
+    // Endorsements
     apiData.haz = false;
     apiData.passenger = false;
     apiData.schoolBus = false;
