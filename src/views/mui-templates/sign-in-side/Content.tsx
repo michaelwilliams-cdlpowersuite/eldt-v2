@@ -11,7 +11,7 @@ import { brandColors } from "../../../styles/brandColors";
 const items = [
   {
     icon: <VerifiedIcon sx={{ color: "text.secondary" }} />,
-    title: "FMCSA-Compliant Training",
+    title: "FMCSA-Compliant Training - I'm here!!!",
     description:
       "Get certified with courses that meet all federal requirements for Entry-Level Driver Training.",
   },
