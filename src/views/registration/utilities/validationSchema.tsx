@@ -1,8 +1,6 @@
 import * as Yup from "yup";
 import { Endorsement } from "./products";
 
-const phoneRegExp = /^\(\d{3}\) \d{3}-\d{4}$/;
-
 export const validationSchema = Yup.object({
   step1: Yup.object({
     selectedCourse: Yup.string(),
@@ -23,8 +21,7 @@ export const validationSchema = Yup.object({
     firstName: Yup.string().required("Required"),
     lastName: Yup.string().required("Required"),
     phone: Yup.string()
-      .required("Required")
-      .matches(phoneRegExp, "Phone number is not valid"),
+      .required("Required"),
     dob: Yup.date().required("Required"),
     driversLicense: Yup.string().required("Required"),
     confirmDriversLicense: Yup.string()
@@ -92,9 +89,9 @@ export const initialValues: RegistrationFormUIValues = {
     confirmDriversLicense: "",
     streetAddress: "",
     city: "",
-    state: "",
+    state: null,
     zip: "",
-    language: { label: "English", code: "en" },
+    language: { label: "English", code: "en", apiValue: 1 },
   },
   step3: {
     optIn: true,
@@ -123,14 +120,14 @@ interface Step2 {
   confirmDriversLicense: string;
   streetAddress: string;
   city: string;
-  state: string;
+  state: { label: string; abbreviation: string; } | null;
   zip: string;
-  language: { label: string; code: string };
+  language: { label: string; code: string, apiValue: number, };
 }
 
 interface Step3 {
   optIn: boolean;
-  transmission: { label: string } | null;
+  transmission: { label: string, apiValue: boolean } | null;
   cdlDate: string;
   cdlType: { label: string } | null;
   endorsements: Endorsement[] | null;
