@@ -69,83 +69,19 @@ Deploy to Dev - Client:
   needs:
     - "Build Image - Client"
   only:
-    - master   # don't auto deploy hotfix branches to dev as that will rollback changes - we get hotfixes onto dev via merge into master
+    - main   # don't auto deploy hotfix branches to dev as that will rollback changes - we get hotfixes onto dev via merge into master
   image: registry.gitlab.com/cdl-powersuite/drive509/deployments/deploy:1f251b51329b937013dd3d33fe1bb9c9debba295
   variables:
-    SERVICE_NAME: dev-client
+    SERVICE_NAME: dev-registrations
     AWS_ECS_CLUSTER: fargate
-    AWS_ECS_CONTAINER: dev-client
+    AWS_ECS_CONTAINER: dev-registrations
     AWS_ECS_TASK_DEFINITION_FILE: .gitlab-ci/aws/registrations-dev-task-definition.json
-    AWS_ECS_TASK_DEFINITION: service_dev-client
-    REPOSITORY_NAME: cdl-client
-    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-client
+    AWS_ECS_TASK_DEFINITION: service_dev-registrations
+    REPOSITORY_NAME: cdl-registrations
+    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-registrations
     ENVIRONMENT: dev
-    SLACK_CHANNEL: '#limelyte-cdl-alerts'
   script:
-    - deploy --wait --message-slack
-
-Deploy to Staging - Client:
-  stage: deploy
-  resource_group: staging
-  needs:
-    - "Build Image - Client"
-  rules:
-    - if: $CI_COMMIT_REF_NAME == "master"
-      when: manual
-    - if: $CI_COMMIT_REF_NAME =~ /hotfix\/*/
-      when: manual
-    - if: $CI_COMMIT_REF_NAME == "epic/CDL-1389-instructor-portal-uiux-updates"
-      when: manual
-  image: registry.gitlab.com/cdl-powersuite/drive509/deployments/deploy:1f251b51329b937013dd3d33fe1bb9c9debba295
-  variables:
-    SERVICE_NAME: staging-client
-    AWS_ECS_CLUSTER: fargate
-    AWS_ECS_CONTAINER: staging-client
-    AWS_ECS_TASK_DEFINITION_FILE: .gitlab-ci/aws/client-staging-task-definition.json
-    AWS_ECS_TASK_DEFINITION: service_staging-client
-    REPOSITORY_NAME: cdl-client
-    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-client
-    ENVIRONMENT: dev
-    SLACK_CHANNEL: '#limelyte-cdl-alerts'
-  script:
-    - deploy --wait --message-slack
-
-Install dependencies for Cypress:
-  stage: build
-  only:
-    - master
-  image: cypress/browsers:node18.12.0-chrome107
-  cache:
-    key:
-      files:
-        - package-lock.json
-    paths:
-      - cache/Cypress
-      - node_modules
-      - .npm
-  variables:
-    npm_config_cache: '$CI_PROJECT_DIR/.npm'
-    CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
-  script:
-    - npm ci
-
-Run Cypress Tests:
-  image: cypress/browsers:node18.12.0-chrome107
-  stage: test-dev
-  needs:
-    - "Deploy to Dev - Client"
-    - "Install dependencies for Cypress"
-  dependencies:
-    - "Install dependencies for Cypress"
-  only:
-    - master
-  variables:
-    npm_config_cache: '$CI_PROJECT_DIR/.npm'
-    CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
-  parallel: 2
-  script:
-    - npm i
-    - npx cypress run --browser chrome --config-file cypress/dev.config.ts --record --key $CYPRESS_CLOUD_KEY --parallel
+    - deploy --wait
 
 trigger prod release:
   stage: deploy
@@ -153,7 +89,7 @@ trigger prod release:
     - "Build Image - Client"
   image: registry.gitlab.com/cdl-powersuite/drive509/deployments/build:1f251b51329b937013dd3d33fe1bb9c9debba295
   rules:
-    - if: $CI_COMMIT_REF_NAME == "master"
+    - if: $CI_COMMIT_REF_NAME == "main"
       when: manual
     - if: $CI_COMMIT_REF_NAME =~ /hotfix\/*/
       when: manual
@@ -218,7 +154,7 @@ Tag Client Production Image:
   <<: *is-release
   <<: *publish-tag
   variables:
-    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-client
+    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-registrations
     BUILD_IMAGE_NAME: "$REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
     IMAGE_NAME_FOR_REGISTRY: "$REGISTRY_IMAGE:$CI_COMMIT_TAG"
 
@@ -228,14 +164,13 @@ Deploy to Prod - Client:
   resource_group: prod
   image: registry.gitlab.com/cdl-powersuite/drive509/deployments/deploy:1f251b51329b937013dd3d33fe1bb9c9debba295
   variables:
-    SERVICE_NAME: prod-client
+    SERVICE_NAME: prod-registrations
     AWS_ECS_CLUSTER: fargate
-    AWS_ECS_CONTAINER: prod-client
+    AWS_ECS_CONTAINER: prod-registrations
     AWS_ECS_TASK_DEFINITION_FILE: .gitlab-ci/aws/registrations-prod-task-definition.json
-    AWS_ECS_TASK_DEFINITION: service_prod-client
-    REPOSITORY_NAME: cdl-client
-    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-client
+    AWS_ECS_TASK_DEFINITION: service_prod-registrations
+    REPOSITORY_NAME: cdl-registrations
+    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-registrations
     ENVIRONMENT: prod
-    SLACK_CHANNEL: '#limelyte-cdl-alerts'
   script:
-    - deploy --wait --message-slack
+    - deploy --wait
