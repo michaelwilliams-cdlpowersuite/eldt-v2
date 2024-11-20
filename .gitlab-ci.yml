@@ -53,8 +53,8 @@ Build Image - Client:
       when: manual                             # manual build hotfix branches (we could auto build, this just saves build resources in case we don't want to)
   variables:
     DOCKERFILE_PATH: docker/app/Dockerfile
-    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-react-app
-    SERVICE_NAME: cdl-react-app
+    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-registrations
+    SERVICE_NAME: cdl-registrations
   image: registry.gitlab.com/cdl-powersuite/drive509/deployments/build:1f251b51329b937013dd3d33fe1bb9c9debba295
   services:
     - name: docker:20.10.16-dind
