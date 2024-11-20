@@ -1,0 +1,241 @@
+stages:
+  - build
+  - deploy
+  - test-dev
+  - trigger-release
+  - prepare-release
+  - deploy-prod
+
+.docker: &docker
+  image: registry.gitlab.com/cdl-powersuite/drive509/deployments/build:1f251b51329b937013dd3d33fe1bb9c9debba295
+  services:
+    - docker:20.10-dind
+
+.is-release: &is-release
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v\d{4}-\d{2}-\d{2}-\d{3}$/' # Run this job when a tag is created manually
+
+.publish-tag: &publish-tag
+  <<: *docker
+  stage: prepare-release
+  script:
+    - aws ecr get-login-password | docker login --username AWS --password-stdin "$REGISTRY_IMAGE"
+    - echo "Using tag $CI_COMMIT_TAG for image"
+    - docker pull "$BUILD_IMAGE_NAME"
+    - docker tag "$BUILD_IMAGE_NAME" "$IMAGE_NAME_FOR_REGISTRY"
+    - docker push "$IMAGE_NAME_FOR_REGISTRY"
+
+variables:
+  # Use standard AWS region variable
+  AWS_DEFAULT_REGION: us-west-2
+
+  # As of GitLab 12.5, privileged runners at CERN mount a /certs/client docker volume that enables use of TLS to
+  # communicate with the docker daemon. This avoids a warning about the docker service possibly not starting
+  # successfully.
+  # See https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled
+  DOCKER_TLS_CERTDIR: "/certs"
+
+  # Note that we do not need to set DOCKER_HOST when using the official docker client image: it automatically
+  # defaults to tcp://docker:2376 upon seeing the TLS certificate directory.
+  DOCKER_HOST: tcp://docker:2376/
+
+  # this variable will clone our LTG submodule which we need for builds
+  GIT_SUBMODULE_STRATEGY: normal
+
+  # The hostname for where we store images
+  DOCKER_REGISTRY: 010081502503.dkr.ecr.us-west-2.amazonaws.com
+
+Build Image - Client:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_REF_NAME == "main"      # auto build master
+    - if: $CI_COMMIT_REF_NAME =~ /hotfix\/*/
+      when: manual                             # manual build hotfix branches (we could auto build, this just saves build resources in case we don't want to)
+  variables:
+    DOCKERFILE_PATH: docker/app/Dockerfile
+    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-react-app
+    SERVICE_NAME: cdl-react-app
+  image: registry.gitlab.com/cdl-powersuite/drive509/deployments/build:1f251b51329b937013dd3d33fe1bb9c9debba295
+  services:
+    - name: docker:20.10.16-dind
+      command: ["--mtu=1300"]
+  script:
+    - export DOCKER_BUILD_ARGS="--build-arg env=prod --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA --build-arg SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN --build-arg BUILD_DATE=\"$(date +%F+%T)\" --target production"
+    - build
+
+Deploy to Dev - Client:
+  stage: deploy
+  resource_group: dev
+  needs:
+    - "Build Image - Client"
+  only:
+    - master   # don't auto deploy hotfix branches to dev as that will rollback changes - we get hotfixes onto dev via merge into master
+  image: registry.gitlab.com/cdl-powersuite/drive509/deployments/deploy:1f251b51329b937013dd3d33fe1bb9c9debba295
+  variables:
+    SERVICE_NAME: dev-client
+    AWS_ECS_CLUSTER: fargate
+    AWS_ECS_CONTAINER: dev-client
+    AWS_ECS_TASK_DEFINITION_FILE: .gitlab-ci/aws/registrations-dev-task-definition.json
+    AWS_ECS_TASK_DEFINITION: service_dev-client
+    REPOSITORY_NAME: cdl-client
+    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-client
+    ENVIRONMENT: dev
+    SLACK_CHANNEL: '#limelyte-cdl-alerts'
+  script:
+    - deploy --wait --message-slack
+
+Deploy to Staging - Client:
+  stage: deploy
+  resource_group: staging
+  needs:
+    - "Build Image - Client"
+  rules:
+    - if: $CI_COMMIT_REF_NAME == "master"
+      when: manual
+    - if: $CI_COMMIT_REF_NAME =~ /hotfix\/*/
+      when: manual
+    - if: $CI_COMMIT_REF_NAME == "epic/CDL-1389-instructor-portal-uiux-updates"
+      when: manual
+  image: registry.gitlab.com/cdl-powersuite/drive509/deployments/deploy:1f251b51329b937013dd3d33fe1bb9c9debba295
+  variables:
+    SERVICE_NAME: staging-client
+    AWS_ECS_CLUSTER: fargate
+    AWS_ECS_CONTAINER: staging-client
+    AWS_ECS_TASK_DEFINITION_FILE: .gitlab-ci/aws/client-staging-task-definition.json
+    AWS_ECS_TASK_DEFINITION: service_staging-client
+    REPOSITORY_NAME: cdl-client
+    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-client
+    ENVIRONMENT: dev
+    SLACK_CHANNEL: '#limelyte-cdl-alerts'
+  script:
+    - deploy --wait --message-slack
+
+Install dependencies for Cypress:
+  stage: build
+  only:
+    - master
+  image: cypress/browsers:node18.12.0-chrome107
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - cache/Cypress
+      - node_modules
+      - .npm
+  variables:
+    npm_config_cache: '$CI_PROJECT_DIR/.npm'
+    CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+  script:
+    - npm ci
+
+Run Cypress Tests:
+  image: cypress/browsers:node18.12.0-chrome107
+  stage: test-dev
+  needs:
+    - "Deploy to Dev - Client"
+    - "Install dependencies for Cypress"
+  dependencies:
+    - "Install dependencies for Cypress"
+  only:
+    - master
+  variables:
+    npm_config_cache: '$CI_PROJECT_DIR/.npm'
+    CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+  parallel: 2
+  script:
+    - npm i
+    - npx cypress run --browser chrome --config-file cypress/dev.config.ts --record --key $CYPRESS_CLOUD_KEY --parallel
+
+trigger prod release:
+  stage: deploy
+  needs:
+    - "Build Image - Client"
+  image: registry.gitlab.com/cdl-powersuite/drive509/deployments/build:1f251b51329b937013dd3d33fe1bb9c9debba295
+  rules:
+    - if: $CI_COMMIT_REF_NAME == "master"
+      when: manual
+    - if: $CI_COMMIT_REF_NAME =~ /hotfix\/*/
+      when: manual
+  when: manual
+  script:
+    - |
+      latest_release_tag=$(curl -s https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/releases?job_token=${CI_JOB_TOKEN} | jq -r '.[0].tag_name')
+      tag_pieces=(`echo $latest_release_tag | tr "-" ' '`)
+      latest_release_year=${tag_pieces[0]:1}
+      latest_release_month=${tag_pieces[1]}
+      latest_release_day=${tag_pieces[2]}
+      latest_release_version=${tag_pieces[3]##+(0)}
+
+      last_release_date=$latest_release_year-$latest_release_month-$latest_release_day
+      todays_date=$(date +%F)
+
+      if [ $last_release_date = $todays_date ]; then
+        new_version=$((latest_release_version + 1))
+        new_version=$(printf %03d $new_version)
+      else
+        new_version=001
+      fi
+
+      echo "v${todays_date}-${new_version}" > release-tag.txt
+  artifacts:
+    paths:
+      - release-tag.txt
+
+create release:
+  stage: prepare-release
+  image: registry.gitlab.com/gitlab-org/release-cli
+  rules:
+    - if: $CI_COMMIT_REF_NAME == "master"
+    - if: $CI_COMMIT_REF_NAME =~ /hotfix\/*/
+  needs:
+    - job: "trigger prod release"
+      artifacts: true
+  script:
+    - echo "## Release $(date +%F)" > release-description.txt
+    - |
+      cat >>release-description.txt <<EOL
+      ### Added:
+      - \<insert new feature description here>
+      - ...
+      ### Updated:
+      - \<insert updated feature description here>
+      - ...
+      ### Fixed:
+      - \<insert bug fixes here>
+      - ...
+      ### Security:
+      - \<insert security related changes here>
+      - ...
+      EOL
+    - export RELEASE_DESCRIPTION=$(cat release-description.txt)
+    - export RELEASE_TAG_NAME=$(cat release-tag.txt)
+    - >
+      release-cli create --name "Release $RELEASE_TAG_NAME" --description "$RELEASE_DESCRIPTION"
+      --tag-name $RELEASE_TAG_NAME --ref $CI_COMMIT_SHA
+
+Tag Client Production Image:
+  <<: *is-release
+  <<: *publish-tag
+  variables:
+    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-client
+    BUILD_IMAGE_NAME: "$REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
+    IMAGE_NAME_FOR_REGISTRY: "$REGISTRY_IMAGE:$CI_COMMIT_TAG"
+
+Deploy to Prod - Client:
+  <<: *is-release
+  stage: deploy-prod
+  resource_group: prod
+  image: registry.gitlab.com/cdl-powersuite/drive509/deployments/deploy:1f251b51329b937013dd3d33fe1bb9c9debba295
+  variables:
+    SERVICE_NAME: prod-client
+    AWS_ECS_CLUSTER: fargate
+    AWS_ECS_CONTAINER: prod-client
+    AWS_ECS_TASK_DEFINITION_FILE: .gitlab-ci/aws/registrations-prod-task-definition.json
+    AWS_ECS_TASK_DEFINITION: service_prod-client
+    REPOSITORY_NAME: cdl-client
+    REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-client
+    ENVIRONMENT: prod
+    SLACK_CHANNEL: '#limelyte-cdl-alerts'
+  script:
+    - deploy --wait --message-slack

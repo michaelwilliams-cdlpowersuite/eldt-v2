@@ -1,0 +1,29 @@
+{
+  "executionRoleArn": "arn:aws:iam::965142579563:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/fargate/service/prod-client",
+          "awslogs-region": "us-west-2",
+          "awslogs-stream-prefix": "fargate"
+        }
+      },
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ],
+      "environment": [],
+      "image": "",
+      "name": "prod-client"
+    }
+  ],
+  "memory": "512",
+  "family": "service_prod-client",
+  "networkMode": "awsvpc",
+  "cpu": "256"
+}

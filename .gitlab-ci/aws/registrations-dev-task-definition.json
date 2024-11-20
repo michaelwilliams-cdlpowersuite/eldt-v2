@@ -1,0 +1,32 @@
+{
+  "executionRoleArn": "arn:aws:iam::965142579563:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/service_dev-registrations",
+          "awslogs-region": "us-west-2",
+          "awslogs-stream-prefix": "fargate",
+          "mode": "non-blocking",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "protocol": "tcp",
+          "containerPort": 80
+        }
+      ],
+      "essential": true,
+      "environment": [],
+      "image": "",
+      "name": "dev-registrations"
+    }
+  ],
+  "cpu": "2048",
+  "memory": "4096",
+  "family": "service_dev-registrations",
+  "networkMode": "awsvpc"
+}
