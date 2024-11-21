@@ -1,29 +1,60 @@
 import {
+  Button,
   Card,
   CardContent,
   CardHeader,
-  Divider,
   Grid2,
   Typography,
 } from "@mui/material";
+import { useRef, useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
 
 interface OrderSummaryProps {}
 
 const OrderSummary: React.FC<OrderSummaryProps> = () => {
+  const sigCanvas = useRef<SignatureCanvas | null>(null);
+  const [signature, setSignature] = useState<string | null>(null);
+
+  const clearCanvas = () => {
+    sigCanvas?.current?.clear();
+  };
+
+  const saveSignature = () => {
+    if (sigCanvas.current) {
+      const dataURL = sigCanvas.current.toDataURL();
+      setSignature(dataURL);
+    }
+  };
+
+  console.log(signature);
+
   return (
     <Grid2 container sx={{ pt: 2 }}>
       <Grid2 size={12}>
         <Card elevation={0} variant="outlined">
           <CardHeader title="Refund Policy" />
           <CardContent>
-            <Typography variant="body1"><strong>By signing below, you are agreeing to ELDT's current refund policy.</strong></Typography>
             <Typography variant="body1">
-              <br />All sales of ELDT online lessons are final once the purchase is submitted and payment is processed. For additional information, please contact us at info@eldt.com or call us at (509) 241-3987.
+              <strong>
+                By signing below, you are agreeing to ELDT's current refund
+                policy.
+              </strong>
             </Typography>
-            <SignatureCanvas canvasProps={{width: 400, height: 100, className: 'sigCanvas'}} /> *
-            <Typography>* Please sign above</Typography>
+            <Typography variant="body1">
+              <br />
+              All sales of ELDT online lessons are final once the purchase is
+              submitted and payment is processed. For additional information,
+              please contact us at info@eldt.com or call us at (509) 241-3987.
+            </Typography>
+            <SignatureCanvas
+              ref={sigCanvas}
+              canvasProps={{ width: 400, height: 100, className: "sigCanvas" }}
+              backgroundColor="#f5f5f5"
+            />
+            *<Typography>* Please sign above</Typography>
           </CardContent>
+          <Button onClick={clearCanvas}>Clear</Button>
+          <Button onClick={saveSignature}>Done</Button>
         </Card>
       </Grid2>
     </Grid2>
