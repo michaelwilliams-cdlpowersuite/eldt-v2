@@ -12,7 +12,6 @@ export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("apiToken")
   );
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   const isTokenExpired = (token: string) => {
     try {
@@ -30,13 +29,21 @@ export const useAuth = () => {
         withCredentials: true,
       });
       const { token } = response.data;
-      localStorage.setItem("apiToken", token);
-      setIsAuthenticated(true);
+      setAuthentication(token);
     } catch (error) {
       console.error("Failed to refresh token", error);
-      setIsAuthenticated(false);
-      localStorage.removeItem("apiToken");
+      clearAuthentication();
     }
+  };
+
+  const setAuthentication = (token: string) => {
+    localStorage.setItem("apiToken", token);
+    setIsAuthenticated(!isTokenExpired(token));
+  };
+
+  const clearAuthentication = () => {
+    localStorage.removeItem("apiToken");
+    setIsAuthenticated(false);
   };
 
   const handleStorageChange = () => {
@@ -75,5 +82,5 @@ export const useAuth = () => {
     return () => clearInterval(interval);
   }, []);
 
-  return { isAuthenticated };
+  return { isAuthenticated, setAuthentication, clearAuthentication };
 };

@@ -1,6 +1,7 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { loginUser } from "../api/api";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./useAuth";
 
 interface LoginVariables {
   email: string;
@@ -17,11 +18,12 @@ export const useLoginMutation = (): UseMutationResult<
   LoginVariables
 > => {
   const navigate = useNavigate();
+  const { setAuthentication } = useAuth();
   return useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
       // Handle success
-      localStorage.setItem("apiToken", data.accessToken);
+      setAuthentication(data.accessToken);
       navigate("/", { replace: true });
     },
     onError: (error) => {

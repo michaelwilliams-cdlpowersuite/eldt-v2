@@ -3,6 +3,7 @@ import { signUpUser } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
 import { snackOptions } from "../views/registration/utilities/snackOptions";
+import { useAuth } from "./useAuth";
 
 interface LoginVariables {
   email: string;
@@ -19,11 +20,12 @@ export const useSignUpMutation = (): UseMutationResult<
   LoginVariables
 > => {
   const navigate = useNavigate();
+  const { setAuthentication } = useAuth();
 
   return useMutation({
     mutationFn: signUpUser,
     onSuccess: (data) => {
-      localStorage.setItem("apiToken", data.accessToken);
+      setAuthentication(data.accessToken);
       enqueueSnackbar("Sign up successful!", snackOptions("success"));
       navigate("/verify-email");
     },
