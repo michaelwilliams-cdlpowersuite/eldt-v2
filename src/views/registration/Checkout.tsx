@@ -75,11 +75,7 @@ const Checkout: React.FC<CheckoutProps> = () => {
         ))}
       </Grid2>
       <RefundPolicy />
-      <OrderSummary
-        selectedCourse={selectedCourse}
-        selectedCourseType={selectedCourseType}
-        selectedEndorsements={selectedEndorsements}
-      />
+      <OrderSummary />
     </Container>
   );
 };
