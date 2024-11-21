@@ -9,7 +9,6 @@ const RegistrationAppBar: React.FC<RegistrationAppBarProps> = () => {
     <AppBar position="fixed" elevation={0} sx={{ bgcolor: "primary.main" }}>
       <Toolbar>
         <Container
-          maxWidth="md"
           disableGutters
           sx={{
             display: "flex",
