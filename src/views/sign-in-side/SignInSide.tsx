@@ -1,6 +1,6 @@
 import Stack from "@mui/material/Stack";
-import AppTheme from "../../../styles/shared-theme/AppTheme";
-import ColorModeSelect from "../../../styles/shared-theme/ColorModeSelect";
+import AppTheme from "../../styles/shared-theme/AppTheme";
+import ColorModeSelect from "../../styles/shared-theme/ColorModeSelect";
 import Content from "./Content";
 import SignInCard from "./SignInCard";
 

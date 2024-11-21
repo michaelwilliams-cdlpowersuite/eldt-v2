@@ -14,11 +14,11 @@ import { styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import LogoIcon from "../../../assets/LogoIconELDT";
-import { useSignUpMutation } from "../../../hooks/useSignUp";
-import { brandColors } from "../../../styles/brandColors";
-import AppTheme from "../../../styles/shared-theme/AppTheme";
-import ColorModeSelect from "../../../styles/shared-theme/ColorModeSelect";
+import LogoIcon from "../../assets/LogoIconELDT";
+import { useSignUpMutation } from "../../hooks/useSignUp";
+import { brandColors } from "../../styles/brandColors";
+import AppTheme from "../../styles/shared-theme/AppTheme";
+import ColorModeSelect from "../../styles/shared-theme/ColorModeSelect";
 import { GoogleIcon } from "./CustomIcons";
 import PasswordValidator from "./PasswordValidator";
 

@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { useForgotPasswordMutation } from "../../../hooks/useForgotPassword";
+import { useForgotPasswordMutation } from "../../hooks/useForgotPassword";
 
 interface ForgotPasswordProps {
   open: boolean;

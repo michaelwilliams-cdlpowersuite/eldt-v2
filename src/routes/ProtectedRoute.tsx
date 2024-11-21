@@ -3,28 +3,30 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 export const ProtectedRoute = ({
   isAuthenticated,
-  emailVerified,
+  isEmailVerified,
   fallback,
   children,
 }: {
   isAuthenticated: boolean;
-  emailVerified?: boolean;
+  isEmailVerified?: boolean;
   fallback?: JSX.Element;
   children: JSX.Element;
 }) => {
   const navigate = useNavigate();
 
+  console.log("isAuthenticated", isAuthenticated);
+  console.log("isEmailVerified", isEmailVerified);
   useEffect(() => {
     if (
       isAuthenticated &&
-      emailVerified &&
+      isEmailVerified &&
       window.location.pathname === "/verify-email"
     ) {
       navigate("/", { replace: true });
     }
-  }, [isAuthenticated, emailVerified, navigate]);
+  }, [isAuthenticated, isEmailVerified, navigate]);
 
-  if (fallback && !emailVerified) {
+  if (fallback && !isEmailVerified) {
     return fallback;
   }
 
@@ -32,7 +34,10 @@ export const ProtectedRoute = ({
     return <Navigate to="/sign-in" />;
   }
 
-  if (emailVerified === false) {
+  if (
+    isEmailVerified === false &&
+    window.location.pathname !== "/verify-email"
+  ) {
     return <Navigate to="/verify-email" />;
   }
 

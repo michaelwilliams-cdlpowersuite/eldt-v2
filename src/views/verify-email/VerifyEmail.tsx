@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import AppTheme from "../../styles/shared-theme/AppTheme";
 import ColorModeSelect from "../../styles/shared-theme/ColorModeSelect";
-import { Card, SignUpContainer } from "../mui-templates/sign-up/SignUp";
+import { Card, SignUpContainer } from "../sign-up/SignUp";
 import LogoIcon from "../../assets/LogoIconELDT";
 import { brandColors } from "../../styles/brandColors";
 import { useMe } from "../../hooks/useMe";

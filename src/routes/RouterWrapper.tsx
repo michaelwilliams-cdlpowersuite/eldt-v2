@@ -5,8 +5,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { useMe } from "../hooks/useMe";
-import SignInSide from "../views/mui-templates/sign-in-side/SignInSide";
-import SignUp from "../views/mui-templates/sign-up/SignUp";
+import SignInSide from "../views/sign-in-side/SignInSide";
+import SignUp from "../views/sign-up/SignUp";
 import Registration from "../views/registration/Registration";
 import VerifyEmail from "../views/verify-email/VerifyEmail";
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -15,14 +15,18 @@ const RouterWrapper = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("apiToken")
   );
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   const { data: me, isLoading: isMeLoading } = useMe();
 
-  const isEmailVerified = !!me?.emailVerifiedAt;
+  useEffect(() => {
+    setIsEmailVerified(!!me?.emailVerifiedAt);
+  }, [me]);
 
   const handleStorageChange = () => {
     setIsAuthenticated(!!localStorage.getItem("apiToken"));
   };
+
   useEffect(() => {
     window.addEventListener("storage", handleStorageChange);
     return () => {
@@ -33,20 +37,16 @@ const RouterWrapper = () => {
   // Trigger state update directly on token change within the same tab
   useEffect(() => {
     const originalSetItem = localStorage.setItem;
-
     localStorage.setItem = function (key: string, value: string) {
       originalSetItem.apply(this, [key, value] as [string, string]);
       if (key === "apiToken") {
         handleStorageChange();
       }
     };
-
     return () => {
       localStorage.setItem = originalSetItem;
     };
   }, []);
-
-  // Define routes
 
   const fallback = <div>Loading...</div>;
 
@@ -60,7 +60,7 @@ const RouterWrapper = () => {
       element: (
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
-          emailVerified={isEmailVerified}
+          isEmailVerified={isEmailVerified}
           fallback={isMeLoading ? fallback : undefined}
         >
           <Registration />
@@ -80,8 +80,7 @@ const RouterWrapper = () => {
       element: (
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
-          emailVerified={isEmailVerified}
-          fallback={isMeLoading ? fallback : undefined}
+          isEmailVerified={isEmailVerified}
         >
           <VerifyEmail disableCustomTheme />
         </ProtectedRoute>
