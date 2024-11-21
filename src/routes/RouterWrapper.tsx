@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import { useMe } from "../hooks/useMe";
 import SignInSide from "../views/mui-templates/sign-in-side/SignInSide";
 import SignUp from "../views/mui-templates/sign-up/SignUp";
@@ -49,6 +53,10 @@ const RouterWrapper = () => {
   const router = createBrowserRouter([
     {
       path: "/",
+      element: <Navigate to="/register" replace />,
+    },
+    {
+      path: "/register",
       element: (
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
