@@ -13,6 +13,7 @@ import { useSelectEndorsement } from "./hooks/useSelectEndorsement";
 import OrderSummary from "./components/OrderSummary";
 import CheckoutForm from "./components/CheckoutForm";
 import { useSelectCourseType } from "./hooks/useSelectCourseType";
+import RefundPolicy from "./components/RefundPolicy";
 
 interface Step4Props {}
 
@@ -72,6 +73,7 @@ const Step4: React.FC<Step4Props> = () => {
           </Grid2>
         ))}
       </Grid2>
+      <RefundPolicy />
       <OrderSummary />
       <Grid2 container spacing={2} sx={{ mt: 2 }}>
         <Grid2 size={12}>
