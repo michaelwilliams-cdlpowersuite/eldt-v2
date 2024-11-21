@@ -8,7 +8,12 @@ import { theme } from "./styles/theme";
 import { AmountProvider } from "./views/registration/context/AmountContext";
 import * as amplitude from "@amplitude/analytics-browser";
 
-amplitude.init("<YOUR_API_KEY>");
+const amplitudeApiKey = process.env.REACT_APP_AMPLITUDE_API_KEY;
+if (amplitudeApiKey) {
+  amplitude.init(amplitudeApiKey);
+} else {
+  console.error("Amplitude API key is not defined");
+}
 
 const App = () => {
   const queryClient = new QueryClient();
