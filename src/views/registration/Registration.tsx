@@ -43,8 +43,8 @@ const Registration: React.FC<RegistrationProps> = () => {
     <Elements stripe={stripePromise} options={options}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <RegistrationAppBar />
-        <Container maxWidth="md" disableGutters sx={{ pt: 1 }}>
-          <Box sx={{ height: "calc(100vh - 64px)" }}>
+        <Container disableGutters sx={{ pt: 1 }}>
+          <Box>
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
