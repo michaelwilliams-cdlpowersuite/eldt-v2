@@ -6,6 +6,9 @@ import { SnackbarProvider } from "notistack";
 import RouterWrapper from "./routes/RouterWrapper";
 import { theme } from "./styles/theme";
 import { AmountProvider } from "./views/registration/context/AmountContext";
+import * as amplitude from "@amplitude/analytics-browser";
+
+amplitude.init("<YOUR_API_KEY>");
 
 const App = () => {
   const queryClient = new QueryClient();
