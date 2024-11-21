@@ -21,7 +21,6 @@ const OrderSummary: React.FC<OrderSummaryProps> = () => {
     selectedEndorsementsField.value
   );
 
-  console.log(selectedCourseType);
   const calculatedSubtotal = useMemo(() => {
     let subtotal = 0;
     if (selectedCourseType?.value?.price) {
@@ -32,6 +31,14 @@ const OrderSummary: React.FC<OrderSummaryProps> = () => {
     });
     return subtotal;
   }, [selectedCourseType, selectedEndorsements]);
+
+  const calculatedProcessingFee = useMemo(() => {
+    return calculatedSubtotal * 0.0385;
+  }, [calculatedSubtotal]);
+
+  const calculatedTotal = useMemo(() => {
+    return calculatedSubtotal + calculatedProcessingFee;
+  }, [calculatedSubtotal, calculatedProcessingFee]);
 
   return (
     <Grid2 container sx={{ pt: 2 }}>
@@ -45,14 +52,35 @@ const OrderSummary: React.FC<OrderSummaryProps> = () => {
             <Divider sx={{ my: 1 }} />
             <Stack justifyContent="space-between" direction="row">
               <Typography variant="body1">Subtotal</Typography>
-              <Typography variant="body1">{calculatedSubtotal}</Typography>
+              <Typography variant="body1">
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }).format(calculatedSubtotal)}
+              </Typography>
             </Stack>
-            <Typography variant="body1">Processing Fee</Typography>
-            <Typography variant="body1">Tax</Typography>
+            <Stack justifyContent="space-between" direction="row">
+              <Typography variant="body1">Processing Fee</Typography>
+              <Typography variant="body1">
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }).format(calculatedProcessingFee)}
+              </Typography>
+            </Stack>
+
             <Divider sx={{ my: 1 }} />
-            <Typography variant="body1" fontWeight="bold">
-              Total
-            </Typography>
+            <Stack justifyContent="space-between" direction="row">
+              <Typography variant="body1" fontWeight="bold">
+                Total
+              </Typography>
+              <Typography variant="body1">
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }).format(calculatedTotal)}
+              </Typography>
+            </Stack>
           </CardContent>
         </Card>
       </Grid2>
