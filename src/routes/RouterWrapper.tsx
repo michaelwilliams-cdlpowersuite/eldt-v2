@@ -10,11 +10,10 @@ import SignUp from "../views/sign-up/SignUp";
 import Registration from "../views/registration/Registration";
 import VerifyEmail from "../views/verify-email/VerifyEmail";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { useAuth } from "../hooks/useAuth";
 
 const RouterWrapper = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("apiToken")
-  );
+  const { isAuthenticated } = useAuth();
   const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   const { data: me, isLoading: isMeLoading } = useMe();
@@ -22,31 +21,6 @@ const RouterWrapper = () => {
   useEffect(() => {
     setIsEmailVerified(!!me?.emailVerifiedAt);
   }, [me]);
-
-  const handleStorageChange = () => {
-    setIsAuthenticated(!!localStorage.getItem("apiToken"));
-  };
-
-  useEffect(() => {
-    window.addEventListener("storage", handleStorageChange);
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
-
-  // Trigger state update directly on token change within the same tab
-  useEffect(() => {
-    const originalSetItem = localStorage.setItem;
-    localStorage.setItem = function (key: string, value: string) {
-      originalSetItem.apply(this, [key, value] as [string, string]);
-      if (key === "apiToken") {
-        handleStorageChange();
-      }
-    };
-    return () => {
-      localStorage.setItem = originalSetItem;
-    };
-  }, []);
 
   const fallback = <div>Loading...</div>;
 
