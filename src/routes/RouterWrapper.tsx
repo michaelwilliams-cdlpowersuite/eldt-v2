@@ -12,26 +12,39 @@ const RouterWrapper = () => {
     !!localStorage.getItem("apiToken")
   );
 
-  const { data: me, isLoading } = useMe();
+  const { data: me, isLoading: isMeLoading } = useMe();
 
   const isEmailVerified = !!me?.emailVerifiedAt;
 
+  const handleStorageChange = () => {
+    setIsAuthenticated(!!localStorage.getItem("apiToken"));
+  };
   useEffect(() => {
-    const handleStorageChange = () => {
-      setIsAuthenticated(!!localStorage.getItem("apiToken"));
-    };
-
     window.addEventListener("storage", handleStorageChange);
     return () => {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
 
-  const fallback = <div>Loading...</div>;
+  // Trigger state update directly on token change within the same tab
+  useEffect(() => {
+    const originalSetItem = localStorage.setItem;
 
-  if (isLoading) {
-    return fallback;
-  }
+    localStorage.setItem = function (key: string, value: string) {
+      originalSetItem.apply(this, [key, value] as [string, string]);
+      if (key === "apiToken") {
+        handleStorageChange();
+      }
+    };
+
+    return () => {
+      localStorage.setItem = originalSetItem;
+    };
+  }, []);
+
+  // Define routes
+
+  const fallback = <div>Loading...</div>;
 
   const router = createBrowserRouter([
     {
@@ -40,7 +53,7 @@ const RouterWrapper = () => {
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
           emailVerified={isEmailVerified}
-          fallback={isLoading ? fallback : undefined}
+          fallback={isMeLoading ? fallback : undefined}
         >
           <Registration />
         </ProtectedRoute>
@@ -60,7 +73,7 @@ const RouterWrapper = () => {
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
           emailVerified={isEmailVerified}
-          fallback={isLoading ? fallback : undefined}
+          fallback={isMeLoading ? fallback : undefined}
         >
           <VerifyEmail disableCustomTheme />
         </ProtectedRoute>

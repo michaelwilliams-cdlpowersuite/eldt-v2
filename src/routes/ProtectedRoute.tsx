@@ -24,7 +24,7 @@ export const ProtectedRoute = ({
     }
   }, [isAuthenticated, emailVerified, navigate]);
 
-  if (fallback && emailVerified === undefined) {
+  if (fallback && !emailVerified) {
     return fallback;
   }
 

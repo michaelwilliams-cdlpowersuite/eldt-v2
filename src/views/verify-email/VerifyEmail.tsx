@@ -10,8 +10,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import AppTheme from "../mui-templates/shared-theme/AppTheme";
-import ColorModeSelect from "../mui-templates/shared-theme/ColorModeSelect";
+import AppTheme from "../../styles/shared-theme/AppTheme";
+import ColorModeSelect from "../../styles/shared-theme/ColorModeSelect";
 import { Card, SignUpContainer } from "../mui-templates/sign-up/SignUp";
 import LogoIcon from "../../assets/LogoIconELDT";
 import { brandColors } from "../../styles/brandColors";

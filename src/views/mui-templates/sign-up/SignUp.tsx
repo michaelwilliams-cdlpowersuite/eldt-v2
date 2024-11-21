@@ -17,8 +17,8 @@ import * as React from "react";
 import LogoIcon from "../../../assets/LogoIconELDT";
 import { useSignUpMutation } from "../../../hooks/useSignUp";
 import { brandColors } from "../../../styles/brandColors";
-import AppTheme from "../shared-theme/AppTheme";
-import ColorModeSelect from "../shared-theme/ColorModeSelect";
+import AppTheme from "../../../styles/shared-theme/AppTheme";
+import ColorModeSelect from "../../../styles/shared-theme/ColorModeSelect";
 import { GoogleIcon } from "./CustomIcons";
 import PasswordValidator from "./PasswordValidator";
 
