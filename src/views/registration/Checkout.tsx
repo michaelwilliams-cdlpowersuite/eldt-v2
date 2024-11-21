@@ -1,19 +1,18 @@
 import { Container, Grid2, Toolbar, Typography } from "@mui/material";
+import { useField } from "formik";
+import OrderSummary from "./components/OrderSummary";
 import { EndorsementCard, ProductTypeCard } from "./components/ProductCards";
+import RefundPolicy from "./components/RefundPolicy";
+import { useSelectCourseType } from "./hooks/useSelectCourseType";
+import { useSelectEndorsement } from "./hooks/useSelectEndorsement";
 import {
+  courseTypes,
   Endorsement,
   endorsements,
   getCourseById,
   getEndorsementsByIds,
-  courseTypes,
 } from "./utilities/products";
 import { pxContainer } from "./utilities/styles";
-import { useField } from "formik";
-import { useSelectEndorsement } from "./hooks/useSelectEndorsement";
-import OrderSummary from "./components/OrderSummary";
-import CheckoutForm from "./components/CheckoutForm";
-import { useSelectCourseType } from "./hooks/useSelectCourseType";
-import RefundPolicy from "./components/RefundPolicy";
 
 interface CheckoutProps {}
 
@@ -75,7 +74,11 @@ const Checkout: React.FC<CheckoutProps> = () => {
         ))}
       </Grid2>
       <RefundPolicy />
-      <OrderSummary />
+      <OrderSummary
+        selectedCourse={selectedCourse}
+        selectedCourseType={selectedCourseType}
+        selectedEndorsements={selectedEndorsements}
+      />
     </Container>
   );
 };

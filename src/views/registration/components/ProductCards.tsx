@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -13,6 +14,9 @@ import {
 import { Stack } from "@mui/system";
 import React from "react";
 import { Course, Endorsement, CourseType } from "../utilities/products";
+import { brandColors } from "../../../styles/brandColors";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 
 interface CourseCardProps {
   course: Course;
@@ -143,11 +147,12 @@ export const ProductTypeCard: React.FC<ProductTypeCardProps> = ({
         display: "flex",
         flexDirection: "column",
         height: "100%",
-        border: selected ? "primary.main" : "",
+
+        // border: selected ? "primary.main" : brandColors.cdlDarkBlue,
       }}
     >
       <CardActionArea
-        sx={{ display: "flex", flexDirection: "column", height: "100%" }}
+        sx={{ display: "flex", flexDirection: "column", height: "100%", pb: 2 }}
       >
         <CardContent
           sx={{
@@ -196,6 +201,18 @@ export const ProductTypeCard: React.FC<ProductTypeCardProps> = ({
             ))}
           </List>
         </CardContent>
+
+        <Button
+          variant="contained"
+          color={selected ? "error" : "secondary"}
+          size="medium"
+          sx={{ fontWeight: "bold" }}
+          startIcon={
+            selected ? <RemoveShoppingCartIcon /> : <ShoppingCartIcon />
+          }
+        >
+          {selected ? "Remove from Cart" : "Add to Cart"}
+        </Button>
       </CardActionArea>
     </Card>
   );

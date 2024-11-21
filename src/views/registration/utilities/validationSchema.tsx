@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { Endorsement } from "./products";
+import { CourseType, Endorsement } from "./products";
 
 export const validationSchema = Yup.object({
   step1: Yup.object({
@@ -73,7 +73,7 @@ export const validationSchema = Yup.object({
     }),
   }),
   step4: Yup.object({
-    selectedCourseType: Yup.string().required("Required"),
+    selectedCourseType: Yup.object().required("Required"),
   }),
 });
 
@@ -102,7 +102,7 @@ export const initialValues: RegistrationFormUIValues = {
     where: "",
     referralSource: null,
   },
-  step4: { selectedCourseType: "" },
+  step4: { selectedCourseType: null },
 };
 
 interface Step1 {
@@ -136,7 +136,7 @@ interface Step3 {
 }
 
 interface Step4 {
-  selectedCourseType: string;
+  selectedCourseType: CourseType | null;
 }
 
 export interface RegistrationFormUIValues {
