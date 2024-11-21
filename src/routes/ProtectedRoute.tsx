@@ -5,17 +5,17 @@ export const ProtectedRoute = ({
   isAuthenticated,
   isEmailVerified,
   fallback,
+  isLoading,
   children,
 }: {
   isAuthenticated: boolean;
   isEmailVerified?: boolean;
   fallback?: JSX.Element;
+  isLoading?: boolean;
   children: JSX.Element;
 }) => {
   const navigate = useNavigate();
 
-  console.log("isAuthenticated", isAuthenticated);
-  console.log("isEmailVerified", isEmailVerified);
   useEffect(() => {
     if (
       isAuthenticated &&
@@ -26,20 +26,20 @@ export const ProtectedRoute = ({
     }
   }, [isAuthenticated, isEmailVerified, navigate]);
 
-  if (fallback && !isEmailVerified) {
-    return fallback;
+  if (isLoading) {
+    return fallback || <div>Loading...</div>;
   }
 
   if (!isAuthenticated) {
     return <Navigate to="/sign-in" />;
   }
 
-  if (
-    isEmailVerified === false &&
-    window.location.pathname !== "/verify-email"
-  ) {
-    return <Navigate to="/verify-email" />;
-  }
+  //   if (
+  //     isEmailVerified === false &&
+  //     window.location.pathname !== "/verify-email"
+  //   ) {
+  //     return <Navigate to="/verify-email" />;
+  //   }
 
   return children;
 };

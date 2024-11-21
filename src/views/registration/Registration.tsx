@@ -9,6 +9,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { useAmount } from "./context/AmountContext";
 import { loadStripe } from "@stripe/stripe-js";
 import { useMemo } from "react";
+import { Outlet } from "react-router-dom";
 
 const stripePromise = loadStripe(
   "pk_test_51KVilWEqooDHZwmck4VuUymwm3Bw75Fuyryrd0o3MiIlhowWiYpgJg0RgyrNIKufGU4lwTGYZxoIcsSSgP2ZaDmJ00Lb7M2O9G" // TODO: Move to .env
@@ -50,7 +51,7 @@ const Registration: React.FC<RegistrationProps> = () => {
               onSubmit={(values) => console.log(values)}
             >
               <Form>
-                <Stepper />
+                <Outlet />
               </Form>
             </Formik>
           </Box>

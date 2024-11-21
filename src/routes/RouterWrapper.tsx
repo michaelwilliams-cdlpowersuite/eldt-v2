@@ -11,11 +11,15 @@ import Registration from "../views/registration/Registration";
 import VerifyEmail from "../views/verify-email/VerifyEmail";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { useAuth } from "../hooks/useAuth";
+import Checkout from "../views/registration/Checkout";
+import Payment from "../views/registration/Payment";
+import StepperOrchestration from "../views/registration/Stepper";
 
 const RouterWrapper = () => {
   const { isAuthenticated } = useAuth();
   const [isEmailVerified, setIsEmailVerified] = useState(false);
 
+  console.log("isAuthenticated", isAuthenticated);
   const { data: me, isLoading: isMeLoading } = useMe();
 
   useEffect(() => {
@@ -36,11 +40,27 @@ const RouterWrapper = () => {
           isAuthenticated={isAuthenticated}
           isEmailVerified={isEmailVerified}
           fallback={isMeLoading ? fallback : undefined}
+          isLoading={isMeLoading}
         >
           <Registration />
         </ProtectedRoute>
       ),
+      children: [
+        {
+          index: true,
+          element: <StepperOrchestration />,
+        },
+        {
+          path: "checkout",
+          element: <Checkout />,
+        },
+        {
+          path: "payment",
+          element: <Payment />,
+        },
+      ],
     },
+
     {
       path: "/sign-in",
       element: <SignInSide disableCustomTheme />,

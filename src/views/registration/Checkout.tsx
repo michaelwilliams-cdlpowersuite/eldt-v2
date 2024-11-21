@@ -1,4 +1,4 @@
-import { Container, Grid2, Typography } from "@mui/material";
+import { Container, Grid2, Toolbar, Typography } from "@mui/material";
 import { EndorsementCard, ProductTypeCard } from "./components/ProductCards";
 import {
   Endorsement,
@@ -15,9 +15,9 @@ import CheckoutForm from "./components/CheckoutForm";
 import { useSelectCourseType } from "./hooks/useSelectCourseType";
 import RefundPolicy from "./components/RefundPolicy";
 
-interface Step4Props {}
+interface CheckoutProps {}
 
-const Step4: React.FC<Step4Props> = () => {
+const Checkout: React.FC<CheckoutProps> = () => {
   const [selectedCourseField] = useField("step1.selectedCourse");
   const [selectedEndorsementsField] = useField("step1.selectedEndorsements");
   const [selectedCourseType] = useField("step4.selectedCourseType");
@@ -38,6 +38,7 @@ const Step4: React.FC<Step4Props> = () => {
 
   return (
     <Container sx={{ px: pxContainer }}>
+      <Toolbar />
       <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>
         Checkout
       </Typography>
@@ -84,4 +85,4 @@ const Step4: React.FC<Step4Props> = () => {
   );
 };
 
-export default Step4;
+export default Checkout;

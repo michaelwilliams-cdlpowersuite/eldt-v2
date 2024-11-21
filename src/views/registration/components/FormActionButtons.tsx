@@ -62,7 +62,7 @@ const FormActionButtons: React.FC<FormActionButtonsProps> = ({
           "&:hover": { backgroundColor: brandColors.goGreenHover },
         }}
       >
-        {isLastStep ? "Finish" : "Next"}
+        {isLastStep ? "Checkout" : "Next"}
       </Button>
     </Box>
   );

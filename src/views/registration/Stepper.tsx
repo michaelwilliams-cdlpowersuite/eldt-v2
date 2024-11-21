@@ -1,31 +1,31 @@
+import { Toolbar } from "@mui/material";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
-import * as React from "react";
-import FormActionButtons from "./components/FormActionButtons";
-import { steps } from "./utilities/steps";
-import Step4 from "./Step4";
-import useValidateCurrentStep from "./hooks/useValidateCurrentStep";
-import { enqueueSnackbar } from "notistack";
-import { snackOptions } from "./utilities/snackOptions";
 import { setIn, useFormikContext } from "formik";
-import { RegistrationFormUIValues } from "./utilities/validationSchema";
-import { Toolbar } from "@mui/material";
+import { enqueueSnackbar } from "notistack";
+import * as React from "react";
+import { Navigate } from "react-router-dom";
 import { useStudentMutation } from "../../hooks/useStudentMutation";
+import FormActionButtons from "./components/FormActionButtons";
+import useValidateCurrentStep from "./hooks/useValidateCurrentStep";
+import { snackOptions } from "./utilities/snackOptions";
+import { steps } from "./utilities/steps";
 import { transformFormikToApi } from "./utilities/transformData";
+import { RegistrationFormUIValues } from "./utilities/validationSchema";
 
 interface StepperOrchestrationProps {}
 
 // This code is lifted from the MUI Stepper example
 // https://mui.com/material-ui/react-stepper/#linear
 const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(2);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const validateCurrentStep = useValidateCurrentStep();
   const { values, setTouched } = useFormikContext<RegistrationFormUIValues>();
   const submitStep = useStudentMutation();
+  console.log("Rendering StepperOrchestration with activeStep:", activeStep);
 
   const isStepOptional = (step: number) => {
     // return step === 1;
@@ -114,13 +114,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
         })}
       </Stepper>
       {activeStep === steps.length ? (
-        <React.Fragment>
-          <Step4 />
-          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-            <Box sx={{ flex: "1 1 auto" }} />
-            <Button onClick={handleReset}>Checkout</Button>
-          </Box>
-        </React.Fragment>
+        <Navigate to="checkout" />
       ) : (
         <React.Fragment>
           <Box sx={{ mt: 2, mb: 1 }}>
