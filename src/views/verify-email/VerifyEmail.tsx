@@ -20,8 +20,6 @@ import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import PhoneIcon from "@mui/icons-material/Phone";
 import EmailIcon from "@mui/icons-material/Email";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useUpdateEmail } from "../../hooks/useUpdateEmail";
 import { useResendVerificationEmail } from "../../hooks/useResendVerificationEmail";
 
@@ -32,7 +30,6 @@ interface VerifyEmailProps {
 const VerifyEmail: React.FC<VerifyEmailProps> = (props: {
   disableCustomTheme?: boolean;
 }) => {
-  const navigate = useNavigate();
   const { data: me } = useMe();
   const { mutate: resendEmail, isPending: isPendingResendEmail } =
     useResendVerificationEmail();
@@ -48,12 +45,6 @@ const VerifyEmail: React.FC<VerifyEmailProps> = (props: {
     updateEmail();
     console.log("Update email");
   };
-
-  useEffect(() => {
-    if (me?.emailVerifiedAt) {
-      navigate("/");
-    }
-  }, [me?.isEmailVerified, navigate]);
 
   return (
     <AppTheme {...props}>

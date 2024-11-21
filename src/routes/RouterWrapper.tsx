@@ -1,82 +1,38 @@
 import { useEffect, useState } from "react";
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useMe } from "../hooks/useMe";
 import SignInSide from "../views/mui-templates/sign-in-side/SignInSide";
 import SignUp from "../views/mui-templates/sign-up/SignUp";
 import Registration from "../views/registration/Registration";
 import VerifyEmail from "../views/verify-email/VerifyEmail";
-
-const ProtectedRoute = ({
-  isAuthenticated,
-  emailVerified,
-  children,
-}: {
-  isAuthenticated: boolean;
-  emailVerified?: boolean;
-  children: JSX.Element;
-}) => {
-  if (!isAuthenticated) {
-    return <Navigate to="/sign-in" />;
-  }
-  if (emailVerified === false) {
-    return <Navigate to="/verify-email" />;
-  }
-  return children;
-};
+import { ProtectedRoute } from "./ProtectedRoute";
 
 const RouterWrapper = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("apiToken")
   );
 
-  const { data: me } = useMe();
+  const { data: me, isLoading } = useMe();
 
   const isEmailVerified = !!me?.emailVerifiedAt;
 
-  console.log("isEmailVerified", isEmailVerified);
-
-  // Manually update `isAuthenticated` on login/logout
-  const updateAuthState = () => {
-    setIsAuthenticated(!!localStorage.getItem("apiToken"));
-  };
-
-  // Listen for manual changes in localStorage
   useEffect(() => {
-    // Event listener for other tabs/windows
     const handleStorageChange = () => {
-      updateAuthState();
+      setIsAuthenticated(!!localStorage.getItem("apiToken"));
     };
 
     window.addEventListener("storage", handleStorageChange);
-
     return () => {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
 
-  // Trigger state update directly on token change within the same tab
-  useEffect(() => {
-    const originalSetItem = localStorage.setItem;
+  const fallback = <div>Loading...</div>;
 
-    localStorage.setItem = function (key: string, value: string) {
-      // Explicitly cast arguments to the required tuple type
-      originalSetItem.apply(this, [key, value] as [string, string]); // Cast to [string, string]
-      if (key === "apiToken") {
-        updateAuthState(); // Update state when apiToken changes
-      }
-    };
+  if (isLoading) {
+    return fallback;
+  }
 
-    return () => {
-      // Restore the original method
-      localStorage.setItem = originalSetItem;
-    };
-  }, []);
-
-  // Define routes
   const router = createBrowserRouter([
     {
       path: "/",
@@ -84,6 +40,7 @@ const RouterWrapper = () => {
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
           emailVerified={isEmailVerified}
+          fallback={isLoading ? fallback : undefined}
         >
           <Registration />
         </ProtectedRoute>
@@ -100,7 +57,11 @@ const RouterWrapper = () => {
     {
       path: "/verify-email",
       element: (
-        <ProtectedRoute isAuthenticated={isAuthenticated}>
+        <ProtectedRoute
+          isAuthenticated={isAuthenticated}
+          emailVerified={isEmailVerified}
+          fallback={isLoading ? fallback : undefined}
+        >
           <VerifyEmail disableCustomTheme />
         </ProtectedRoute>
       ),
