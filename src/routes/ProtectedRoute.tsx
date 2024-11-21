@@ -34,6 +34,7 @@ export const ProtectedRoute = ({
     return <Navigate to="/sign-in" />;
   }
 
+  // TODO: Figure out a better way to handle this
   //   if (
   //     isEmailVerified === false &&
   //     window.location.pathname !== "/verify-email"

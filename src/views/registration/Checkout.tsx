@@ -37,7 +37,7 @@ const Checkout: React.FC<CheckoutProps> = () => {
   };
 
   return (
-    <Container sx={{ px: pxContainer }}>
+    <Container sx={{ px: pxContainer, pb: 4 }}>
       <Toolbar />
       <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>
         Checkout
@@ -76,11 +76,6 @@ const Checkout: React.FC<CheckoutProps> = () => {
       </Grid2>
       <RefundPolicy />
       <OrderSummary />
-      <Grid2 container spacing={2} sx={{ mt: 2 }}>
-        <Grid2 size={12}>
-          <CheckoutForm />
-        </Grid2>
-      </Grid2>
     </Container>
   );
 };
