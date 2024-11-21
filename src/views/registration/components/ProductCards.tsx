@@ -201,7 +201,6 @@ export const ProductTypeCard: React.FC<ProductTypeCardProps> = ({
             ))}
           </List>
         </CardContent>
-
         <Button
           variant="contained"
           color={selected ? "error" : "secondary"}

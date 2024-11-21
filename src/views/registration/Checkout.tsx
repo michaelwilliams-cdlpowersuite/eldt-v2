@@ -6,6 +6,7 @@ import RefundPolicy from "./components/RefundPolicy";
 import { useSelectCourseType } from "./hooks/useSelectCourseType";
 import { useSelectEndorsement } from "./hooks/useSelectEndorsement";
 import {
+  CourseType,
   courseTypes,
   Endorsement,
   endorsements,
@@ -31,8 +32,8 @@ const Checkout: React.FC<CheckoutProps> = () => {
     selectEndorsement(id);
   };
 
-  const handleSelectCourseType = (id: string) => {
-    selectCourseType(id);
+  const handleSelectCourseType = (courseType: CourseType) => {
+    selectCourseType(courseType);
   };
 
   return (
@@ -50,8 +51,8 @@ const Checkout: React.FC<CheckoutProps> = () => {
             <ProductTypeCard
               key={courseType.id}
               productType={courseType}
-              selected={selectedCourseType.value === courseType.id}
-              onSelect={() => handleSelectCourseType(courseType.id)}
+              selected={selectedCourseType?.value?.id === courseType.id}
+              onSelect={() => handleSelectCourseType(courseType)}
             />
           </Grid2>
         ))}

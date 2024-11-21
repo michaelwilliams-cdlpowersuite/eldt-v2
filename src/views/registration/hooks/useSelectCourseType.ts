@@ -7,14 +7,17 @@ export const useSelectCourseType = () => {
     useFormikContext<any>();
 
   return useCallback(
-    (id: CourseType["id"]) => {
-      const newValue = values.step4.selectedCourseType === id ? "" : id;
+    (courseType: CourseType) => {
+      const isCurrentlySelected =
+        values.step4.selectedCourseType?.id === courseType.id;
+
+      const newValue = isCurrentlySelected ? null : courseType;
 
       setFieldValue("step4.selectedCourseType", newValue).then(() => {
         validateField("step4.selectedCourseType");
       });
 
-      if (values.step4.selectedCourseType !== id) {
+      if (!isCurrentlySelected) {
         setFieldTouched("step4.selectedCourseType", true);
       }
     },
