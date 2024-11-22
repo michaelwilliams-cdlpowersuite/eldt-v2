@@ -31,10 +31,10 @@ const RouterWrapper = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Navigate to="/register" replace />,
+      element: <Navigate to="/theory/register" replace />,
     },
     {
-      path: "/register",
+      path: "/theory/register",
       element: (
         <ProtectedRoute
           isEmailVerified={isEmailVerified}
