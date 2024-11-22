@@ -52,7 +52,6 @@ export const transformFormikToApi = (
     apiData.passenger = false;
     apiData.schoolBus = false;
 
-    console.log(formikValues.step1.selectedEndorsements);
     // Map selectedEndorsements to API booleans
     if (formikValues.step1.selectedEndorsements) {
       formikValues.step1.selectedEndorsements.forEach((id) => {

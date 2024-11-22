@@ -44,7 +44,6 @@ export const submitStepData = async (
   studentId: string
 ) => {
   const companyId = process.env.REACT_APP_DEFAULT_COMPANY_ID; // TODO: should this be hardcoded or come from me.companies[0].id?
-  console.log("stepData", stepData);
 
   try {
     const response = await apiClient.patch(

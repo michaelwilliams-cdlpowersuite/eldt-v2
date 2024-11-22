@@ -19,7 +19,6 @@ interface RegistrationProps {}
 
 const Registration: React.FC<RegistrationProps> = () => {
   const { amount } = useAmount();
-  console.log("Amount:", amount); // TODO delete after testing
 
   // Options were taken from stripe-payment.component.ts in the original project
   const options = useMemo(

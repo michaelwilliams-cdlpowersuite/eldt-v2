@@ -19,7 +19,6 @@ const RouterWrapper = () => {
   const { isAuthenticated } = useAuth();
   const [isEmailVerified, setIsEmailVerified] = useState(false);
 
-  console.log("isAuthenticated", isAuthenticated);
   const { data: me, isLoading: isMeLoading } = useMe();
 
   useEffect(() => {

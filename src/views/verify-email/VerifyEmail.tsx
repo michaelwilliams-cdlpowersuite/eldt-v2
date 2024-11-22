@@ -82,12 +82,10 @@ const VerifyEmail: React.FC<VerifyEmailProps> = (props: {
 
   const handleResendEmail = () => {
     resendEmail();
-    console.log("Resend email");
   };
 
   const handleUpdateEmail = () => {
     updateEmail();
-    console.log("Update email");
   };
 
   return (

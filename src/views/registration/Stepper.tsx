@@ -25,7 +25,6 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
   const validateCurrentStep = useValidateCurrentStep();
   const { values, setTouched } = useFormikContext<RegistrationFormUIValues>();
   const submitStep = useStudentMutation();
-  console.log("Rendering StepperOrchestration with activeStep:", activeStep);
 
   const isStepOptional = (step: number) => {
     // return step === 1;

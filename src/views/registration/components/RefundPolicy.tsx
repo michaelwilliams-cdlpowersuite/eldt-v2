@@ -9,14 +9,20 @@ import {
 import { useRef, useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
 
-interface OrderSummaryProps {}
+interface RefundPolicyProps {}
 
-const OrderSummary: React.FC<OrderSummaryProps> = () => {
+const RefundPolicy: React.FC<RefundPolicyProps> = () => {
   const sigCanvas = useRef<SignatureCanvas | null>(null);
   const [signature, setSignature] = useState<string | null>(null);
-  const [isSigned, setIsSigned] = useState<boolean>(false);
 
   console.log(signature);
+
+  const handleSignatureEnd = () => {
+    if (sigCanvas.current) {
+      const signatureData = sigCanvas.current.toDataURL();
+      setSignature(signatureData);
+    }
+  };
 
   return (
     <Grid2 container sx={{ pt: 2 }}>
@@ -40,6 +46,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = () => {
               ref={sigCanvas}
               canvasProps={{ width: 400, height: 100, className: "sigCanvas" }}
               backgroundColor="#f5f5f5"
+              onEnd={handleSignatureEnd}
             />
             *<Typography>* Please sign above</Typography>
           </CardContent>
@@ -49,4 +56,4 @@ const OrderSummary: React.FC<OrderSummaryProps> = () => {
   );
 };
 
-export default OrderSummary;
+export default RefundPolicy;
