@@ -34,7 +34,7 @@ const RouterWrapper = () => {
       element: <Navigate to="/theory/register" replace />,
     },
     {
-      path: "/theory/register",
+      path: "/register",
       element: (
         <ProtectedRoute
           isEmailVerified={isEmailVerified}
@@ -76,7 +76,7 @@ const RouterWrapper = () => {
         </ProtectedRoute>
       ),
     },
-  ]);
+  ], { basename: '/theory'});
 
   return <RouterProvider router={router} />;
 };
