@@ -28,7 +28,9 @@ FROM nginx:1.27.2 as production
 
 COPY ./docker/app/nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=build-stage /app/build /var/www/
+RUN mkdir /var/www/theory
+
+COPY --from=build-stage /app/build /var/www/theory
 
 RUN rm -rf /var/www/*.js.map
 
