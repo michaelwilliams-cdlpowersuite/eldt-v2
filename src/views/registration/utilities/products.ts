@@ -8,6 +8,13 @@ import { ReactComponent as Schoolbus } from "../../../assets/icons-03.svg";
 import { ReactComponent as ClassB } from "../../../assets/icons-04.svg";
 import { ReactComponent as ClassA } from "../../../assets/icons-05.svg";
 import { ReactComponent as ClassBA } from "../../../assets/icons-06.svg";
+import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import SchoolIcon from "@mui/icons-material/School";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload";
+import EngineeringIcon from "@mui/icons-material/Engineering";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 
 export interface Course {
   id: string;
@@ -101,25 +108,38 @@ export const courseTypes: CourseType[] = [
     id: "1",
     type: "video",
     price: 75,
-    title: "Theory Video Version",
+    title: "ELDT Video MasterCourse",
     description:
       "Our Video Master Course goes above and beyond industry standard to help you build a solid foundation as a new driver.",
     benefits: [
       {
+        icon: DirectionsRunIcon,
+        title: "Self-Paced",
+      },
+      {
         icon: AccessTimeIcon,
         title: "Available 24/7",
       },
+
+      {
+        icon: VerifiedIcon,
+        title: "Includes certificate of completion",
+      },
+      {
+        icon: AssuredWorkloadIcon,
+        title: "Submits to TPR",
+      },
+      {
+        icon: EngineeringIcon,
+        title: "Learn by Watching Real CDL Instructors",
+      },
+      {
+        icon: ThumbUpIcon,
+        title: "Over 1,200 reviews and counting",
+      },
       {
         icon: DevicesIcon,
-        title: "Available on All Devices",
-      },
-      {
-        icon: KeyIcon,
-        title: "Lifetime Access",
-      },
-      {
-        icon: OndemandVideoIcon,
-        title: "On-Demand Video Streaming",
+        title: "For Visual Learners",
       },
     ],
   },
@@ -127,21 +147,26 @@ export const courseTypes: CourseType[] = [
     id: "2",
     type: "text",
     price: 50,
-    title: "Theory Reading Version",
+    title: "ELDT Written Course",
     description:
       "If you don't mind doing some reading, our Literature Course is just what you're looking for. Packed with great content that will help you begin your career as a commercial driver.",
     benefits: [
       {
+        icon: DirectionsRunIcon,
+        title: "Self-Paced",
+      },
+      {
         icon: AccessTimeIcon,
         title: "Available 24/7",
       },
+
       {
-        icon: DevicesIcon,
-        title: "Available on All Devices",
+        icon: VerifiedIcon,
+        title: "Includes certificate of completion",
       },
       {
-        icon: KeyIcon,
-        title: "Lifetime Access",
+        icon: AssuredWorkloadIcon,
+        title: "Submits to TPR",
       },
     ],
   },

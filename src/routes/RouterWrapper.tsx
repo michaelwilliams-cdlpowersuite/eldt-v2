@@ -28,55 +28,58 @@ const RouterWrapper = () => {
 
   const fallback = <div>Loading...</div>;
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Navigate to="/register" replace />,
-    },
-    {
-      path: "/register",
-      element: (
-        <ProtectedRoute
-          isEmailVerified={isEmailVerified}
-          fallback={isMeLoading ? fallback : undefined}
-          isLoading={isMeLoading}
-        >
-          <Registration />
-        </ProtectedRoute>
-      ),
-      children: [
-        {
-          index: true,
-          element: <StepperOrchestration />,
-        },
-        {
-          path: "checkout",
-          element: <Checkout />,
-        },
-        {
-          path: "payment",
-          element: <Payment />,
-        },
-      ],
-    },
+  const router = createBrowserRouter(
+    [
+      {
+        path: "/",
+        element: <Navigate to="/theory/register" replace />,
+      },
+      {
+        path: "/theory/register",
+        element: (
+          <ProtectedRoute
+            isEmailVerified={isEmailVerified}
+            fallback={isMeLoading ? fallback : undefined}
+            isLoading={isMeLoading}
+          >
+            <Registration />
+          </ProtectedRoute>
+        ),
+        children: [
+          {
+            index: true,
+            element: <StepperOrchestration />,
+          },
+          {
+            path: "checkout",
+            element: <Checkout />,
+          },
+          {
+            path: "payment",
+            element: <Payment />,
+          },
+        ],
+      },
 
-    {
-      path: "/sign-in",
-      element: <SignInSide disableCustomTheme />,
-    },
-    {
-      path: "/sign-up",
-      element: <SignUp disableCustomTheme />,
-    },
-    {
-      path: "/verify-email",
-      element: (
-        <ProtectedRoute isEmailVerified={isEmailVerified}>
-          <VerifyEmail disableCustomTheme />
-        </ProtectedRoute>
-      ),
-    },
-  ]);
+      {
+        path: "/sign-in",
+        element: <SignInSide disableCustomTheme />,
+      },
+      {
+        path: "/sign-up",
+        element: <SignUp disableCustomTheme />,
+      },
+      {
+        path: "/verify-email",
+        element: (
+          <ProtectedRoute isEmailVerified={isEmailVerified}>
+            <VerifyEmail disableCustomTheme />
+          </ProtectedRoute>
+        ),
+      },
+    ],
+    { basename: "/theory" }
+  );
 
   return <RouterProvider router={router} />;
 };
