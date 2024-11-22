@@ -18,29 +18,7 @@ const stripePromise = loadStripe(
 interface RegistrationProps {}
 
 const Registration: React.FC<RegistrationProps> = () => {
-  const { amount } = useAmount();
-  console.log("Amount:", amount); // TODO delete after testing
-
-  // Options were taken from stripe-payment.component.ts in the original project
-  const options = useMemo(
-    () => ({
-      mode: "payment" as "payment",
-      amount: amount * 100,
-      currency: "usd",
-      paymentMethodCreation: "manual" as "manual",
-      paymentMethodTypes: ["card"],
-      appearance: {
-        theme: "stripe" as "stripe",
-        variables: {
-          iconColor: "#0C567D",
-        },
-      },
-    }),
-    [amount]
-  );
-
   return (
-    <Elements stripe={stripePromise} options={options}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <RegistrationAppBar />
         <Container disableGutters sx={{ pt: 1 }}>
@@ -57,7 +35,6 @@ const Registration: React.FC<RegistrationProps> = () => {
           </Box>
         </Container>
       </LocalizationProvider>
-    </Elements>
   );
 };
 

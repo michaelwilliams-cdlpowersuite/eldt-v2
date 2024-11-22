@@ -36,7 +36,7 @@ export const courses: Course[] = [
   {
     id: "3",
     title: "Class B-A CDL Training",
-    description: "Comination Vehicle",
+    description: "Combination Vehicle",
     icon: ClassBA,
     type: "Class B-A",
   },
@@ -93,6 +93,9 @@ export interface CourseType {
     icon: React.ElementType;
     title: string;
   }>;
+  sku: {
+    [k: string]: string;
+  }
   price: number;
 }
 
@@ -102,6 +105,11 @@ export const courseTypes: CourseType[] = [
     type: "video",
     price: 75,
     title: "Theory Video Version",
+    sku: {
+      "Class A": "class_a_theory",
+      "Class B": "class_b_theory",
+      "Class B-A": "class_b-a_theory",
+    },
     description:
       "Our Video Master Course goes above and beyond industry standard to help you build a solid foundation as a new driver.",
     benefits: [
@@ -128,6 +136,11 @@ export const courseTypes: CourseType[] = [
     type: "text",
     price: 50,
     title: "Theory Reading Version",
+    sku: {
+      "Class A": "class_a_theory_master",
+      "Class B": "class_b_theory_master",
+      "Class B-A": "class_b-a_theory_master",
+    },
     description:
       "If you don't mind doing some reading, our Literature Course is just what you're looking for. Packed with great content that will help you begin your career as a commercial driver.",
     benefits: [
