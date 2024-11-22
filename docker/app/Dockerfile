@@ -25,6 +25,9 @@ ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 ARG REACT_APP_DEFAULT_COMPANY_ID=empty
 ENV REACT_APP_DEFAULT_COMPANY_ID=${REACT_APP_DEFAULT_COMPANY_ID}
 
+ARG ANGULAR_CLIENT_URL=empty
+ENV ANGULAR_CLIENT_URL=${ANGULAR_CLIENT_URL}
+
 RUN printf "export class AppVersion {\n  public static readonly hash = '$CI_COMMIT_SHA';\n  public static readonly date = '$BUILD_DATE';\n}" > ./src/version.ts
 
 RUN npm run build

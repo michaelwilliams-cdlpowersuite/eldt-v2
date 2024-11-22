@@ -5,6 +5,7 @@ export const apiClient = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 // Add a request interceptor to include the Auth token
@@ -162,6 +163,16 @@ export const resendVerificationEmail = async (userId: string) => {
 export const getMe = async () => {
   try {
     const response = await apiClient.get("user/me");
+    return response.data;
+  } catch (error) {
+    console.error("Error getting user data:", error);
+    throw error;
+  }
+};
+
+export const prepareHandoff = async () => {
+  try {
+    const response = await apiClient.get("/eldt/authenticated-handoff");
     return response.data;
   } catch (error) {
     console.error("Error getting user data:", error);

@@ -10,6 +10,8 @@ import { useAmount } from "./context/AmountContext";
 import { loadStripe } from "@stripe/stripe-js";
 import { useMemo } from "react";
 import { Outlet } from "react-router-dom";
+import {Button} from "@mui/material";
+import {prepareHandoff} from "../../api/api";
 
 const stripePromise = loadStripe(
   "pk_test_51KVilWEqooDHZwmck4VuUymwm3Bw75Fuyryrd0o3MiIlhowWiYpgJg0RgyrNIKufGU4lwTGYZxoIcsSSgP2ZaDmJ00Lb7M2O9G" // TODO: Move to .env
@@ -19,7 +21,6 @@ interface RegistrationProps {}
 
 const Registration: React.FC<RegistrationProps> = () => {
   const { amount } = useAmount();
-  console.log("Amount:", amount); // TODO delete after testing
 
   // Options were taken from stripe-payment.component.ts in the original project
   const options = useMemo(
@@ -39,6 +40,13 @@ const Registration: React.FC<RegistrationProps> = () => {
     [amount]
   );
 
+  const handleAuthRedirect = async () => {
+    await prepareHandoff()
+
+    // @ts-ignore
+    window.location = (process.env.ANGULAR_CLIENT_URL || "http://localhost:4200") + '/eldt-handoff';
+  };
+
   return (
     <Elements stripe={stripePromise} options={options}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -54,6 +62,7 @@ const Registration: React.FC<RegistrationProps> = () => {
                 <Outlet />
               </Form>
             </Formik>
+            <Button variant="contained" onClick={handleAuthRedirect}>Click me</Button>
           </Box>
         </Container>
       </LocalizationProvider>
