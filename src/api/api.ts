@@ -172,7 +172,7 @@ export const getMe = async () => {
 
 export const prepareHandoff = async () => {
   try {
-    const response = await apiClient.get("/eldt/authenticated-handoff");
+    const response = await apiClient.post("/eldt/authenticated-handoff");
     return response.data;
   } catch (error) {
     console.error("Error getting user data:", error);
