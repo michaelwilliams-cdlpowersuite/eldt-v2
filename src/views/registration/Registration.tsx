@@ -44,7 +44,7 @@ const Registration: React.FC<RegistrationProps> = () => {
     await prepareHandoff()
 
     // @ts-ignore
-    window.location = (process.env.ANGULAR_CLIENT_URL || "http://localhost:4200") + '/eldt-handoff';
+    window.location = 'https://dev.eldt.com/eldt-handoff';
   };
 
   return (
