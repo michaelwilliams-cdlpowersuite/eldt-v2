@@ -2,6 +2,8 @@ import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { loginUser } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./useAuth";
+import { enqueueSnackbar } from "notistack";
+import { snackOptions } from "../views/registration/utilities/snackOptions";
 
 interface LoginVariables {
   email: string;
@@ -22,16 +24,20 @@ export const useLoginMutation = (): UseMutationResult<
   return useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
-      // Handle success
       setAuthentication(data.accessToken);
       navigate("/", { replace: true });
     },
     onError: (error) => {
-      // Handle error
-      console.error(
-        "Login failed!",
-        error instanceof Error ? error.message : error
-      );
+      if (error instanceof Error && (error as any).response) {
+        // Extract error message from response
+        const serverError = (error as any).response.data;
+        const message = serverError.message || "An unexpected error occurred";
+
+        enqueueSnackbar(message, snackOptions("error"));
+      } else {
+        console.error("Unexpected error:", error);
+        enqueueSnackbar("An unexpected error occurred", snackOptions("error"));
+      }
     },
   });
 };
