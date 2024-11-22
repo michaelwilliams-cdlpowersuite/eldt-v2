@@ -4,16 +4,16 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import { useMe } from "../hooks/useMe";
-import SignInSide from "../views/sign-in-side/SignInSide";
-import SignUp from "../views/sign-up/SignUp";
-import Registration from "../views/registration/Registration";
-import VerifyEmail from "../views/verify-email/VerifyEmail";
-import { ProtectedRoute } from "./ProtectedRoute";
 import { useAuth } from "../hooks/useAuth";
+import { useMe } from "../hooks/useMe";
 import Checkout from "../views/registration/Checkout";
 import Payment from "../views/registration/Payment";
+import Registration from "../views/registration/Registration";
 import StepperOrchestration from "../views/registration/Stepper";
+import SignInSide from "../views/sign-in-side/SignInSide";
+import SignUpSide from "../views/sign-up/SignUpSide";
+import VerifyEmail from "../views/verify-email/VerifyEmail";
+import { ProtectedRoute } from "./ProtectedRoute";
 
 const RouterWrapper = () => {
   const { isAuthenticated } = useAuth();
@@ -67,7 +67,7 @@ const RouterWrapper = () => {
       },
       {
         path: "/sign-up",
-        element: <SignUp disableCustomTheme />,
+        element: <SignUpSide disableCustomTheme />,
       },
       {
         path: "/verify-email",
