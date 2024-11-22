@@ -76,7 +76,7 @@ const RouterWrapper = () => {
         </ProtectedRoute>
       ),
     },
-  ], { basename: '/theory'});
+  ]);
 
   return <RouterProvider router={router} />;
 };
