@@ -19,6 +19,12 @@ ENV BUILD_DATE=${BUILD_DATE}
 ARG SENTRY_AUTH_TOKEN=empty
 ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
 
+ARG REACT_APP_API_URL=empty
+ENV REACT_APP_API_URL=${REACT_APP_API_URL}
+
+ARG REACT_APP_DEFAULT_COMPANY_ID=empty
+ENV REACT_APP_DEFAULT_COMPANY_ID=${REACT_APP_DEFAULT_COMPANY_ID}
+
 RUN printf "export class AppVersion {\n  public static readonly hash = '$CI_COMMIT_SHA';\n  public static readonly date = '$BUILD_DATE';\n}" > ./src/version.ts
 
 RUN npm run build
