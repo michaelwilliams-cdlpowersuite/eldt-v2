@@ -31,7 +31,7 @@ const RouterWrapper = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Navigate to="/theory/register" replace />,
+      element: <Navigate to="/register" replace />,
     },
     {
       path: "/register",
