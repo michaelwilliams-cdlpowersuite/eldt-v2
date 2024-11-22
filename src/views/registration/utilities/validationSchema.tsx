@@ -35,42 +35,14 @@ export const validationSchema = Yup.object({
     language: Yup.object().required("Required"),
   }),
   step3: Yup.object({
-    optIn: Yup.boolean().required("Required").default(true),
-    transmission: Yup.object().when("optIn", {
-      is: true,
-      then: (schema: any) => schema.required("Required"),
-      otherwise: (schema: any) => schema.nullable(),
-    }),
-    cdlDate: Yup.string().when("optIn", {
-      is: true,
-      then: (schema: any) => schema.required("Required"),
-      otherwise: (schema: any) => schema,
-    }),
-    cdlType: Yup.object().when("optIn", {
-      is: true,
-      then: (schema: any) => schema.required("Required"),
-      otherwise: (schema: any) => schema.nullable(),
-    }),
-    endorsements: Yup.array().when("optIn", {
-      is: true,
-      then: (schema: any) => schema.required("Required"),
-      otherwise: (schema: any) => schema.nullable(),
-    }),
-    workType: Yup.array().when("optIn", {
-      is: true,
-      then: (schema: any) => schema.required("Required"),
-      otherwise: (schema: any) => schema.nullable(),
-    }),
-    where: Yup.string().when("optIn", {
-      is: true,
-      then: (schema: any) => schema.required("Required"),
-      otherwise: (schema: any) => schema,
-    }),
-    referralSource: Yup.object().when("optIn", {
-      is: true,
-      then: (schema: any) => schema.required("Required"),
-      otherwise: (schema: any) => schema.nullable(),
-    }),
+    transmission: Yup.object().required("Required"),
+    cdlDate: Yup.string().required("Required"),
+    // cdlType: Yup.object().required("Required").nullable(),
+    // endorsements: Yup.array().required("Required").nullable(),
+    workType: Yup.array().required("Required"),
+
+    where: Yup.string().required("Required"),
+    referralSource: Yup.object().required("Required"),
   }),
   step4: Yup.object({
     selectedCourseType: Yup.object().required("Required"),
