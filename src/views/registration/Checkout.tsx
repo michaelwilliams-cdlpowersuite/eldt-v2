@@ -40,7 +40,7 @@ const Checkout: React.FC<CheckoutProps> = () => {
     <Container sx={{ px: pxContainer, pb: 4 }}>
       <Toolbar />
       <Typography variant="h6" sx={{ mt: 2, mb: 1 }}>
-        Checkout
+        Order Details
       </Typography>
       <Typography variant="body1" sx={{ mb: 2 }}>
         Select FCMSA Approved Training for {selectedCourse?.type}

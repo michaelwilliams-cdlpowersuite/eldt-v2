@@ -32,10 +32,10 @@ const RouterWrapper = () => {
     [
       {
         path: "/",
-        element: <Navigate to="/theory/register" replace />,
+        element: <Navigate to="/register" replace />,
       },
       {
-        path: "/theory/register",
+        path: "/register",
         element: (
           <ProtectedRoute
             isEmailVerified={isEmailVerified}
