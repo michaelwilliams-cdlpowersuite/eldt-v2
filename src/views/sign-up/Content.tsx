@@ -11,13 +11,13 @@ import { brandColors } from "../../styles/brandColors";
 const items = [
   {
     icon: <VerifiedIcon sx={{ color: "text.secondary" }} />,
-    title: "FMCSA-Compliant Training",
+    title: "#1 Online ELDT Training Platform",
     description:
-      "Get certified with courses that meet all federal requirements for Entry-Level Driver Training.",
+      "We set the standard for online ELDT training, trusted by over 300 Registered Training Providers.",
   },
   {
     icon: <SchoolIcon sx={{ color: "text.secondary" }} />,
-    title: "Expert-Instructor Designed",
+    title: "Designed by CDL Instructors",
     description:
       "Courses created by certified CDL instructors to ensure you get the best training.",
   },
@@ -25,7 +25,7 @@ const items = [
     icon: <AttachMoneyIcon sx={{ color: "text.secondary" }} />,
     title: "Affordable and Flexible",
     description:
-      "Complete your training starting at just $25, with courses available 24/7 to fit your schedule.",
+      "Complete your training with the most cost-effective courses, available 24/7 to fit your busy schedule.",
   },
   {
     icon: <DevicesIcon sx={{ color: "text.secondary" }} />,

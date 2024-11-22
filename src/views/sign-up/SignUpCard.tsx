@@ -119,14 +119,16 @@ export default function SignUpCard(props: { disableCustomTheme?: boolean }) {
 
   return (
     <Card variant="outlined">
-      <LogoIcon
-        sx={{
-          width: "250px",
-          height: "55px",
-          color: brandColors.cdlDarkBlue,
-          margin: "0 auto",
-        }}
-      />
+      <Box sx={{ display: { xs: "flex", md: "none" } }}>
+        <LogoIcon
+          sx={{
+            width: "250px",
+            height: "55px",
+            color: brandColors.cdlDarkBlue,
+            margin: "0 auto",
+          }}
+        />
+      </Box>
       <Typography
         component="h1"
         variant="h4"
