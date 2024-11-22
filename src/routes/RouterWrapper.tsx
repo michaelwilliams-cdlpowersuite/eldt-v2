@@ -37,7 +37,6 @@ const RouterWrapper = () => {
       path: "/register",
       element: (
         <ProtectedRoute
-          isAuthenticated={isAuthenticated}
           isEmailVerified={isEmailVerified}
           fallback={isMeLoading ? fallback : undefined}
           isLoading={isMeLoading}
@@ -72,10 +71,7 @@ const RouterWrapper = () => {
     {
       path: "/verify-email",
       element: (
-        <ProtectedRoute
-          isAuthenticated={isAuthenticated}
-          isEmailVerified={isEmailVerified}
-        >
+        <ProtectedRoute isEmailVerified={isEmailVerified}>
           <VerifyEmail disableCustomTheme />
         </ProtectedRoute>
       ),

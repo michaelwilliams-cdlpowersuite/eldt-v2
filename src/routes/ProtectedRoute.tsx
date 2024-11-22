@@ -1,20 +1,20 @@
 import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 export const ProtectedRoute = ({
-  isAuthenticated,
   isEmailVerified,
   fallback,
   isLoading,
   children,
 }: {
-  isAuthenticated: boolean;
   isEmailVerified?: boolean;
   fallback?: JSX.Element;
   isLoading?: boolean;
   children: JSX.Element;
 }) => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (

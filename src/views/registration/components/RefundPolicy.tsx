@@ -14,17 +14,7 @@ interface OrderSummaryProps {}
 const OrderSummary: React.FC<OrderSummaryProps> = () => {
   const sigCanvas = useRef<SignatureCanvas | null>(null);
   const [signature, setSignature] = useState<string | null>(null);
-
-  const clearCanvas = () => {
-    sigCanvas?.current?.clear();
-  };
-
-  const saveSignature = () => {
-    if (sigCanvas.current) {
-      const dataURL = sigCanvas.current.toDataURL();
-      setSignature(dataURL);
-    }
-  };
+  const [isSigned, setIsSigned] = useState<boolean>(false);
 
   console.log(signature);
 
@@ -53,8 +43,6 @@ const OrderSummary: React.FC<OrderSummaryProps> = () => {
             />
             *<Typography>* Please sign above</Typography>
           </CardContent>
-          <Button onClick={clearCanvas}>Clear</Button>
-          <Button onClick={saveSignature}>Done</Button>
         </Card>
       </Grid2>
     </Grid2>
