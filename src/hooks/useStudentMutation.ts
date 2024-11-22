@@ -13,6 +13,10 @@ export const useStudentMutation = (): UseMutationResult<
   const studentId = me?.student?.id;
   return useMutation({
     mutationFn: async (stepData: Record<string, any>) => {
+      if (!studentId) {
+        return;
+      }
+
       return await submitStepData(stepData, studentId);
     },
     onSuccess: () => {

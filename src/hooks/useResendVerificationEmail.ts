@@ -19,6 +19,7 @@ export const useResendVerificationEmail = (): UseMutationResult<
       }
       return await resendVerificationEmail(userId);
     },
+
     onSuccess: () => {
       enqueueSnackbar(
         "Verification email resent successfully!",
