@@ -46,9 +46,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = () => {
         <Card elevation={0} variant="outlined">
           <CardHeader title="Order Summary" />
           <CardContent>
-            <Typography variant="body1">
-              FCMSA Approved Training - I'm here!
-            </Typography>
+            <Typography variant="body1">FCMSA Approved Training</Typography>
             <Divider sx={{ my: 1 }} />
             <Stack justifyContent="space-between" direction="row">
               <Typography variant="body1">Subtotal</Typography>

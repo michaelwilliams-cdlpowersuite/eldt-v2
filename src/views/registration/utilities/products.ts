@@ -1,7 +1,10 @@
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import AssuredWorkloadIcon from "@mui/icons-material/AssuredWorkload";
 import DevicesIcon from "@mui/icons-material/Devices";
-import KeyIcon from "@mui/icons-material/Key";
-import OndemandVideoIcon from "@mui/icons-material/OndemandVideo";
+import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
+import EngineeringIcon from "@mui/icons-material/Engineering";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import VerifiedIcon from "@mui/icons-material/Verified";
 import { ReactComponent as Hazmat } from "../../../assets/icons-01.svg";
 import { ReactComponent as Passenger } from "../../../assets/icons-02.svg";
 import { ReactComponent as Schoolbus } from "../../../assets/icons-03.svg";
@@ -101,25 +104,38 @@ export const courseTypes: CourseType[] = [
     id: "1",
     type: "video",
     price: 75,
-    title: "Theory Video Version",
+    title: "ELDT Video MasterCourse",
     description:
-      "Our Video Master Course goes above and beyond industry standard to help you build a solid foundation as a new driver.",
+      "An immersive learning experience with real CDL instructors—perfect for visual learners who want to see and hear their training come to life.",
     benefits: [
+      {
+        icon: DirectionsRunIcon,
+        title: "Self-Paced",
+      },
       {
         icon: AccessTimeIcon,
         title: "Available 24/7",
       },
+
+      {
+        icon: VerifiedIcon,
+        title: "Includes certificate of completion",
+      },
+      {
+        icon: AssuredWorkloadIcon,
+        title: "Submits to TPR",
+      },
+      {
+        icon: EngineeringIcon,
+        title: "Learn by Watching Real CDL Instructors",
+      },
+      {
+        icon: ThumbUpIcon,
+        title: "Over 1,200 reviews and counting",
+      },
       {
         icon: DevicesIcon,
-        title: "Available on All Devices",
-      },
-      {
-        icon: KeyIcon,
-        title: "Lifetime Access",
-      },
-      {
-        icon: OndemandVideoIcon,
-        title: "On-Demand Video Streaming",
+        title: "For Visual Learners",
       },
     ],
   },
@@ -127,21 +143,26 @@ export const courseTypes: CourseType[] = [
     id: "2",
     type: "text",
     price: 50,
-    title: "Theory Reading Version",
+    title: "ELDT Written Course",
     description:
-      "If you don't mind doing some reading, our Literature Course is just what you're looking for. Packed with great content that will help you begin your career as a commercial driver.",
+      "The Original Online Theory, designed and written by CDL instructors—perfect for those who prefer to learn through reading.",
     benefits: [
+      {
+        icon: DirectionsRunIcon,
+        title: "Self-Paced",
+      },
       {
         icon: AccessTimeIcon,
         title: "Available 24/7",
       },
+
       {
-        icon: DevicesIcon,
-        title: "Available on All Devices",
+        icon: VerifiedIcon,
+        title: "Includes certificate of completion",
       },
       {
-        icon: KeyIcon,
-        title: "Lifetime Access",
+        icon: AssuredWorkloadIcon,
+        title: "Submits to TPR",
       },
     ],
   },

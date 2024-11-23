@@ -168,7 +168,11 @@ export default function SignInCard() {
         <Typography sx={{ textAlign: "center" }}>
           Don&apos;t have an account?{" "}
           <span>
-            <Link href="/sign-up" variant="body2" sx={{ alignSelf: "center" }}>
+            <Link
+              href="/theory/sign-up"
+              variant="body2"
+              sx={{ alignSelf: "center" }}
+            >
               Sign up
             </Link>
           </span>

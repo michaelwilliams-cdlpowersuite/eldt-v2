@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Card,
   CardContent,
@@ -6,23 +7,50 @@ import {
   Grid2,
   Typography,
 } from "@mui/material";
+import { useField, useFormikContext } from "formik";
 import { useRef, useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
+import { brandColors } from "../../../styles/brandColors";
 
-interface OrderSummaryProps {}
+interface RefundPolicyProps {}
 
-const OrderSummary: React.FC<OrderSummaryProps> = () => {
+const RefundPolicy: React.FC<RefundPolicyProps> = () => {
   const sigCanvas = useRef<SignatureCanvas | null>(null);
-  const [signature, setSignature] = useState<string | null>(null);
-  const [isSigned, setIsSigned] = useState<boolean>(false);
+  const [field, meta] = useField("step4.signature");
+  const { setFieldValue, setFieldTouched, validateField } = useFormikContext();
 
-  console.log(signature);
+  const handleSignatureEnd = () => {
+    if (sigCanvas.current) {
+      const signatureData = sigCanvas.current.toDataURL();
+      setFieldTouched("step4.signature", true);
+      setFieldValue("step4.signature", signatureData);
+    }
+  };
+
+  const handleClearSignature = () => {
+    if (sigCanvas.current) {
+      sigCanvas.current.clear();
+      setFieldValue("step4.signature", null);
+      validateField("step4.signature");
+    }
+  };
 
   return (
     <Grid2 container sx={{ pt: 2 }}>
       <Grid2 size={12}>
-        <Card elevation={0} variant="outlined">
+        <Card
+          elevation={0}
+          variant="outlined"
+          sx={{
+            borderColor:
+              meta.touched && meta.error
+                ? brandColors.cdlRed
+                : "rgba(0, 0, 0, 0.12)",
+            borderWidth: 2,
+          }}
+        >
           <CardHeader title="Refund Policy" />
+          {meta.error && <Alert severity="error">{meta.error as string}</Alert>}
           <CardContent>
             <Typography variant="body1">
               <strong>
@@ -40,8 +68,17 @@ const OrderSummary: React.FC<OrderSummaryProps> = () => {
               ref={sigCanvas}
               canvasProps={{ width: 400, height: 100, className: "sigCanvas" }}
               backgroundColor="#f5f5f5"
+              onEnd={handleSignatureEnd}
             />
             *<Typography>* Please sign above</Typography>
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleClearSignature}
+              sx={{ mt: 2 }}
+            >
+              Reset Signature
+            </Button>
           </CardContent>
         </Card>
       </Grid2>
@@ -49,4 +86,4 @@ const OrderSummary: React.FC<OrderSummaryProps> = () => {
   );
 };
 
-export default OrderSummary;
+export default RefundPolicy;
