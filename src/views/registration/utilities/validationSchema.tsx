@@ -45,7 +45,8 @@ export const validationSchema = Yup.object({
     referralSource: Yup.object().required("Required"),
   }),
   step4: Yup.object({
-    selectedCourseType: Yup.object().required("Required"),
+    selectedCourseType: Yup.object().required("You must choose a course type."),
+    signature: Yup.string().required("You must sign the refund policy."),
   }),
 });
 

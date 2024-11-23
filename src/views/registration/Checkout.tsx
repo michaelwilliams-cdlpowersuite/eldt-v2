@@ -1,4 +1,4 @@
-import { Container, Grid2, Toolbar, Typography } from "@mui/material";
+import { Alert, Container, Grid2, Toolbar, Typography } from "@mui/material";
 import { useField } from "formik";
 import OrderSummary from "./components/OrderSummary";
 import { EndorsementCard, ProductTypeCard } from "./components/ProductCards";
@@ -20,7 +20,10 @@ interface CheckoutProps {}
 const Checkout: React.FC<CheckoutProps> = () => {
   const [selectedCourseField] = useField("step1.selectedCourse");
   const [selectedEndorsementsField] = useField("step1.selectedEndorsements");
-  const [selectedCourseType] = useField("step4.selectedCourseType");
+  const [selectedCourseType, selectedCourseTypeMeta] = useField(
+    "step4.selectedCourseType"
+  );
+
   const selectedCourse = getCourseById(selectedCourseField.value);
   const selectedEndorsements = getEndorsementsByIds(
     selectedEndorsementsField.value
@@ -45,6 +48,9 @@ const Checkout: React.FC<CheckoutProps> = () => {
       <Typography variant="body1" sx={{ mb: 2 }}>
         Select FCMSA Approved Training for {selectedCourse?.type}
       </Typography>
+      {selectedCourseTypeMeta.error && (
+        <Alert severity="error">{selectedCourseTypeMeta.error as string}</Alert>
+      )}
       <Grid2 container spacing={2} sx={{ mt: 2 }}>
         {courseTypes.map((courseType, index) => (
           <Grid2 size={{ xs: 12, sm: 6 }} key={index}>
