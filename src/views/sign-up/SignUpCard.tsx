@@ -263,7 +263,7 @@ export default function SignUpCard(props: { disableCustomTheme?: boolean }) {
         <Typography sx={{ textAlign: "center" }}>
           Already have an account?{" "}
           <Link
-            href="/theory/sign-in"
+            href="/sign-in"
             variant="body2"
             sx={{ alignSelf: "center" }}
           >
