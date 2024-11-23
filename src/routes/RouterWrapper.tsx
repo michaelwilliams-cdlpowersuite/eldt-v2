@@ -25,7 +25,7 @@ const RouterWrapper = () => {
     setIsEmailVerified(!!me?.emailVerifiedAt);
   }, [me]);
 
-  const fallback = <div>Loading...</div>;
+  const fallback = <div></div>;
 
   const router = createBrowserRouter(
     [

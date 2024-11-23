@@ -13,10 +13,6 @@ import { Outlet } from "react-router-dom";
 import {Button} from "@mui/material";
 import {prepareHandoff} from "../../api/api";
 
-const stripePromise = loadStripe(
-  "pk_test_51KVilWEqooDHZwmck4VuUymwm3Bw75Fuyryrd0o3MiIlhowWiYpgJg0RgyrNIKufGU4lwTGYZxoIcsSSgP2ZaDmJ00Lb7M2O9G" // TODO: Move to .env
-);
-
 interface RegistrationProps {}
 
 const Registration: React.FC<RegistrationProps> = () => {
@@ -48,7 +44,6 @@ const Registration: React.FC<RegistrationProps> = () => {
   };
 
   return (
-    <Elements stripe={stripePromise} options={options}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <RegistrationAppBar />
         <Container disableGutters sx={{ pt: 1 }}>
@@ -66,7 +61,6 @@ const Registration: React.FC<RegistrationProps> = () => {
           </Box>
         </Container>
       </LocalizationProvider>
-    </Elements>
   );
 };
 

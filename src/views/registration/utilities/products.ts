@@ -39,7 +39,7 @@ export const courses: Course[] = [
   {
     id: "3",
     title: "Class B-A CDL Training",
-    description: "Comination Vehicle",
+    description: "Combination Vehicle",
     icon: ClassBA,
     type: "Class B-A",
   },
@@ -96,6 +96,9 @@ export interface CourseType {
     icon: React.ElementType;
     title: string;
   }>;
+  sku: {
+    [k: string]: string;
+  }
   price: number;
 }
 
@@ -105,6 +108,11 @@ export const courseTypes: CourseType[] = [
     type: "video",
     price: 75,
     title: "ELDT Video MasterCourse",
+    sku: {
+      "Class A": "class_a_theory",
+      "Class B": "class_b_theory",
+      "Class B-A": "class_b-a_theory",
+    },
     description:
       "An immersive learning experience with real CDL instructors—perfect for visual learners who want to see and hear their training come to life.",
     benefits: [
@@ -144,6 +152,11 @@ export const courseTypes: CourseType[] = [
     type: "text",
     price: 50,
     title: "ELDT Written Course",
+    sku: {
+      "Class A": "class_a_theory_master",
+      "Class B": "class_b_theory_master",
+      "Class B-A": "class_b-a_theory_master",
+    },
     description:
       "The Original Online Theory, designed and written by CDL instructors—perfect for those who prefer to learn through reading.",
     benefits: [
