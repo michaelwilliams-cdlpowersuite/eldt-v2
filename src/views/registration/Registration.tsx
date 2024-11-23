@@ -6,19 +6,11 @@ import { buildInitialValues, validationSchema } from "./utilities/validationSche
 import RegistrationAppBar from "./components/AppBar";
 import { Outlet } from "react-router-dom";
 import {Button} from "@mui/material";
-import {prepareHandoff} from "../../api/api";
 import {useMe} from "../../hooks/useMe";
 
 interface RegistrationProps {}
 
 const Registration: React.FC<RegistrationProps> = () => {
-  const handleAuthRedirect = async () => {
-    await prepareHandoff()
-
-    // @ts-ignore
-    window.location = 'https://dev.eldt.com/eldt-handoff';
-  };
-
   const { data: me } = useMe();
 
   return (
@@ -35,7 +27,6 @@ const Registration: React.FC<RegistrationProps> = () => {
                 <Outlet />
               </Form>
             </Formik>
-            <Button variant="contained" onClick={handleAuthRedirect}>Click me</Button>
           </Box>
         </Container>
       </LocalizationProvider>
