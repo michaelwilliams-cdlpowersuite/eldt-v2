@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import React from "react";
-import { Course, Endorsement, CourseType } from "../utilities/products";
+import { Course, Endorsement, Product } from "../utilities/products";
 import { brandColors } from "../../../styles/brandColors";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
@@ -129,13 +129,13 @@ export const EndorsementCard: React.FC<EndorsementCardProps> = ({
 };
 
 interface ProductTypeCardProps {
-  productType: CourseType;
+  product: Product;
   selected: boolean;
   onSelect: () => void;
 }
 
 export const ProductTypeCard: React.FC<ProductTypeCardProps> = ({
-  productType,
+  product,
   onSelect,
   selected,
 }) => {
@@ -153,6 +153,7 @@ export const ProductTypeCard: React.FC<ProductTypeCardProps> = ({
     >
       <CardActionArea
         sx={{ display: "flex", flexDirection: "column", height: "100%", pb: 2 }}
+        component="div"
       >
         <CardContent
           sx={{
@@ -163,10 +164,10 @@ export const ProductTypeCard: React.FC<ProductTypeCardProps> = ({
         >
           <div>
             <Typography variant="h6" textAlign="center">
-              {productType.title}
+              {product.title}
             </Typography>
             <Typography variant="h3" textAlign="center">
-              ${productType.price}
+              ${product.price}
             </Typography>
           </div>
 
@@ -180,11 +181,11 @@ export const ProductTypeCard: React.FC<ProductTypeCardProps> = ({
               py: 2,
             }}
           >
-            {productType.description}
+            {product.description}
           </Typography>
 
           <List>
-            {productType.benefits?.map((benefit, index) => (
+            {product.benefits?.map((benefit, index) => (
               <React.Fragment key={index}>
                 <Divider />
                 <ListItem>

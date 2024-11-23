@@ -5,14 +5,13 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SnackbarProvider } from "notistack";
 import RouterWrapper from "./routes/RouterWrapper";
 import { theme } from "./styles/theme";
-import { AmountProvider } from "./views/registration/context/AmountContext";
 import * as amplitude from "@amplitude/analytics-browser";
 
 const amplitudeApiKey = process.env.REACT_APP_AMPLITUDE_API_KEY;
 if (amplitudeApiKey) {
   amplitude.init(amplitudeApiKey);
 } else {
-  console.error("Amplitude API key is not defined");
+  //console.error("Amplitude API key is not defined");
 }
 
 const App = () => {
@@ -25,9 +24,7 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />
           <SnackbarProvider>
-            <AmountProvider>
-              <RouterWrapper />
-            </AmountProvider>
+            <RouterWrapper />
           </SnackbarProvider>
         </QueryClientProvider>
       </ThemeProvider>

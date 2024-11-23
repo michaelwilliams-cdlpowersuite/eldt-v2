@@ -1,5 +1,12 @@
 import * as Yup from "yup";
-import { CourseType, Endorsement } from "./products";
+import {
+  Endorsement,
+  getCourseByType,
+  getEndorsementsByApiKeys
+} from "./products";
+import {User} from "../../../types/user";
+import {states} from "./statesList";
+import {Student} from "../../../types/student";
 
 export const validationSchema = Yup.object({
   step1: Yup.object({
@@ -44,25 +51,27 @@ export const validationSchema = Yup.object({
     where: Yup.string().required("Required"),
     referralSource: Yup.object().required("Required"),
   }),
-  step4: Yup.object({
-    selectedCourseType: Yup.object().required("You must choose a course type."),
+  cart: Yup.object({
     signature: Yup.string().required("You must sign the refund policy."),
   }),
 });
 
-export const initialValues: RegistrationFormUIValues = {
-  step1: { selectedCourse: "", selectedEndorsements: [] },
+export const buildInitialValues = (user?: User): RegistrationFormUIValues => ({
+  step1: {
+    selectedCourse: user?.student?.cdlClass ? getCourseByType(user.student.cdlClass)?.id ?? '' : '',
+    selectedEndorsements: ['haz', 'passenger', 'schoolBus'].filter((e) => !!(user?.student && user.student[e as keyof Student])).map((e) => getEndorsementsByApiKeys([e])[0].id),
+  },
   step2: {
-    firstName: "",
-    lastName: "",
-    phone: "",
-    dob: "",
-    driversLicense: "",
-    confirmDriversLicense: "",
-    streetAddress: "",
-    city: "",
-    state: null,
-    zip: "",
+    firstName: user?.firstName ?? '',
+    lastName: user?.lastName ?? '',
+    phone: user?.student?.phone ?? '',
+    dob: '',
+    driversLicense: user?.student.driversLicense ?? '',
+    confirmDriversLicense: user?.student.driversLicense ?? '',
+    streetAddress: user?.student?.address.address1 ?? '',
+    city: user?.student?.address.city ?? '',
+    state: user?.student?.address.state ? (states.find((s) => s.abbreviation === user.student.address.state) ?? null) : null,
+    zip: user?.student?.address.zip ?? '',
     language: { label: "English", code: "en", apiValue: 1 },
   },
   step3: {
@@ -75,8 +84,11 @@ export const initialValues: RegistrationFormUIValues = {
     where: "",
     referralSource: null,
   },
-  step4: { selectedCourseType: null },
-};
+  cart: {
+    items: [],
+    signature: null,
+  }
+});
 
 interface Step1 {
   selectedCourse: string;
@@ -108,14 +120,20 @@ interface Step3 {
   referralSource: { label: string } | null;
 }
 
-interface Step4 {
-  selectedCourseType: CourseType | null;
+export interface CartItem {
+  price: number;
+  sku: string;
+}
+
+export interface Cart {
+  items: CartItem[];
+  signature: string | null;
 }
 
 export interface RegistrationFormUIValues {
   step1: Step1;
   step2: Step2;
   step3: Step3;
-  step4: Step4;
+  cart: Cart;
   // Add additional steps as needed
 }

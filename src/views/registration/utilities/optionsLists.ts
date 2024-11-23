@@ -1,5 +1,3 @@
-// TODO Michael, if you need different values, add them here or I can
-
 export const transmissions = [
   { label: "Automatic", apiValue: true },
   { label: "Manual", apiValue: false },

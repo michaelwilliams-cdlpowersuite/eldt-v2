@@ -11,27 +11,28 @@ import { useField, useFormikContext } from "formik";
 import { useRef, useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { brandColors } from "../../../styles/brandColors";
+import {Cart, RegistrationFormUIValues} from "../utilities/validationSchema";
 
 interface RefundPolicyProps {}
 
 const RefundPolicy: React.FC<RefundPolicyProps> = () => {
   const sigCanvas = useRef<SignatureCanvas | null>(null);
-  const [field, meta] = useField("step4.signature");
-  const { setFieldValue, setFieldTouched, validateField } = useFormikContext();
+  const [field, meta] = useField("cart.signature");
+  const { setFieldValue, setFieldTouched, validateField } = useFormikContext<RegistrationFormUIValues>();
 
   const handleSignatureEnd = () => {
     if (sigCanvas.current) {
       const signatureData = sigCanvas.current.toDataURL();
-      setFieldTouched("step4.signature", true);
-      setFieldValue("step4.signature", signatureData);
+      setFieldTouched("cart.signature", true);
+      setFieldValue("cart.signature", signatureData);
     }
   };
 
   const handleClearSignature = () => {
     if (sigCanvas.current) {
       sigCanvas.current.clear();
-      setFieldValue("step4.signature", null);
-      validateField("step4.signature");
+      setFieldValue("cart.signature", null);
+      validateField("cart.signature");
     }
   };
 

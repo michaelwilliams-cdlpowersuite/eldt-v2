@@ -1,3 +1,5 @@
+import {Address} from "./address";
+
 export interface Student {
     id: number;
     createdAt: Date;
@@ -8,7 +10,7 @@ export interface Student {
     // user: User;
     // company: Company;
     //
-    // address: Address;
+    address: Address;
     // attendance: StudentAttendance;
     // attendances: StudentAttendance[];
     // fileUploads: StudentFileUpload[];

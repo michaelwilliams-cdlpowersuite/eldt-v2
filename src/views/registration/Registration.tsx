@@ -2,40 +2,16 @@ import { Box, Container } from "@mui/system";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { Form, Formik } from "formik";
-import { initialValues, validationSchema } from "./utilities/validationSchema";
-import Stepper from "./Stepper";
+import { buildInitialValues, validationSchema } from "./utilities/validationSchema";
 import RegistrationAppBar from "./components/AppBar";
-import { Elements } from "@stripe/react-stripe-js";
-import { useAmount } from "./context/AmountContext";
-import { loadStripe } from "@stripe/stripe-js";
-import { useMemo } from "react";
 import { Outlet } from "react-router-dom";
 import {Button} from "@mui/material";
 import {prepareHandoff} from "../../api/api";
+import {useMe} from "../../hooks/useMe";
 
 interface RegistrationProps {}
 
 const Registration: React.FC<RegistrationProps> = () => {
-  const { amount } = useAmount();
-
-  // Options were taken from stripe-payment.component.ts in the original project
-  const options = useMemo(
-    () => ({
-      mode: "payment" as "payment",
-      amount: amount * 100,
-      currency: "usd",
-      paymentMethodCreation: "manual" as "manual",
-      paymentMethodTypes: ["card"],
-      appearance: {
-        theme: "stripe" as "stripe",
-        variables: {
-          iconColor: "#0C567D",
-        },
-      },
-    }),
-    [amount]
-  );
-
   const handleAuthRedirect = async () => {
     await prepareHandoff()
 
@@ -43,13 +19,15 @@ const Registration: React.FC<RegistrationProps> = () => {
     window.location = 'https://dev.eldt.com/eldt-handoff';
   };
 
+  const { data: me } = useMe();
+
   return (
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <RegistrationAppBar />
         <Container disableGutters sx={{ pt: 1 }}>
           <Box>
             <Formik
-              initialValues={initialValues}
+              initialValues={buildInitialValues(me)}
               validationSchema={validationSchema}
               onSubmit={(values) => console.log(values)}
             >

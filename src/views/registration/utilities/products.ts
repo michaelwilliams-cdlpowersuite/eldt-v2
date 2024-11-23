@@ -11,6 +11,7 @@ import { ReactComponent as Schoolbus } from "../../../assets/icons-03.svg";
 import { ReactComponent as ClassB } from "../../../assets/icons-04.svg";
 import { ReactComponent as ClassA } from "../../../assets/icons-05.svg";
 import { ReactComponent as ClassBA } from "../../../assets/icons-06.svg";
+import {CartItem} from "./validationSchema";
 
 export interface Course {
   id: string;
@@ -24,17 +25,17 @@ export interface Course {
 export const courses: Course[] = [
   {
     id: "1",
-    title: "Class B CDL Training",
-    description: "Single Vehicle",
-    icon: ClassB,
-    type: "Class B",
-  },
-  {
-    id: "2",
     title: "Class A CDL Training",
     description: "Combination Vehicle",
     icon: ClassA,
     type: "Class A",
+  },
+  {
+    id: "2",
+    title: "Class B CDL Training",
+    description: "Single Vehicle",
+    icon: ClassB,
+    type: "Class B",
   },
   {
     id: "3",
@@ -49,13 +50,18 @@ export const getCourseById = (id: string): Course | undefined => {
   return courses.find((course) => course.id === id);
 };
 
+export const getCourseByType = (type: string): Course | undefined => {
+  return courses.find((course) => course.type === type);
+};
+
 export interface Endorsement {
   id: string;
   title: string;
   icon?: React.ElementType;
   iconStyles?: React.CSSProperties;
-  price?: number;
   apiKey: string;
+  sku: string;
+  price: number;
 }
 
 export const endorsements: Endorsement[] = [
@@ -66,6 +72,7 @@ export const endorsements: Endorsement[] = [
     iconStyles: { maxHeight: "30px" },
     price: 25,
     apiKey: "haz",
+    sku: "hazmat_theory",
   },
   {
     id: "2",
@@ -73,6 +80,7 @@ export const endorsements: Endorsement[] = [
     icon: Passenger,
     price: 25,
     apiKey: "passenger",
+    sku: "passenger_theory",
   },
   {
     id: "3",
@@ -80,6 +88,7 @@ export const endorsements: Endorsement[] = [
     icon: Schoolbus,
     price: 25,
     apiKey: "schoolBus",
+    sku: "school_bus_theory",
   },
 ];
 
@@ -87,8 +96,11 @@ export const getEndorsementsByIds = (ids: string[]): Endorsement[] => {
   return endorsements.filter((endorsement) => ids.includes(endorsement.id));
 };
 
-export interface CourseType {
-  id: string;
+export const getEndorsementsByApiKeys = (apiKeys: string[]): Endorsement[] => {
+  return endorsements.filter((endorsement) => apiKeys.includes(endorsement.apiKey));
+};
+
+export interface Product {
   type: string;
   title: string;
   description?: string;
@@ -96,22 +108,21 @@ export interface CourseType {
     icon: React.ElementType;
     title: string;
   }>;
-  sku: {
+  skuMap: {
     [k: string]: string;
   }
   price: number;
 }
 
-export const courseTypes: CourseType[] = [
+export const products: Product[] = [
   {
-    id: "1",
-    type: "video",
+    type: "master",
     price: 75,
     title: "ELDT Video MasterCourse",
-    sku: {
-      "Class A": "class_a_theory",
-      "Class B": "class_b_theory",
-      "Class B-A": "class_b-a_theory",
+    skuMap: {
+      "Class A": "class_a_theory_master",
+      "Class B": "class_b_theory_master",
+      "Class B-A": "class_b-a_theory_master",
     },
     description:
       "An immersive learning experience with real CDL instructors—perfect for visual learners who want to see and hear their training come to life.",
@@ -148,14 +159,13 @@ export const courseTypes: CourseType[] = [
     ],
   },
   {
-    id: "2",
-    type: "text",
+    type: "reading",
     price: 50,
     title: "ELDT Written Course",
-    sku: {
-      "Class A": "class_a_theory_master",
-      "Class B": "class_b_theory_master",
-      "Class B-A": "class_b-a_theory_master",
+    skuMap: {
+      "Class A": "class_a_theory",
+      "Class B": "class_b_theory",
+      "Class B-A": "class_b-a_theory",
     },
     description:
       "The Original Online Theory, designed and written by CDL instructors—perfect for those who prefer to learn through reading.",

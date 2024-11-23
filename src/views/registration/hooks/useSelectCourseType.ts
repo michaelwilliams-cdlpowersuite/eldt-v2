@@ -1,24 +1,23 @@
 import { useFormikContext } from "formik";
 import { useCallback } from "react";
-import { CourseType } from "../utilities/products";
 
 export const useSelectCourseType = () => {
   const { values, setFieldValue, validateField, setFieldTouched } =
     useFormikContext<any>();
 
   return useCallback(
-    (courseType: CourseType) => {
+    (courseType: any) => {
       const isCurrentlySelected =
-        values.step4.selectedCourseType?.id === courseType.id;
+        values.cart.selectedCourseType?.id === courseType.id;
 
       const newValue = isCurrentlySelected ? null : courseType;
 
-      setFieldValue("step4.selectedCourseType", newValue).then(() => {
-        validateField("step4.selectedCourseType");
+      setFieldValue("cart.selectedCourseType", newValue).then(() => {
+        validateField("cart.selectedCourseType");
       });
 
       if (!isCurrentlySelected) {
-        setFieldTouched("step4.selectedCourseType", true);
+        setFieldTouched("cart.selectedCourseType", true);
       }
     },
     [values, setFieldValue, validateField, setFieldTouched]

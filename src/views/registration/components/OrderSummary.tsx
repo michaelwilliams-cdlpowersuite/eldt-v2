@@ -10,27 +10,21 @@ import {
 import { useField } from "formik";
 import { useMemo } from "react";
 import { Endorsement, getEndorsementsByIds } from "../utilities/products";
+import {CartItem} from "../utilities/validationSchema";
 
 interface OrderSummaryProps {}
 
 const OrderSummary: React.FC<OrderSummaryProps> = () => {
-  const [selectedCourses] = useField("step1.selectedCourse");
   const [selectedEndorsementsField] = useField("step1.selectedEndorsements");
-  const [selectedCourseType] = useField("step4.selectedCourseType");
-  const selectedEndorsements = getEndorsementsByIds(
-    selectedEndorsementsField.value
-  );
+  const [selectedItems] = useField("cart.items");
 
   const calculatedSubtotal = useMemo(() => {
     let subtotal = 0;
-    if (selectedCourseType?.value?.price) {
-      subtotal += selectedCourseType?.value?.price;
-    }
-    selectedEndorsements.forEach((endorsement: Endorsement) => {
-      subtotal += endorsement?.price || 0;
+    selectedItems.value?.forEach((item: CartItem) => {
+      subtotal += item.price || 0;
     });
     return subtotal;
-  }, [selectedCourseType, selectedEndorsements]);
+  }, [selectedItems]);
 
   const calculatedProcessingFee = useMemo(() => {
     return calculatedSubtotal * 0.0385;
@@ -64,6 +58,12 @@ const OrderSummary: React.FC<OrderSummaryProps> = () => {
                   style: "currency",
                   currency: "USD",
                 }).format(calculatedProcessingFee)}
+              </Typography>
+            </Stack>
+            <Stack justifyContent="space-between" direction="row">
+              <Typography variant="body1">Tax</Typography>
+              <Typography variant="subtitle2">
+                Calculated during payment
               </Typography>
             </Stack>
 
