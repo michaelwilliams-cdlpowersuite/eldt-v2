@@ -1,11 +1,12 @@
 import apiClient from './apiClient';
+import config from "../config";
 
 // Student API
 export const submitStepData = async (
   stepData: Record<string, any>,
   studentId: number
 ) => {
-  const companyId = process.env.REACT_APP_DEFAULT_COMPANY_ID; // TODO: should this be hardcoded or come from me.companies[0].id?
+  const companyId = config.defaultCompanyId;
 
   try {
     const response = await apiClient.patch(
@@ -53,7 +54,7 @@ export const signUpUser = async ({
   email: string;
   password: string;
 }) => {
-  const companyId = process.env.REACT_APP_DEFAULT_COMPANY_ID; // TODO: set env variables to correct values
+  const companyId = config.defaultCompanyId;
   const studentType = "quiz"; // TODO: set to "quiz" for now
   const code = null; // TODO: Shrug
 
@@ -92,7 +93,7 @@ export const forgotPassword = async ({ email }: { email: string }) => {
 
 // Update Email API
 export const updateEmail = async (userId: number) => {
-  const companyId = process.env.REACT_APP_DEFAULT_COMPANY_ID; // TODO: set env variables to correct values
+  const companyId = config.defaultCompanyId;
   const locationId = 0; // TODO: set to 0 for now
   try {
     const response = await apiClient.patch(
@@ -107,7 +108,7 @@ export const updateEmail = async (userId: number) => {
 
 // Resend Verification Email API
 export const resendVerificationEmail = async (userId: number) => {
-  const companyId = process.env.REACT_APP_DEFAULT_COMPANY_ID; // TODO: set env variables to correct values
+  const companyId = config.defaultCompanyId;
   try {
     const response = await apiClient.patch(
       `/companies/${companyId}/users/${userId}/resend-verification-email`

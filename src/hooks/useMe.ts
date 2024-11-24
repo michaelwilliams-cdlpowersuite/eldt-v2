@@ -8,7 +8,7 @@ export const useMe = () => {
   return useQuery<User>({
     queryKey: ["me"],
     queryFn: getMe,
-    // retry: false, // no retry
+    // retry: false, // no retry?
     enabled
   });
 };

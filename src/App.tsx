@@ -6,8 +6,9 @@ import { SnackbarProvider } from "notistack";
 import RouterWrapper from "./routes/RouterWrapper";
 import { theme } from "./styles/theme";
 import * as amplitude from "@amplitude/analytics-browser";
+import config from './config';
 
-const amplitudeApiKey = process.env.REACT_APP_AMPLITUDE_API_KEY;
+const amplitudeApiKey = config.amplitudeApiKey;
 if (amplitudeApiKey) {
   amplitude.init(amplitudeApiKey);
 } else {

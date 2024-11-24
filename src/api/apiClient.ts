@@ -1,8 +1,9 @@
 import axios from "axios";
 import {isTokenExpired} from "../hooks/useAuth";
+import config from "../config";
 
 const apiClient = axios.create({
-    baseURL: process.env.REACT_APP_API_URL || "http://localhost:8001/api",
+    baseURL: config.apiUrl,
     headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",

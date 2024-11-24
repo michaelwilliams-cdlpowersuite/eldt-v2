@@ -60,7 +60,7 @@ Build Image - Client:
     - name: docker:20.10.16-dind
       command: ["--mtu=1300"]
   script:
-    - export DOCKER_BUILD_ARGS="--build-arg env=prod --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA --build-arg SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN --build-arg BUILD_DATE=\"$(date +%F+%T)\" --build-arg REACT_APP_API_URL=$REACT_APP_API_URL --build-arg REACT_APP_DEFAULT_COMPANY_ID=$REACT_APP_DEFAULT_COMPANY_ID --build-arg ANGULAR_CLIENT_URL=$ANGULAR_CLIENT_URL --target production"
+    - export DOCKER_BUILD_ARGS="--build-arg env=prod --build-arg CI_COMMIT_SHA=$CI_COMMIT_SHA --build-arg SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN --build-arg BUILD_DATE=\"$(date +%F+%T)\" --target production"
     - build
 
 Deploy to Dev - Client:

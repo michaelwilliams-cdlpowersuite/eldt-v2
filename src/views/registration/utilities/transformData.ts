@@ -1,10 +1,19 @@
 import dayjs from "dayjs";
 import { RegistrationFormUIValues } from "./validationSchema";
 import { courses, endorsements } from "./products";
+import config from "../../../config";
+import {bool} from "yup";
 
 interface ApiData {
   firstName?: string;
   lastName?: string;
+
+  locationId: number;
+  packageId?: number;
+
+  signature?: string;
+  customAgreementTerms?: boolean;
+  applicationCompletedAt?: Date;
 
   cdlClass?: string;
   haz?: boolean;
@@ -35,7 +44,9 @@ interface ApiData {
 export const transformFormikToApi = (
   formikValues: Partial<RegistrationFormUIValues>
 ): ApiData => {
-  const apiData: ApiData = {};
+  const apiData: ApiData = {
+    locationId: config.locationId,
+  };
 
   if (formikValues.step1) {
     // CDL Class
@@ -43,8 +54,13 @@ export const transformFormikToApi = (
     const selectedCourse = courses.find(
       (course) => course.id === selectedCourseId
     );
+
     if (selectedCourse) {
       apiData.cdlClass = selectedCourse.type;
+      apiData.packageId = config.packageIds[apiData.cdlClass];
+    } else {
+      apiData.cdlClass = 'None';
+      apiData.packageId = config.packageIds['None'];
     }
 
     // Endorsements
@@ -88,6 +104,10 @@ export const transformFormikToApi = (
 
   if (formikValues.step3) {
     apiData.automatic_transmission = formikValues.step3.transmission?.apiValue;
+    // @see completedApplication() in student-form.service.ts
+    apiData.customAgreementTerms = true;
+    apiData.applicationCompletedAt = new Date();
+    apiData.signature = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACWCAYAAABkW7XSAAAAAXNSR0IArs4c6QAABGhJREFUeF7t1IEJADAMAsF2/6EtdIuHywRyBu+2HUeAAIGAwDVYgZZEJEDgCxgsj0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIg8ACBlFZdWYR+vQAAAABJRU5ErkJggg==';
 
     apiData.cdlCompletedDate = formikValues.step3.cdlDate
       ? dayjs(formikValues.step3.cdlDate).toISOString()

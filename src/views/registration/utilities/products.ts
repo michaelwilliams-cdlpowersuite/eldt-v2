@@ -11,7 +11,7 @@ import { ReactComponent as Schoolbus } from "../../../assets/icons-03.svg";
 import { ReactComponent as ClassB } from "../../../assets/icons-04.svg";
 import { ReactComponent as ClassA } from "../../../assets/icons-05.svg";
 import { ReactComponent as ClassBA } from "../../../assets/icons-06.svg";
-import {CartItem} from "./validationSchema";
+import config from '../../../config';
 
 export interface Course {
   id: string;
@@ -20,6 +20,7 @@ export interface Course {
   icon?: React.ElementType;
   iconStyles?: React.CSSProperties;
   type: string;
+  apiPackageId: number;
 }
 
 export const courses: Course[] = [
@@ -29,6 +30,7 @@ export const courses: Course[] = [
     description: "Combination Vehicle",
     icon: ClassA,
     type: "Class A",
+    apiPackageId: config.packageIds['Class A'],
   },
   {
     id: "2",
@@ -36,6 +38,7 @@ export const courses: Course[] = [
     description: "Single Vehicle",
     icon: ClassB,
     type: "Class B",
+    apiPackageId: config.packageIds['Class B'],
   },
   {
     id: "3",
@@ -43,6 +46,7 @@ export const courses: Course[] = [
     description: "Combination Vehicle",
     icon: ClassBA,
     type: "Class B-A",
+    apiPackageId: config.packageIds['Class B-A'],
   },
 ];
 

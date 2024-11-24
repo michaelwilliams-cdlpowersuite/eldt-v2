@@ -6,9 +6,10 @@ import {CartItem} from "../utilities/validationSchema";
 import {createCheckoutSession} from "../../../api/ecommerenceApi";
 import {Navigate, useNavigate} from "react-router-dom";
 import {prepareHandoff} from "../../../api/api";
+import config from "../../../config";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid recreating the `Stripe` object on every render.
-const stripePromise = loadStripe("pk_test_51KVilWEqooDHZwmck4VuUymwm3Bw75Fuyryrd0o3MiIlhowWiYpgJg0RgyrNIKufGU4lwTGYZxoIcsSSgP2ZaDmJ00Lb7M2O9G");
+const stripePromise = loadStripe(config.stripePublicKey);
 
 const CheckoutForm = () => {
     const [error, setError] = useState('');
@@ -29,8 +30,7 @@ const CheckoutForm = () => {
     const handleAuthRedirect = async () => {
         await prepareHandoff()
 
-        // @ts-ignore
-        window.location = 'https://dev.eldt.com/eldt-handoff';
+        window.location.replace(config.angularClientUrl+'/eldt-handoff');
     };
 
     const onComplete = () => {
