@@ -24,6 +24,7 @@ import { useUpdateEmail } from "../../hooks/useUpdateEmail";
 import { brandColors } from "../../styles/brandColors";
 import AppTheme from "../../styles/shared-theme/AppTheme";
 import ColorModeSelect from "../../styles/shared-theme/ColorModeSelect";
+import {Navigate} from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -87,6 +88,10 @@ const VerifyEmail: React.FC<VerifyEmailProps> = (props: {
   const handleUpdateEmail = () => {
     updateEmail();
   };
+
+  if (me.emailVerifiedAt) {
+    return <Navigate to="/register" />;
+  }
 
   return (
     <AppTheme {...props}>
