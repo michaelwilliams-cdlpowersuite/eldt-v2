@@ -8,6 +8,16 @@ interface DecodedToken {
   exp: number; // Token expiration in seconds since epoch
 }
 
+export const isTokenExpired = (token: string) => {
+  try {
+    const decoded: DecodedToken = jwtDecode(token);
+    const currentTime = Date.now() / 1000; // Current time in seconds
+    return decoded.exp < currentTime;
+  } catch {
+    return true; // If decoding fails, treat as expired
+  }
+};
+
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(
     !!localStorage.getItem("apiToken")
@@ -24,16 +34,6 @@ export const useAuth = () => {
       setIsAuthenticated(!isTokenExpired(token));
     } else {
       setIsAuthenticated(false);
-    }
-  };
-
-  const isTokenExpired = (token: string) => {
-    try {
-      const decoded: DecodedToken = jwtDecode(token);
-      const currentTime = Date.now() / 1000; // Current time in seconds
-      return decoded.exp < currentTime;
-    } catch {
-      return true; // If decoding fails, treat as expired
     }
   };
 

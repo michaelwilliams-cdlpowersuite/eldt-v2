@@ -1,4 +1,5 @@
 import axios from "axios";
+import {isTokenExpired} from "../hooks/useAuth";
 
 const apiClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL || "http://localhost:8001/api",
@@ -23,12 +24,17 @@ apiClient.interceptors.request.use(
   }
 );
 
-const getAuthToken = () => {
+export const getAuthToken = () => {
     try {
         const token = localStorage.getItem("apiToken");
         if (!token) {
             throw new Error("Token not found in localStorage.");
         }
+
+        if (isTokenExpired(token)) {
+          throw new Error("Token expired.");
+        }
+
         return token;
     } catch (error) {
         if (error instanceof Error) {
