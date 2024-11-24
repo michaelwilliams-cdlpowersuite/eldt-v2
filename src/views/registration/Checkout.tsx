@@ -116,7 +116,6 @@ const Checkout: React.FC<CheckoutProps> = () => {
       {selectedCourseTypeMeta.error && (
         <Alert severity="error">{selectedCourseTypeMeta.error as string}</Alert>
       )}
-      Items: {JSON.stringify(cartItems.value)}
       <Grid2 container spacing={2} sx={{ mt: 2 }}>
         {products.map((product, index) => (
           <Grid2 size={{ xs: 12, sm: 6 }} key={index}>
