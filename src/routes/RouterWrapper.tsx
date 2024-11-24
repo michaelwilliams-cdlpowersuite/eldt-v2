@@ -31,7 +31,7 @@ const RouterWrapper = () => {
     [
       {
         path: "/",
-        element: <Navigate to="/register" replace />,
+        element: <Navigate to="/sign-up" replace />,
       },
       {
         path: "/register",
