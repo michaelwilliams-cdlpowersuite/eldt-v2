@@ -89,7 +89,7 @@ const VerifyEmail: React.FC<VerifyEmailProps> = (props: {
     updateEmail();
   };
 
-  if (me.emailVerifiedAt) {
+  if (me?.emailVerifiedAt) {
     return <Navigate to="/register" />;
   }
 
