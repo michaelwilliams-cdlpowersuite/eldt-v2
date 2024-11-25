@@ -77,7 +77,7 @@ export const useAuth = () => {
       if (token && shouldTokenBeRefreshed(token)) {
         handleRefresh();
       }
-    }, 1 * 60 * 1000); // Check every 5 minutes
+    }, 5 * 60 * 1000); // Check every 5 minutes
 
     return () => clearInterval(interval);
   }, []);
