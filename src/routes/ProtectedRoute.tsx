@@ -28,7 +28,7 @@ export const ProtectedRoute = ({
   }, [isAuthenticated, isEmailVerified, navigate]);
 
   if (isLoading) {
-    return fallback || <div>Loading...</div>;
+    return fallback || <FullpageLoader></FullpageLoader>;
   }
 
   if (!isAuthenticated) {
