@@ -16,11 +16,12 @@ import CheckEmailToVerify from "../views/verify-email/CheckEmailToVerify";
 import { ProtectedRoute } from "./ProtectedRoute";
 import VerifyEmail from "../views/verify-email/VerifyEmail";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { refreshToken } from "../api/api";
 
 const RouterWrapper = () => {
   const { isAuthenticated } = useAuth();
   const [isEmailVerified, setIsEmailVerified] = useState(false);
+
+  console.log(isAuthenticated);
 
   const { data: me, isLoading: isMeLoading } = useMe();
 

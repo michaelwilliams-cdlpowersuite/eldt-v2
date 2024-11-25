@@ -37,8 +37,15 @@ export const useAuth = () => {
   });
 
   const setAuthentication = (token: string) => {
+    console.log("Setting authentication with token:", token);
     localStorage.setItem("apiToken", token);
-    setIsAuthenticated(!isTokenExpired(token));
+
+    const expired = isTokenExpired(token);
+    console.log("Is token expired?", expired);
+
+    setIsAuthenticated(!expired);
+
+    handleStorageChange();
   };
 
   const refreshTokenMutation = useRefreshTokenMutation(setAuthentication);
@@ -48,8 +55,9 @@ export const useAuth = () => {
 
   const handleStorageChange = () => {
     const token = localStorage.getItem("apiToken");
-    if (token) {
-      setIsAuthenticated(!isTokenExpired(token));
+    console.log("handle storage change!!!!!!!!!!!!!!!!!!!!!:");
+    if (token && !isTokenExpired(token)) {
+      setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);
     }
