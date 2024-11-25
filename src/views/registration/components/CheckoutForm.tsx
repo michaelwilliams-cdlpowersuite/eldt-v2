@@ -7,13 +7,14 @@ import {createCheckoutSession} from "../../../api/ecommerenceApi";
 import {Navigate, useNavigate} from "react-router-dom";
 import {prepareHandoff} from "../../../api/api";
 import config from "../../../config";
+import FullpageLoader from "../../../components/FullpageLoader";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(config.stripePublicKey);
 
 const CheckoutForm = () => {
     const [error, setError] = useState('');
-    const [isComplete, setIsComplete] = useState(false);
+    const [isComplete, setIsComplete] = useState(true);
     const [cart] = useField("cart");
 
     const fetchClientSecret = useCallback(async () => {
@@ -44,7 +45,7 @@ const CheckoutForm = () => {
     };
 
     return isComplete ? (
-        <p>Payment completed. Processing your order...</p>
+        <FullpageLoader loadingText="Processing your order..."/>
     ) : (
         <>
             <EmbeddedCheckoutProvider
