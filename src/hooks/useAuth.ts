@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { useEffect, useState } from "react";
+import { useRefreshTokenMutation } from "./useRefreshToken";
 
 const REFRESH_TOKEN_URL = "/refresh-token";
+const BUFFER_TIME = 60 * 10; // 10 minutes before token expiry
 
 interface DecodedToken {
   exp: number; // Token expiration in seconds since epoch
@@ -18,14 +19,31 @@ export const isTokenExpired = (token: string) => {
   }
 };
 
+const shouldTokenBeRefreshed = (token: string) => {
+  try {
+    const decoded: DecodedToken = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+
+    return decoded.exp < currentTime + BUFFER_TIME;
+  } catch {
+    return false;
+  }
+};
+
 export const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("apiToken")
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const token = localStorage.getItem("apiToken");
+    return token ? !isTokenExpired(token) : false;
+  });
 
   const setAuthentication = (token: string) => {
     localStorage.setItem("apiToken", token);
     setIsAuthenticated(!isTokenExpired(token));
+  };
+
+  const refreshTokenMutation = useRefreshTokenMutation(setAuthentication);
+  const handleRefresh = () => {
+    refreshTokenMutation.mutate();
   };
 
   const handleStorageChange = () => {
@@ -45,42 +63,29 @@ export const useAuth = () => {
     };
   }, []);
 
-  //   const refreshToken = async () => {
-  //     try {
-  //       const response = await axios.post(REFRESH_TOKEN_URL, null, {
-  //         withCredentials: true,
-  //       });
-  //       const { token } = response.data;
-  //       setAuthentication(token);
-  //     } catch (error) {
-  //       console.error("Failed to refresh token", error);
-  //       clearAuthentication();
-  //     }
-  //   };
+  // Automatically refresh token if near expiry
+  useEffect(() => {
+    const token = localStorage.getItem("apiToken");
+    if (token && isTokenExpired(token)) {
+      handleRefresh();
+    }
+  }, []);
 
-  //   // Automatically refresh token if near expiry
-  //   useEffect(() => {
-  //     const token = localStorage.getItem("apiToken");
-  //     if (token && isTokenExpired(token)) {
-  //       refreshToken();
-  //     }
-  //   }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const token = localStorage.getItem("apiToken");
+      if (token && shouldTokenBeRefreshed(token)) {
+        handleRefresh();
+      }
+    }, 1 * 60 * 1000); // Check every 5 minutes
 
-  //   useEffect(() => {
-  //     const interval = setInterval(() => {
-  //       const token = localStorage.getItem("apiToken");
-  //       if (token && isTokenExpired(token)) {
-  //         refreshToken();
-  //       }
-  //     }, 5 * 60 * 1000); // Check every 5 minutes
+    return () => clearInterval(interval);
+  }, []);
 
-  //     return () => clearInterval(interval);
-  //   }, []);
-
-  //   const clearAuthentication = () => {
-  //     localStorage.removeItem("apiToken");
-  //     setIsAuthenticated(false);
-  //   };
+  const clearAuthentication = () => {
+    localStorage.removeItem("apiToken");
+    setIsAuthenticated(false);
+  };
 
   return { isAuthenticated, setAuthentication };
 };
