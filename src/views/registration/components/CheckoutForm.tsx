@@ -14,7 +14,7 @@ const stripePromise = loadStripe(config.stripePublicKey);
 
 const CheckoutForm = () => {
     const [error, setError] = useState('');
-    const [isComplete, setIsComplete] = useState(true);
+    const [isComplete, setIsComplete] = useState(false);
     const [cart] = useField("cart");
 
     const fetchClientSecret = useCallback(async () => {
