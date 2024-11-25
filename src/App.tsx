@@ -6,7 +6,8 @@ import { SnackbarProvider } from "notistack";
 import RouterWrapper from "./routes/RouterWrapper";
 import { theme } from "./styles/theme";
 import * as amplitude from "@amplitude/analytics-browser";
-import config from './config';
+import config from "./config";
+import { AuthProvider } from "./auth/AuthProvider";
 
 const amplitudeApiKey = config.amplitudeApiKey;
 if (amplitudeApiKey) {
@@ -22,12 +23,14 @@ const App = () => {
     <div className="App">
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <QueryClientProvider client={queryClient}>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <SnackbarProvider>
-            <RouterWrapper />
-          </SnackbarProvider>
-        </QueryClientProvider>
+        <AuthProvider>
+          <QueryClientProvider client={queryClient}>
+            <ReactQueryDevtools initialIsOpen={false} />
+            <SnackbarProvider>
+              <RouterWrapper />
+            </SnackbarProvider>
+          </QueryClientProvider>
+        </AuthProvider>
       </ThemeProvider>
     </div>
   );
