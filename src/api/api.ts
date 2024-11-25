@@ -61,7 +61,7 @@ export const signUpUser = async ({
   try {
     const response = await apiClient.post(
       `/student-register`,
-      { email, password, companyId, studentType, code },
+      { email, password, companyId, studentType, code, source: 'eldt.com' },
       {
         // Override default headers for this request
         headers: {
@@ -116,6 +116,19 @@ export const resendVerificationEmail = async (userId: number) => {
     return response.data;
   } catch (error) {
     console.error("Error resending verification email:", error);
+    throw error;
+  }
+};
+
+export const verifyEmail = async ({userId, token}: {userId: number, token: string}) => {
+  const companyId = config.defaultCompanyId;
+  try {
+    const response = await apiClient.post(
+      `/companies/${companyId}/users/${userId}/email-verifications/?token=${token}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error verifying email:", error);
     throw error;
   }
 };

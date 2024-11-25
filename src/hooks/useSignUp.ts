@@ -27,7 +27,7 @@ export const useSignUpMutation = (): UseMutationResult<
     onSuccess: (data) => {
       setAuthentication(data.accessToken);
       enqueueSnackbar("Sign up successful!", snackOptions("success"));
-      navigate("/verify-email");
+      navigate("/check-email");
     },
     onError: (error) => {
       if (error instanceof Error && (error as any).response) {

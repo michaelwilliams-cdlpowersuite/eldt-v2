@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import FullpageLoader from "../components/FullpageLoader";
 
 export const ProtectedRoute = ({
   isEmailVerified,
@@ -20,7 +21,7 @@ export const ProtectedRoute = ({
     if (
       isAuthenticated &&
       isEmailVerified &&
-      window.location.pathname === "/verify-email"
+      window.location.pathname === "/check-email"
     ) {
       navigate("/", { replace: true });
     }

@@ -1,11 +1,13 @@
-import {Box, LinearProgress} from "@mui/material";
+import {Box, LinearProgress, Typography} from "@mui/material";
 import LogoIcon from "../assets/LogoIconELDT";
 import {brandColors} from "../styles/brandColors";
 import * as React from "react";
 
-interface FullpageLoaderProps {}
+interface FullpageLoaderProps {
+  loadingText?: string;
+}
 
-const FullpageLoader: React.FC<FullpageLoaderProps> = () => {
+const FullpageLoader: React.FC<FullpageLoaderProps> = ({ loadingText }) => {
   return (
     <div style={{
       display: 'flex',
@@ -35,6 +37,7 @@ const FullpageLoader: React.FC<FullpageLoaderProps> = () => {
           }
         }}
         />
+        { loadingText ? ( <Typography sx={{textAlign: 'center'}}>{ loadingText }</Typography> ) : '' }
       </Box>
     </div>
   )

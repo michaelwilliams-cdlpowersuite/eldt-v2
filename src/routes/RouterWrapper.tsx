@@ -12,8 +12,9 @@ import Registration from "../views/registration/Registration";
 import StepperOrchestration from "../views/registration/Stepper";
 import SignInSide from "../views/sign-in-side/SignInSide";
 import SignUpSide from "../views/sign-up/SignUpSide";
-import VerifyEmail from "../views/verify-email/VerifyEmail";
+import CheckEmailToVerify from "../views/verify-email/CheckEmailToVerify";
 import { ProtectedRoute } from "./ProtectedRoute";
+import VerifyEmail from "../views/verify-email/VerifyEmail";
 
 const RouterWrapper = () => {
   const { isAuthenticated } = useAuth();
@@ -24,8 +25,6 @@ const RouterWrapper = () => {
   useEffect(() => {
     setIsEmailVerified(!!me?.emailVerifiedAt);
   }, [me]);
-
-  const fallback = <div></div>;
 
   const router = createBrowserRouter(
     [
@@ -38,7 +37,6 @@ const RouterWrapper = () => {
         element: (
           <ProtectedRoute
             isEmailVerified={isEmailVerified}
-            fallback={isMeLoading ? fallback : undefined}
             isLoading={isMeLoading}
           >
             <Registration />
@@ -69,11 +67,17 @@ const RouterWrapper = () => {
         element: <SignUpSide disableCustomTheme />,
       },
       {
-        path: "/verify-email",
+        path: "/check-email",
         element: (
           <ProtectedRoute isEmailVerified={isEmailVerified}>
-            <VerifyEmail disableCustomTheme />
+            <CheckEmailToVerify disableCustomTheme />
           </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/email-verification",
+        element: (
+          <VerifyEmail />
         ),
       },
     ]
