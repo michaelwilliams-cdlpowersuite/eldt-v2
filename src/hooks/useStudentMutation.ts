@@ -20,7 +20,7 @@ export const useStudentMutation = (): UseMutationResult<
       return await submitStepData(stepData, studentId);
     },
     onSuccess: () => {
-      enqueueSnackbar("Step completed successfully!", snackOptions("success"));
+      //enqueueSnackbar("Step completed successfully!", snackOptions("success"));
     },
     onError: (error) => {
       enqueueSnackbar(
