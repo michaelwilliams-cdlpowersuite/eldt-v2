@@ -26,7 +26,7 @@ const FormActionButtons: React.FC<FormActionButtonsProps> = ({
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+    <Box sx={{ display: "flex", flexDirection: "row", pt: 2, mb: 6 }}>
       <Button
         variant="contained"
         disableElevation

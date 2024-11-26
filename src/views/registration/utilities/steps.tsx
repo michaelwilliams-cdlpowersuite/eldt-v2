@@ -5,7 +5,7 @@ import Step3 from "../Step3";
 export const steps: StepProps[] = [
   { label: "Course Selection", component: Step1 },
   { label: "Personal Info", component: Step2 },
-  { label: "Additional Details", component: Step3 },
+  { label: "Additional Info", component: Step3 },
 ];
 
 interface StepProps {
