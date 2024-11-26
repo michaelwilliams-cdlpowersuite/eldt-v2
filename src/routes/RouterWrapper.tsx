@@ -16,6 +16,7 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import VerifyEmail from "../views/verify-email/VerifyEmail";
 import { useAuth } from "../auth/AuthProvider";
 import OAuthHandoff from "../views/Auth/OAuthHandoff";
+import * as Sentry from "@sentry/react";
 
 const RouterWrapper = () => {
   const { isAuthenticated } = useAuth();
@@ -27,7 +28,10 @@ const RouterWrapper = () => {
     setIsEmailVerified(!!me?.emailVerifiedAt);
   }, [me]);
 
-  const router = createBrowserRouter([
+  const sentryCreateBrowserRouter =
+    Sentry.wrapCreateBrowserRouter(createBrowserRouter);
+
+  const router = sentryCreateBrowserRouter([
     {
       path: "/",
       element: isAuthenticated ? (
@@ -84,8 +88,8 @@ const RouterWrapper = () => {
     },
     {
       path: "/oauth-handoff",
-      element: <OAuthHandoff />
-    }
+      element: <OAuthHandoff />,
+    },
   ]);
 
   return <RouterProvider router={router} />;
