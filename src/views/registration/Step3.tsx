@@ -207,31 +207,44 @@ const Step3: React.FC<Step3Props> = () => {
       <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 4 }}>
         <Typography variant="h6">Thank you for choosing ELDT.com</Typography>
         <Grid container spacing={2}>
-          <Grid2 size={{ xs: 12 }}>
-            <FormikAutocomplete
-              name="step3.referralSource"
-              options={referralSources}
-              getOptionLabel={(option: { label: any }) => option.label}
-              textFieldProps={{
-                label: "How did you hear about us?",
-              }}
-              disableCloseOnSelect
-              renderOption={(props, option, { selected }) => {
-                const { key, ...optionProps } = props;
-                return (
-                  <li key={key} {...optionProps}>
-                    <Checkbox
-                      icon={icon}
-                      checkedIcon={checkedIcon}
-                      style={{ marginRight: 8 }}
-                      checked={selected}
-                    />
-                    {option.label}
-                  </li>
-                );
-              }}
-            />
-          </Grid2>
+          <MobileOnly>
+            <Grid2 size={{ xs: 12 }}>
+              <FormikSelectWithCheckmarks
+                name="step3.referralSource"
+                options={referralSources}
+                getOptionValue={(option) => option.label}
+                getOptionLabel={(option) => option.label}
+                label="How did you hear about us?"
+              />
+            </Grid2>
+          </MobileOnly>
+          <DesktopOnly>
+            <Grid2 size={{ xs: 12 }}>
+              <FormikAutocomplete
+                name="step3.referralSource"
+                options={referralSources}
+                getOptionLabel={(option: { label: any }) => option.label}
+                textFieldProps={{
+                  label: "How did you hear about us?",
+                }}
+                disableCloseOnSelect
+                renderOption={(props, option, { selected }) => {
+                  const { key, ...optionProps } = props;
+                  return (
+                    <li key={key} {...optionProps}>
+                      <Checkbox
+                        icon={icon}
+                        checkedIcon={checkedIcon}
+                        style={{ marginRight: 8 }}
+                        checked={selected}
+                      />
+                      {option.label}
+                    </li>
+                  );
+                }}
+              />
+            </Grid2>
+          </DesktopOnly>
           <Grid2>
             <Typography>What type of work are you looking for?</Typography>
             <FormControlLabel

@@ -10,6 +10,7 @@ import {
   FormHelperText,
   SelectChangeEvent,
   OutlinedInput,
+  Box,
 } from "@mui/material";
 import { useField, useFormikContext } from "formik";
 
@@ -89,7 +90,7 @@ const FormikSelectWithCheckmarks = <T,>({
     : getOptionValue(field.value || {});
 
   return (
-    <div>
+    <Box sx={{ pt: 2 }}>
       <FormControl sx={{ width: "100%" }}>
         <InputLabel id={`${name}-select-label`}>{label}</InputLabel>
         <Select
@@ -133,7 +134,7 @@ const FormikSelectWithCheckmarks = <T,>({
           <FormHelperText error>{meta.error}</FormHelperText>
         )}
       </FormControl>
-    </div>
+    </Box>
   );
 };
 

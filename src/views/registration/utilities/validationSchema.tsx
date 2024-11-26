@@ -2,11 +2,11 @@ import * as Yup from "yup";
 import {
   Endorsement,
   getCourseByType,
-  getEndorsementsByApiKeys
+  getEndorsementsByApiKeys,
 } from "./products";
-import {User} from "../../../types/user";
-import {states} from "./statesList";
-import {Student} from "../../../types/student";
+import { User } from "../../../types/user";
+import { states } from "./statesList";
+import { Student } from "../../../types/student";
 
 export const validationSchema = Yup.object({
   step1: Yup.object({
@@ -48,7 +48,7 @@ export const validationSchema = Yup.object({
     workType: Yup.array().required("Required"),
 
     where: Yup.string().required("Required"),
-    referralSource: Yup.string().required("Required"),
+    referralSource: Yup.object().required("Required"),
   }),
   cart: Yup.object({
     signature: Yup.string().required("You must sign the refund policy."),
@@ -57,20 +57,27 @@ export const validationSchema = Yup.object({
 
 export const buildInitialValues = (user?: User): RegistrationFormUIValues => ({
   step1: {
-    selectedCourse: user?.student?.cdlClass ? getCourseByType(user.student.cdlClass)?.id ?? '' : '',
-    selectedEndorsements: ['haz', 'passenger', 'schoolBus'].filter((e) => !!(user?.student && user.student[e as keyof Student])).map((e) => getEndorsementsByApiKeys([e])[0].id),
+    selectedCourse: user?.student?.cdlClass
+      ? getCourseByType(user.student.cdlClass)?.id ?? ""
+      : "",
+    selectedEndorsements: ["haz", "passenger", "schoolBus"]
+      .filter((e) => !!(user?.student && user.student[e as keyof Student]))
+      .map((e) => getEndorsementsByApiKeys([e])[0].id),
   },
   step2: {
-    firstName: user?.firstName ?? '',
-    lastName: user?.lastName ?? '',
-    phone: user?.student?.phone ?? '',
-    dob: '',
-    driversLicense: user?.student.driversLicense ?? '',
-    confirmDriversLicense: user?.student.driversLicense ?? '',
-    streetAddress: user?.student?.address.address1 ?? '',
-    city: user?.student?.address.city ?? '',
-    state: user?.student?.address.state ? (states.find((s) => s.abbreviation === user.student.address.state) ?? null) : null,
-    zip: user?.student?.address.zip ?? '',
+    firstName: user?.firstName ?? "",
+    lastName: user?.lastName ?? "",
+    phone: user?.student?.phone ?? "",
+    dob: "",
+    driversLicense: user?.student.driversLicense ?? "",
+    confirmDriversLicense: user?.student.driversLicense ?? "",
+    streetAddress: user?.student?.address.address1 ?? "",
+    city: user?.student?.address.city ?? "",
+    state: user?.student?.address.state
+      ? states.find((s) => s.abbreviation === user.student.address.state) ??
+        null
+      : null,
+    zip: user?.student?.address.zip ?? "",
     language: { label: "English", code: "en", apiValue: 1 },
   },
   step3: {
@@ -81,12 +88,12 @@ export const buildInitialValues = (user?: User): RegistrationFormUIValues => ({
     endorsements: null,
     workType: null,
     where: "",
-    referralSource: '',
+    referralSource: "",
   },
   cart: {
     items: [],
     signature: null,
-  }
+  },
 });
 
 interface Step1 {
