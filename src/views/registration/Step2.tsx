@@ -54,7 +54,7 @@ const Step2: React.FC<Step2Props> = () => {
           <FormikTextField name="step2.streetAddress" label="Address" />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 4 }}>
-          <FormikTextField name="step2.zip" label="Zip" />
+          <FormikTextField name="step2.zip" label="Zip" inputProps={{ maxLength: 5, type: "number" }} />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 4 }}>
           <FormikTextField name="step2.city" label="City" />
