@@ -26,9 +26,10 @@ const FormActionButtons: React.FC<FormActionButtonsProps> = ({
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "row", pt: 2, mb: 6 }}>
+    <Box sx={{ display: "flex", flexDirection: "row", pt: 2, mb: 6, mx: 2 }}>
       <Button
-        variant="contained"
+        size="large"
+        variant="outlined"
         disableElevation
         color="inherit"
         disabled={activeStep === 0}
@@ -52,6 +53,7 @@ const FormActionButtons: React.FC<FormActionButtonsProps> = ({
         </Button>
       )}
       <Button
+        size="large"
         onClick={handleSubmit}
         variant="contained"
         disableElevation
