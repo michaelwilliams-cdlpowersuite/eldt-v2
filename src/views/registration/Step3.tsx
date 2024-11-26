@@ -9,7 +9,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import { Grid, Stack } from "@mui/system";
+import { Box, Grid, Stack } from "@mui/system";
 import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikDatePicker from "./components/FormikDatePicker";
 import FormikTextField from "./components/FormikTextField";
@@ -24,6 +24,7 @@ import { pxContainer, titleStyles } from "./utilities/styles";
 import { useField } from "formik";
 import React, { useState } from "react";
 import FormikSelectWithCheckmarks from "./components/FormikSelectWithCheckmarks";
+import { DesktopOnly, MobileOnly } from "../../components/ResponsiveWrappers";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -82,16 +83,42 @@ const Step3: React.FC<Step3Props> = () => {
       <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 4 }}>
         <Typography variant="h6">Once your training is complete...</Typography>
         <Grid2 container spacing={2}>
-          <Grid2 size={{ xs: 12 }}>
-            <FormikSelectWithCheckmarks
-              name="step3.cdlType"
-              options={cdlTypes}
-              getOptionValue={(option) => option.label}
-              getOptionLabel={(option) => option.label}
-              multiple
-              label="What type of CDL will you have?"
-            />
-          </Grid2>
+          <MobileOnly>
+            <Grid2 size={{ xs: 12 }}>
+              <FormikSelectWithCheckmarks
+                name="step3.cdlType"
+                options={cdlTypes}
+                getOptionValue={(option) => option.label}
+                getOptionLabel={(option) => option.label}
+                label="What type of CDL will you have?"
+              />
+            </Grid2>
+          </MobileOnly>
+          <DesktopOnly>
+            <Grid2 size={{ xs: 12 }}>
+              <FormikAutocomplete
+                name="step3.cdlType"
+                options={cdlTypes}
+                getOptionLabel={(option: { label: any }) => option.label}
+                textFieldProps={{ label: "What type of CDL will you have?" }}
+                disableCloseOnSelect
+                renderOption={(props, option, { selected }) => {
+                  const { key, ...optionProps } = props;
+                  return (
+                    <li key={key} {...optionProps}>
+                      <Checkbox
+                        icon={icon}
+                        checkedIcon={checkedIcon}
+                        style={{ marginRight: 8 }}
+                        checked={selected}
+                      />
+                      {option.label}
+                    </li>
+                  );
+                }}
+              />
+            </Grid2>
+          </DesktopOnly>
           <Grid2 size={{ xs: 12 }}>
             <FormikAutocomplete
               name="step3.endorsements"

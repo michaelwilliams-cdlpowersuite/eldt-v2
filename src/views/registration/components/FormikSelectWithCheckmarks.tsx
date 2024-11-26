@@ -71,22 +71,31 @@ const FormikSelectWithCheckmarks = <T,>({
           {...props}
           labelId={`${name}-select-label`}
           id={`${name}-select`}
-          multiple
+          multiple={multiple}
           value={value}
-          name="name"
+          name={name}
           onChange={handleChange}
           input={<OutlinedInput label={label} />}
-          renderValue={(selected) =>
-            (selected as (string | number)[]).join(", ")
-          }
+          renderValue={(selected) => {
+            if (multiple) {
+              return (selected as (string | number)[]).join(", ");
+            }
+            // For single selection, just display the label of the selected value
+            const selectedOption = options.find(
+              (option) => getOptionValue(option) === selected
+            );
+            return selectedOption ? getOptionLabel(selectedOption) : "";
+          }}
           MenuProps={MenuProps}
         >
           {options.map((option) => (
             <MenuItem
-              key={getOptionLabel(option)}
+              key={getOptionValue(option)}
               value={getOptionValue(option)}
             >
-              <Checkbox checked={isSelected(getOptionValue(option))} />
+              {multiple && (
+                <Checkbox checked={isSelected(getOptionValue(option))} />
+              )}
               <ListItemText primary={getOptionLabel(option)} />
             </MenuItem>
           ))}
