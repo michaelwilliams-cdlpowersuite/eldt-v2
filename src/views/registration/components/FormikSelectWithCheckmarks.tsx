@@ -55,13 +55,30 @@ const FormikSelectWithCheckmarks = <T,>({
   const { setFieldValue } = useFormikContext();
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
-    setFieldValue(name, event.target.value as (string | number)[]);
+    if (multiple) {
+      const selectedValues = (event.target.value as T[]).map((value) =>
+        options.find((option) => getOptionValue(option) === value)
+      );
+      setFieldValue(name, selectedValues.filter(Boolean)); // Filter out any undefined
+    } else {
+      const selectedValue = options.find(
+        (option) => getOptionValue(option) === event.target.value
+      );
+      setFieldValue(name, selectedValue || null);
+    }
   };
 
-  const isSelected = (value: string | number) =>
-    Array.isArray(field.value) && field.value.includes(value);
+  const isSelected = (option: T) =>
+    multiple && Array.isArray(field.value)
+      ? field.value.some(
+          (selectedOption: T) =>
+            getOptionValue(selectedOption) === getOptionValue(option)
+        )
+      : getOptionValue(field.value) === getOptionValue(option);
 
-  const value = multiple ? field.value || [] : field.value || null;
+  const value = multiple
+    ? (field.value || []).map((option: T) => getOptionValue(option))
+    : getOptionValue(field.value || {});
 
   return (
     <div>
@@ -78,7 +95,13 @@ const FormikSelectWithCheckmarks = <T,>({
           input={<OutlinedInput label={label} />}
           renderValue={(selected) => {
             if (multiple) {
-              return (selected as (string | number)[]).join(", ");
+              const selectedOptions = (selected as (string | number)[]).map(
+                (value) =>
+                  options.find((option) => getOptionValue(option) === value)
+              );
+              return selectedOptions
+                .map((option) => (option ? getOptionLabel(option) : ""))
+                .join(", ");
             }
             // For single selection, just display the label of the selected value
             const selectedOption = options.find(
@@ -93,13 +116,14 @@ const FormikSelectWithCheckmarks = <T,>({
               key={getOptionValue(option)}
               value={getOptionValue(option)}
             >
-              {multiple && (
-                <Checkbox checked={isSelected(getOptionValue(option))} />
-              )}
+              {multiple && <Checkbox checked={isSelected(option)} />}
               <ListItemText primary={getOptionLabel(option)} />
             </MenuItem>
           ))}
         </Select>
+        {meta.touched && meta.error && (
+          <FormHelperText error>{meta.error}</FormHelperText>
+        )}
       </FormControl>
     </div>
   );

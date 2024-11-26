@@ -83,7 +83,7 @@ const Step3: React.FC<Step3Props> = () => {
       <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 4 }}>
         <Typography variant="h6">Once your training is complete...</Typography>
         <Grid2 container spacing={2}>
-          <MobileOnly>
+          <MobileOnly key="cdlType-mobile">
             <Grid2 size={{ xs: 12 }}>
               <FormikSelectWithCheckmarks
                 name="step3.cdlType"
@@ -94,7 +94,7 @@ const Step3: React.FC<Step3Props> = () => {
               />
             </Grid2>
           </MobileOnly>
-          <DesktopOnly>
+          <DesktopOnly key="cdleType-desktop">
             <Grid2 size={{ xs: 12 }}>
               <FormikAutocomplete
                 name="step3.cdlType"
@@ -119,33 +119,48 @@ const Step3: React.FC<Step3Props> = () => {
               />
             </Grid2>
           </DesktopOnly>
-          <Grid2 size={{ xs: 12 }}>
-            <FormikAutocomplete
-              name="step3.endorsements"
-              dependentAnswer="step1.endorsements"
-              options={endorsements}
-              getOptionLabel={(option) => option.title}
-              textFieldProps={{
-                label: "What type of endorsements will you have?",
-              }}
-              disableCloseOnSelect
-              multiple
-              renderOption={(props, option, { selected }) => {
-                const { key, ...optionProps } = props;
-                return (
-                  <li key={key} {...optionProps}>
-                    <Checkbox
-                      icon={icon}
-                      checkedIcon={checkedIcon}
-                      style={{ marginRight: 8 }}
-                      checked={selected}
-                    />
-                    {option.title}
-                  </li>
-                );
-              }}
-            />
-          </Grid2>
+          <MobileOnly key="cdlType-mobile">
+            <Grid2 size={{ xs: 12 }}>
+              <FormikSelectWithCheckmarks
+                name="step3.endorsements"
+                options={endorsements}
+                getOptionValue={(option) => option.title}
+                getOptionLabel={(option) => option.title}
+                label="What type of CDL will you have?"
+                multiple
+              />
+            </Grid2>
+          </MobileOnly>
+          <DesktopOnly key="cdleType-desktop">
+            <Grid2 size={{ xs: 12 }}>
+              <FormikAutocomplete
+                name="step3.endorsements"
+                dependentAnswer="step1.endorsements"
+                options={endorsements}
+                getOptionLabel={(option) => option.title}
+                textFieldProps={{
+                  label: "What type of endorsements will you have?",
+                }}
+                disableCloseOnSelect
+                multiple
+                renderOption={(props, option, { selected }) => {
+                  const { key, ...optionProps } = props;
+                  return (
+                    <li key={key} {...optionProps}>
+                      <Checkbox
+                        icon={icon}
+                        checkedIcon={checkedIcon}
+                        style={{ marginRight: 8 }}
+                        checked={selected}
+                      />
+                      {option.title}
+                    </li>
+                  );
+                }}
+              />
+            </Grid2>
+          </DesktopOnly>
+
           <Grid2 size={{ xs: 12 }}>
             <FormikAutocomplete
               name="step3.workType"
