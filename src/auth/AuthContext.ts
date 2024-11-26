@@ -28,12 +28,13 @@ export const isTokenExpired = (token: string) => {
   }
 };
 
-export const shouldTokenBeRefreshed = (token: string) => {
+export const shouldTokenBeRefreshed = (token: string): boolean => {
   try {
-    const decoded: DecodedToken = jwtDecode(token);
-    const currentTime = Date.now() / 1000;
-    return decoded.exp < currentTime + BUFFER_TIME;
-  } catch {
-    return false;
+    const decoded = jwtDecode<DecodedToken>(token); // Decodes the token
+    const currentTime = Date.now() / 1000; // Current time in seconds
+    return decoded.exp < currentTime + BUFFER_TIME; // Refresh if within buffer time
+  } catch (error) {
+    console.error("Failed to decode token for refresh check:", error);
+    return false; // If decoding fails, assume no refresh is needed
   }
 };

@@ -1,9 +1,10 @@
 import { useMutation, UseMutationResult } from "@tanstack/react-query";
 import { loginUser } from "../api/api";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./useAuth";
+
 import { enqueueSnackbar } from "notistack";
 import { snackOptions } from "../views/registration/utilities/snackOptions";
+import { useAuth } from "../auth/AuthProvider";
 
 interface LoginVariables {
   email: string;

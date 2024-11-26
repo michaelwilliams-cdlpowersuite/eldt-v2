@@ -13,7 +13,6 @@ export const useRefreshTokenMutation = (
   return useMutation({
     mutationFn: refreshToken,
     onSuccess: (data) => {
-      console.log(data.accessToken);
       setAuthentication(data.accessToken);
       console.info("Token refreshed");
     },

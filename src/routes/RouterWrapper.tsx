@@ -4,7 +4,6 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
 import { useMe } from "../hooks/useMe";
 import Checkout from "../views/registration/Checkout";
 import Payment from "../views/registration/Payment";
@@ -16,12 +15,11 @@ import CheckEmailToVerify from "../views/verify-email/CheckEmailToVerify";
 import { ProtectedRoute } from "./ProtectedRoute";
 import VerifyEmail from "../views/verify-email/VerifyEmail";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { useAuth } from "../auth/AuthProvider";
 
 const RouterWrapper = () => {
   const { isAuthenticated } = useAuth();
   const [isEmailVerified, setIsEmailVerified] = useState(false);
-
-  console.log(isAuthenticated);
 
   const { data: me, isLoading: isMeLoading } = useMe();
 

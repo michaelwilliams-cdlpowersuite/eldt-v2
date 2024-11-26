@@ -1,6 +1,5 @@
 import axios from "axios";
 import config from "../config";
-import { isTokenExpired } from "../hooks/useAuth";
 
 const apiClient = axios.create({
   baseURL: config.apiUrl,
@@ -30,10 +29,6 @@ export const getAuthToken = () => {
     const token = localStorage.getItem("apiToken");
     if (!token) {
       throw new Error("Token not found in localStorage.");
-    }
-
-    if (isTokenExpired(token)) {
-      throw new Error("Token expired.");
     }
 
     return token;

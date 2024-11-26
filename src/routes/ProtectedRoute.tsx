@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../auth/AuthProvider";
 import FullpageLoader from "../components/FullpageLoader";
 
 export const ProtectedRoute = ({

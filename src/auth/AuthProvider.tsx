@@ -5,6 +5,7 @@ import {
   isTokenExpired,
   shouldTokenBeRefreshed,
 } from "./AuthContext";
+import { refreshToken } from "../api/api";
 
 interface AuthProviderProps {
   children: React.ReactNode;
@@ -34,10 +35,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  //   const refreshTokenMutation = useRefreshTokenMutation(setAuthentication);
-
-  const handleRefresh = () => {
-    // refreshTokenMutation.mutate();
+  const handleRefresh = async () => {
+    try {
+      const data = await refreshToken();
+      if (data?.accessToken) {
+        setAuthentication(data.accessToken);
+      } else {
+        clearAuthentication();
+      }
+    } catch (error) {
+      clearAuthentication();
+    }
   };
 
   const clearAuthentication = () => {
@@ -45,21 +53,33 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsAuthenticated(false);
   };
 
-  // Automatically refresh token if near expiry
-  useEffect(() => {
+  const handleStorageChange = () => {
     const token = localStorage.getItem("apiToken");
-    if (token && isTokenExpired(token)) {
-      handleRefresh();
+    if (token && !isTokenExpired(token)) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
     }
+  };
+
+  // Listen for token changes in localStorage
+  useEffect(() => {
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
+  // Automatically check for token expiry every 5 minutes
   useEffect(() => {
     const interval = setInterval(() => {
+      console.log("Checking token for refresh...");
       const token = localStorage.getItem("apiToken");
       if (token && shouldTokenBeRefreshed(token)) {
+        console.log("Calling handleRefresh...");
         handleRefresh();
       }
-    }, 5 * 60 * 1000); // Check every 5 minutes
+    }, 1 * 60 * 1000); // 5 minutes
 
     return () => clearInterval(interval);
   }, []);
