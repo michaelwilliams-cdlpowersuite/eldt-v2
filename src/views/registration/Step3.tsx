@@ -3,28 +3,21 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import {
   Checkbox,
   FormControlLabel,
-  FormGroup,
   Grid2,
-  NativeSelect,
   Paper,
   Typography,
 } from "@mui/material";
-import { Box, Grid, Stack } from "@mui/system";
-import FormikAutocomplete from "./components/FormikAutocomplete";
-import FormikDatePicker from "./components/FormikDatePicker";
-import FormikTextField from "./components/FormikTextField";
-import {
-  cdlTypes,
-  referralSources,
-  transmissions,
-  workTypes,
-} from "./utilities/optionsLists";
-import { endorsements } from "./utilities/products";
-import { pxContainer, titleStyles } from "./utilities/styles";
+import { Grid, Stack } from "@mui/system";
 import { useField } from "formik";
 import React, { useState } from "react";
-import FormikSelectWithCheckmarks from "./components/FormikSelectWithCheckmarks";
 import { DesktopOnly, MobileOnly } from "../../components/ResponsiveWrappers";
+import FormikAutocomplete from "./components/FormikAutocomplete";
+import FormikDatePicker from "./components/FormikDatePicker";
+import FormikSelectWithCheckmarks from "./components/FormikSelectWithCheckmarks";
+import FormikTextField from "./components/FormikTextField";
+import { cdlTypes, referralSources, workTypes } from "./utilities/optionsLists";
+import { endorsements } from "./utilities/products";
+import { pxContainer, titleStyles } from "./utilities/styles";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
