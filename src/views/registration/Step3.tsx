@@ -66,7 +66,7 @@ const Step3: React.FC<Step3Props> = () => {
             onOpen={() => setOpen(true)}
             onClose={() => setOpen(false)}
             name="step3.cdlDate"
-            label="When did you/will you complete your training?"
+            label="When did you or will you complete your training?"
             views={["month", "year"]}
             format="MM-YYYY"
             textFieldProps={{
@@ -243,7 +243,6 @@ const Step3: React.FC<Step3Props> = () => {
             </Grid2>
           </DesktopOnly>
           <Grid2>
-            <Typography>What type of work are you looking for?</Typography>
             <FormControlLabel
               control={<Checkbox defaultChecked />}
               label="Connect me with employment opportunties please!"

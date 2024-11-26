@@ -1,5 +1,6 @@
 import apiClient from "./apiClient";
 import config from "../config";
+import * as Sentry from "@sentry/react";
 
 // Student API
 export const submitStepData = async (
@@ -15,6 +16,7 @@ export const submitStepData = async (
     );
     return response.data;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error submitting step data:", error);
     throw error;
   }
@@ -41,6 +43,7 @@ export const loginUser = async ({
     );
     return response.data;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error logging in:", error);
     throw error;
   }
@@ -61,7 +64,7 @@ export const signUpUser = async ({
   try {
     const response = await apiClient.post(
       `/student-register`,
-      { email, password, companyId, studentType, code, source: 'eldt.com' },
+      { email, password, companyId, studentType, code, source: "eldt.com" },
       {
         // Override default headers for this request
         headers: {
@@ -71,6 +74,7 @@ export const signUpUser = async ({
     );
     return response.data;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error logging in:", error);
     throw error;
   }
@@ -86,6 +90,7 @@ export const forgotPassword = async ({ email }: { email: string }) => {
     });
     return response.data;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error sending forgot password email:", error);
     throw error;
   }
@@ -101,6 +106,7 @@ export const updateEmail = async (userId: number) => {
     );
     return response.data;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error updating email:", error);
     throw error;
   }
@@ -115,6 +121,7 @@ export const resendVerificationEmail = async (userId: number) => {
     );
     return response.data;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error resending verification email:", error);
     throw error;
   }
@@ -128,12 +135,19 @@ export const refreshToken = async () => {
     });
     return response.data;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Failed to refresh token", error);
     throw error;
   }
 };
 
-export const verifyEmail = async ({userId, token}: {userId: number, token: string}) => {
+export const verifyEmail = async ({
+  userId,
+  token,
+}: {
+  userId: number;
+  token: string;
+}) => {
   const companyId = config.defaultCompanyId;
   try {
     const response = await apiClient.post(
@@ -141,6 +155,7 @@ export const verifyEmail = async ({userId, token}: {userId: number, token: strin
     );
     return response.data;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error verifying email:", error);
     throw error;
   }
@@ -152,6 +167,7 @@ export const getMe = async () => {
     const response = await apiClient.get("user/me");
     return response.data;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error getting user data:", error);
     throw error;
   }
@@ -164,6 +180,7 @@ export const retrieveHandoff = async () => {
     });
     return response.data;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Failed to obtain handoff information", error);
     throw error;
   }
@@ -174,6 +191,7 @@ export const prepareHandoff = async () => {
     const response = await apiClient.post("/eldt/authenticated-handoff");
     return response.data;
   } catch (error) {
+    Sentry.captureException(error);
     console.error("Error getting user data:", error);
     throw error;
   }
