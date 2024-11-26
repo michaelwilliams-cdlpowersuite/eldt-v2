@@ -1,14 +1,17 @@
 import {
   Autocomplete,
-  AutocompleteProps,
+  AutocompleteProps, InputBase, SelectChangeEvent,
   TextField,
   TextFieldProps,
 } from "@mui/material";
 import { useField, useFormikContext } from "formik";
-import React from "react";
+import React, {ReactNode} from "react";
+import {styled} from "@mui/material/styles";
+import Select from "@mui/material/Select";
+import {SelectProps} from "@mui/material/Select/Select";
 
 type FormikAutocompleteProps<T, Multiple extends boolean = false> = Omit<
-  AutocompleteProps<T, Multiple, false, false>,
+  SelectProps<T>,
   "renderInput"
 > & {
   name: string;
@@ -27,29 +30,29 @@ const FormikAutocomplete = <T, Multiple extends boolean = false>({
   const [field, meta] = useField(name);
   const { setFieldValue, setFieldTouched } = useFormikContext();
 
-  const handleChange = (event: React.SyntheticEvent, value: T | T[] | null) => {
+  const handleChange = (event: SelectChangeEvent<string>, child: ReactNode) => {
     setFieldValue(name, value); // Update Formik's state with single or multiple values
   };
 
   const value = multiple ? field.value || [] : field.value || null;
 
   return (
-    <Autocomplete
-      {...props}
+    <Select
       multiple={multiple}
       value={value} // Dynamically handle value based on 'multiple'
       onChange={handleChange}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          {...textFieldProps} // Spread any TextFieldProps passed in
-          error={meta.touched && Boolean(meta.error)}
-          helperText={meta.touched && meta.error}
-          fullWidth
-          margin="normal"
-          onBlur={() => setFieldTouched(name, true, true)}
-        />
-      )}
+      // renderInput={(params) => (
+      //   <TextField
+      //     {...params}
+      //     {...textFieldProps} // Spread any TextFieldProps passed in
+      //     error={meta.touched && Boolean(meta.error)}
+      //     helperText={meta.touched && meta.error}
+      //     fullWidth
+      //     margin="normal"
+      //     autoFocus={false}
+      //     onBlur={() => setFieldTouched(name, true, true)}
+      //   />
+      // )}
     />
   );
 };

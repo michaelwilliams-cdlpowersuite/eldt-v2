@@ -42,14 +42,13 @@ export const validationSchema = Yup.object({
     language: Yup.object().required("Required"),
   }),
   step3: Yup.object({
-    transmission: Yup.object().required("Required"),
     cdlDate: Yup.string().required("Required"),
     // cdlType: Yup.object().required("Required").nullable(),
     // endorsements: Yup.array().required("Required").nullable(),
     workType: Yup.array().required("Required"),
 
     where: Yup.string().required("Required"),
-    referralSource: Yup.object().required("Required"),
+    referralSource: Yup.string().required("Required"),
   }),
   cart: Yup.object({
     signature: Yup.string().required("You must sign the refund policy."),
@@ -76,13 +75,13 @@ export const buildInitialValues = (user?: User): RegistrationFormUIValues => ({
   },
   step3: {
     optIn: true,
-    transmission: null,
+    prefersAutomatic: false,
     cdlDate: "",
     cdlType: null,
     endorsements: null,
     workType: null,
     where: "",
-    referralSource: null,
+    referralSource: '',
   },
   cart: {
     items: [],
@@ -111,13 +110,13 @@ interface Step2 {
 
 interface Step3 {
   optIn: boolean;
-  transmission: { label: string; apiValue: boolean } | null;
+  prefersAutomatic: boolean;
   cdlDate: string;
   cdlType: { label: string } | null;
   endorsements: Endorsement[] | null;
   workType: [{ label: string; value: string }] | null;
   where: string;
-  referralSource: { label: string } | null;
+  referralSource: string;
 }
 
 export interface CartItem {

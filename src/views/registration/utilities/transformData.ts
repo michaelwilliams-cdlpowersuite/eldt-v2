@@ -103,7 +103,8 @@ export const transformFormikToApi = (
   }
 
   if (formikValues.step3) {
-    apiData.automatic_transmission = formikValues.step3.transmission?.apiValue;
+    apiData.automatic_transmission = formikValues.step3.prefersAutomatic ?? false
+
     // @see completedApplication() in student-form.service.ts
     apiData.customAgreementTerms = true;
     apiData.applicationCompletedAt = new Date();
