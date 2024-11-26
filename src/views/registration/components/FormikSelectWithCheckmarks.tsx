@@ -91,7 +91,7 @@ const FormikSelectWithCheckmarks = <T,>({
 
   return (
     <Box sx={{ pt: 2 }}>
-      <FormControl sx={{ width: "100%" }}>
+      <FormControl sx={{ width: "100%" }} error={!!meta.error}>
         <InputLabel id={`${name}-select-label`}>{label}</InputLabel>
         <Select
           {...props}
