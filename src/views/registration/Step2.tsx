@@ -1,5 +1,5 @@
 import { Box, Grid2, Typography } from "@mui/material";
-import React, { ChangeEventHandler } from "react";
+import React from "react";
 import { IMaskInput } from "react-imask";
 import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikDatePicker from "./components/FormikDatePicker";
