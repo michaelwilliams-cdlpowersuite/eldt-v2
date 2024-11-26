@@ -1,4 +1,4 @@
-import apiClient from './apiClient';
+import apiClient from "./apiClient";
 import config from "../config";
 
 // Student API
@@ -116,6 +116,19 @@ export const resendVerificationEmail = async (userId: number) => {
     return response.data;
   } catch (error) {
     console.error("Error resending verification email:", error);
+    throw error;
+  }
+};
+
+// Refresh Token API
+export const refreshToken = async () => {
+  try {
+    const response = await apiClient.post("/refresh-token", null, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Failed to refresh token", error);
     throw error;
   }
 };
