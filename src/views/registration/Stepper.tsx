@@ -20,7 +20,7 @@ interface StepperOrchestrationProps {}
 // This code is lifted from the MUI Stepper example
 // https://mui.com/material-ui/react-stepper/#linear
 const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(2);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const validateCurrentStep = useValidateCurrentStep();
   const { values, setTouched } = useFormikContext<RegistrationFormUIValues>();

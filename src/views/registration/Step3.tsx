@@ -2,8 +2,10 @@ import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import {
   Checkbox,
-  FormControlLabel, FormGroup,
-  Grid2, NativeSelect,
+  FormControlLabel,
+  FormGroup,
+  Grid2,
+  NativeSelect,
   Paper,
   Typography,
 } from "@mui/material";
@@ -20,7 +22,8 @@ import {
 import { endorsements } from "./utilities/products";
 import { pxContainer, titleStyles } from "./utilities/styles";
 import { useField } from "formik";
-import React, {useState} from "react";
+import React, { useState } from "react";
+import FormikSelectWithCheckmarks from "./components/FormikSelectWithCheckmarks";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -38,8 +41,11 @@ const Step3: React.FC<Step3Props> = () => {
         Additional Info
       </Typography>
 
-      <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 2, px: pxContainer }}>
-        <Typography variant="h6" >Training Details</Typography>
+      <Paper
+        variant="outlined"
+        sx={{ width: "100%", padding: 2, mt: 2, px: pxContainer }}
+      >
+        <Typography variant="h6">Training Details</Typography>
         <Stack>
           <FormControlLabel
             control={<Checkbox value={true} />}
@@ -47,7 +53,11 @@ const Step3: React.FC<Step3Props> = () => {
             name="step3.prefersAutomatic"
             onChange={stepField.onChange}
           />
-          <Typography variant="caption">Check this box if you would prefer to train in an automatic vehicle. We recommend training in manual to have the most employment opportunities.</Typography>
+          <Typography variant="caption">
+            Check this box if you would prefer to train in an automatic vehicle.
+            We recommend training in manual to have the most employment
+            opportunities.
+          </Typography>
 
           <FormikDatePicker
             sx={{ mt: 3 }}
@@ -56,7 +66,7 @@ const Step3: React.FC<Step3Props> = () => {
             onClose={() => setOpen(false)}
             name="step3.cdlDate"
             label="When did you/will you complete your training?"
-            views={['month', 'year']}
+            views={["month", "year"]}
             format="MM-YYYY"
             textFieldProps={{
               onClick: () => setOpen(true),
@@ -73,26 +83,13 @@ const Step3: React.FC<Step3Props> = () => {
         <Typography variant="h6">Once your training is complete...</Typography>
         <Grid2 container spacing={2}>
           <Grid2 size={{ xs: 12 }}>
-            <FormikAutocomplete
+            <FormikSelectWithCheckmarks
               name="step3.cdlType"
               options={cdlTypes}
-              getOptionLabel={(option: { label: any }) => option.label}
-              textFieldProps={{ label: "What type of CDL will you have?" }}
-              disableCloseOnSelect
-              renderOption={(props, option, { selected }) => {
-                const { key, ...optionProps } = props;
-                return (
-                  <li key={key} {...optionProps}>
-                    <Checkbox
-                      icon={icon}
-                      checkedIcon={checkedIcon}
-                      style={{ marginRight: 8 }}
-                      checked={selected}
-                    />
-                    {option.label}
-                  </li>
-                );
-              }}
+              getOptionValue={(option) => option.label}
+              getOptionLabel={(option) => option.label}
+              multiple
+              label="What type of CDL will you have?"
             />
           </Grid2>
           <Grid2 size={{ xs: 12 }}>
@@ -182,7 +179,7 @@ const Step3: React.FC<Step3Props> = () => {
           <Grid2>
             <Typography>What type of work are you looking for?</Typography>
             <FormControlLabel
-              control={<Checkbox defaultChecked/>}
+              control={<Checkbox defaultChecked />}
               label="Connect me with employment opportunties please!"
               name="step3.optIn"
               onChange={stepField.onChange}
@@ -191,9 +188,9 @@ const Step3: React.FC<Step3Props> = () => {
               ELDT.com is connected with hundreds of trucking companies across
               America to help connect quality drivers with potential employment
               opportunities. To create the best experience, recruiters use text,
-              phone, or email to communicate. If getting connected with employment
-              opportunities is something that interests you, let us know by clicking
-              the checkbox provided.
+              phone, or email to communicate. If getting connected with
+              employment opportunities is something that interests you, let us
+              know by clicking the checkbox provided.
             </Typography>
           </Grid2>
         </Grid>
