@@ -126,7 +126,7 @@ const Step3: React.FC<Step3Props> = () => {
                 options={endorsements}
                 getOptionValue={(option) => option.title}
                 getOptionLabel={(option) => option.title}
-                label="What type of CDL will you have?"
+                label="What type of endorsements will you have?"
                 multiple
               />
             </Grid2>
@@ -161,32 +161,46 @@ const Step3: React.FC<Step3Props> = () => {
             </Grid2>
           </DesktopOnly>
 
-          <Grid2 size={{ xs: 12 }}>
-            <FormikAutocomplete
-              name="step3.workType"
-              options={workTypes}
-              getOptionLabel={(option: { label: any }) => option.label}
-              textFieldProps={{
-                label: "What type of work are you looking for?",
-              }}
-              disableCloseOnSelect
-              multiple
-              renderOption={(props, option, { selected }) => {
-                const { key, ...optionProps } = props;
-                return (
-                  <li key={key} {...optionProps}>
-                    <Checkbox
-                      icon={icon}
-                      checkedIcon={checkedIcon}
-                      style={{ marginRight: 8 }}
-                      checked={selected}
-                    />
-                    {option.label}
-                  </li>
-                );
-              }}
-            />
-          </Grid2>
+          <MobileOnly key="worktype-mobile">
+            <Grid2 size={{ xs: 12 }}>
+              <FormikSelectWithCheckmarks
+                name="step3.workType"
+                options={workTypes}
+                getOptionValue={(option) => option.label}
+                getOptionLabel={(option) => option.label}
+                label="What type of work are you looking for?"
+                multiple
+              />
+            </Grid2>
+          </MobileOnly>
+          <DesktopOnly key="worktype-desktop">
+            <Grid2 size={{ xs: 12 }}>
+              <FormikAutocomplete
+                name="step3.workType"
+                options={workTypes}
+                getOptionLabel={(option: { label: any }) => option.label}
+                textFieldProps={{
+                  label: "What type of work are you looking for?",
+                }}
+                disableCloseOnSelect
+                multiple
+                renderOption={(props, option, { selected }) => {
+                  const { key, ...optionProps } = props;
+                  return (
+                    <li key={key} {...optionProps}>
+                      <Checkbox
+                        icon={icon}
+                        checkedIcon={checkedIcon}
+                        style={{ marginRight: 8 }}
+                        checked={selected}
+                      />
+                      {option.label}
+                    </li>
+                  );
+                }}
+              />
+            </Grid2>
+          </DesktopOnly>
         </Grid2>
       </Paper>
 

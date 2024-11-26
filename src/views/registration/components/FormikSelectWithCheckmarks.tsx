@@ -68,13 +68,21 @@ const FormikSelectWithCheckmarks = <T,>({
     }
   };
 
-  const isSelected = (option: T) =>
-    multiple && Array.isArray(field.value)
-      ? field.value.some(
-          (selectedOption: T) =>
-            getOptionValue(selectedOption) === getOptionValue(option)
-        )
-      : getOptionValue(field.value) === getOptionValue(option);
+  const isSelected = (option: T) => {
+    if (!option || !field.value) return false;
+
+    if (multiple && Array.isArray(field.value)) {
+      return field.value.some(
+        (selectedOption: T | null) =>
+          selectedOption &&
+          getOptionValue(selectedOption) === getOptionValue(option)
+      );
+    }
+
+    return (
+      field.value && getOptionValue(field.value as T) === getOptionValue(option)
+    );
+  };
 
   const value = multiple
     ? (field.value || []).map((option: T) => getOptionValue(option))
