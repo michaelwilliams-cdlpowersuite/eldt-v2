@@ -1,5 +1,5 @@
 import { Box, Grid2, Typography } from "@mui/material";
-import React, {ChangeEventHandler} from "react";
+import React, { ChangeEventHandler } from "react";
 import { IMaskInput } from "react-imask";
 import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikDatePicker from "./components/FormikDatePicker";
@@ -54,7 +54,19 @@ const Step2: React.FC<Step2Props> = () => {
           <FormikTextField name="step2.streetAddress" label="Address" />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 4 }}>
-          <FormikTextField name="step2.zip" label="Zip" inputProps={{ type: "number", max: 99999 }} />
+          <FormikTextField
+            name="step2.zip"
+            label="Zip"
+            slotProps={{
+              input: {
+                inputProps: {
+                  maxLength: 5,
+                  inputMode: "numeric",
+                  pattern: "[0-9]*",
+                },
+              },
+            }}
+          />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 4 }}>
           <FormikTextField name="step2.city" label="City" />
