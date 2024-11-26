@@ -51,10 +51,9 @@ export const validationSchema = Yup.object({
   }),
   step3: Yup.object({
     cdlDate: Yup.string().required("Required"),
-    // cdlType: Yup.object().required("Required").nullable(),
-    // endorsements: Yup.array().required("Required").nullable(),
+    cdlType: Yup.object().required("Required"),
+    endorsements: Yup.array().required("Required"),
     workType: Yup.array().required("Required"),
-
     where: Yup.string().required("Required"),
     referralSource: Yup.object().required("Required"),
   }),

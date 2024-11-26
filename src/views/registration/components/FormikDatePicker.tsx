@@ -1,5 +1,6 @@
 import { TextFieldProps } from "@mui/material";
-import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
+import { DesktopDatePicker } from "@mui/x-date-pickers";
+import { DatePickerProps } from "@mui/x-date-pickers/DatePicker";
 import { Dayjs } from "dayjs";
 import { useField, useFormikContext } from "formik";
 import React from "react";
@@ -25,7 +26,7 @@ const FormikDatePicker: React.FC<FormikDatePickerProps> = ({
   };
 
   return (
-    <DatePicker
+    <DesktopDatePicker
       {...props}
       value={field.value || null} // Handle null values
       onChange={handleChange}
