@@ -1,37 +1,59 @@
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import DevicesIcon from "@mui/icons-material/Devices";
 import SchoolIcon from "@mui/icons-material/School";
-import VerifiedIcon from "@mui/icons-material/Verified";
+import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import LogoIcon from "../../assets/LogoIconELDT";
 import { brandColors } from "../../styles/brandColors";
+import AddTaskIcon from "@mui/icons-material/AddTask";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import GradingIcon from "@mui/icons-material/Grading";
+import PhoneIcon from "@mui/icons-material/Phone";
 
 const items = [
   {
-    icon: <VerifiedIcon sx={{ color: "text.secondary" }} />,
-    title: "FMCSA-Compliant Training",
-    description:
-      "Get certified with courses that meet all federal requirements for Entry-Level Driver Training.",
+    icon: <SentimentVerySatisfiedIcon sx={{ color: "text.secondary" }} />,
+    title: "Step by Step, Mile by Mile—Our Team Has Your Back",
+    description: (
+      <span>
+        You’ve made the right choice with ELDT.com. Our team is here to help
+        anytime.{" "}
+        <a
+          href="tel:+15092413987"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <PhoneIcon
+            sx={{
+              marginLeft: "4px",
+              verticalAlign: "middle",
+              fontSize: "1rem",
+              color: "inherit",
+            }}
+          />
+          (509) 241-3987
+        </a>
+      </span>
+    ),
   },
   {
-    icon: <SchoolIcon sx={{ color: "text.secondary" }} />,
-    title: "Expert-Instructor Designed",
+    icon: <AddTaskIcon sx={{ color: "text.secondary" }} />,
+    title: "Trusted by 300+ Training Providers Nationwide",
     description:
-      "Courses created by certified CDL instructors to ensure you get the best training.",
+      "ELDT.com is recognized in all 50 states for FMCSA-compliant theory training.",
   },
   {
-    icon: <AttachMoneyIcon sx={{ color: "text.secondary" }} />,
-    title: "Affordable and Flexible",
+    icon: <LocalShippingIcon sx={{ color: "text.secondary" }} />,
+    title: "Need Help Finding Behind-The-Wheel Training?",
     description:
-      "Complete your training starting at just $25, with courses available 24/7 to fit your schedule.",
+      "We can connect you with a trusted local CDL training school near you.",
   },
   {
-    icon: <DevicesIcon sx={{ color: "text.secondary" }} />,
-    title: "Convenient and Mobile-Friendly",
+    icon: <GradingIcon sx={{ color: "text.secondary" }} />,
+    title: "Receive Your Certificate with Confidence",
     description:
-      "Access and complete your training anytime, anywhere, on any device.",
+      "Complete the course, score 80% or higher, and get your certificate.",
   },
 ];
 
