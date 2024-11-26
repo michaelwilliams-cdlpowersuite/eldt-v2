@@ -79,7 +79,6 @@ const Step3: React.FC<Step3Props> = () => {
           />
         </Stack>
       </Paper>
-
       <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 4 }}>
         <Typography variant="h6">Once your training is complete...</Typography>
         <Grid2 container spacing={2}>
@@ -94,7 +93,7 @@ const Step3: React.FC<Step3Props> = () => {
               />
             </Grid2>
           </MobileOnly>
-          <DesktopOnly key="cdleType-desktop">
+          <DesktopOnly key="cdlType-desktop">
             <Grid2 size={{ xs: 12 }}>
               <FormikAutocomplete
                 name="step3.cdlType"
@@ -119,7 +118,7 @@ const Step3: React.FC<Step3Props> = () => {
               />
             </Grid2>
           </DesktopOnly>
-          <MobileOnly key="cdlType-mobile">
+          <MobileOnly key="endorsements-mobile">
             <Grid2 size={{ xs: 12 }}>
               <FormikSelectWithCheckmarks
                 name="step3.endorsements"
@@ -131,7 +130,7 @@ const Step3: React.FC<Step3Props> = () => {
               />
             </Grid2>
           </MobileOnly>
-          <DesktopOnly key="cdleType-desktop">
+          <DesktopOnly key="endorsements-desktop">
             <Grid2 size={{ xs: 12 }}>
               <FormikAutocomplete
                 name="step3.endorsements"
@@ -160,7 +159,6 @@ const Step3: React.FC<Step3Props> = () => {
               />
             </Grid2>
           </DesktopOnly>
-
           <MobileOnly key="worktype-mobile">
             <Grid2 size={{ xs: 12 }}>
               <FormikSelectWithCheckmarks
@@ -203,11 +201,10 @@ const Step3: React.FC<Step3Props> = () => {
           </DesktopOnly>
         </Grid2>
       </Paper>
-
       <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 4 }}>
         <Typography variant="h6">Thank you for choosing ELDT.com</Typography>
         <Grid container spacing={2}>
-          <MobileOnly>
+          <MobileOnly key="referralSource-mobile">
             <Grid2 size={{ xs: 12 }}>
               <FormikSelectWithCheckmarks
                 name="step3.referralSource"
@@ -218,7 +215,7 @@ const Step3: React.FC<Step3Props> = () => {
               />
             </Grid2>
           </MobileOnly>
-          <DesktopOnly>
+          <DesktopOnly key="referralSource-desktop">
             <Grid2 size={{ xs: 12 }}>
               <FormikAutocomplete
                 name="step3.referralSource"
