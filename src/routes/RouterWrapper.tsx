@@ -14,7 +14,6 @@ import SignUpSide from "../views/sign-up/SignUpSide";
 import CheckEmailToVerify from "../views/verify-email/CheckEmailToVerify";
 import { ProtectedRoute } from "./ProtectedRoute";
 import VerifyEmail from "../views/verify-email/VerifyEmail";
-import { ProtectedRoute } from "./ProtectedRoute";
 import { useAuth } from "../auth/AuthProvider";
 
 const RouterWrapper = () => {
@@ -27,62 +26,62 @@ const RouterWrapper = () => {
     setIsEmailVerified(!!me?.emailVerifiedAt);
   }, [me]);
 
-  const router = createBrowserRouter(
-    [
-      {
-        path: "/",
-        element: isAuthenticated ? <Navigate to="/register" replace /> : <Navigate to="/sign-up" replace />,
-      },
-      {
-        path: "/register",
-        element: (
-          <ProtectedRoute
-            isEmailVerified={isEmailVerified}
-            isLoading={isMeLoading}
-          >
-            <Registration />
-          </ProtectedRoute>
-        ),
-        children: [
-          {
-            index: true,
-            element: <StepperOrchestration />,
-          },
-          {
-            path: "checkout",
-            element: <Checkout />,
-          },
-          {
-            path: "payment",
-            element: <Payment />,
-          },
-        ],
-      },
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: isAuthenticated ? (
+        <Navigate to="/register" replace />
+      ) : (
+        <Navigate to="/sign-up" replace />
+      ),
+    },
+    {
+      path: "/register",
+      element: (
+        <ProtectedRoute
+          isEmailVerified={isEmailVerified}
+          isLoading={isMeLoading}
+        >
+          <Registration />
+        </ProtectedRoute>
+      ),
+      children: [
+        {
+          index: true,
+          element: <StepperOrchestration />,
+        },
+        {
+          path: "checkout",
+          element: <Checkout />,
+        },
+        {
+          path: "payment",
+          element: <Payment />,
+        },
+      ],
+    },
 
-      {
-        path: "/sign-in",
-        element: <SignInSide disableCustomTheme />,
-      },
-      {
-        path: "/sign-up",
-        element: <SignUpSide disableCustomTheme />,
-      },
-      {
-        path: "/check-email",
-        element: (
-          <ProtectedRoute isEmailVerified={isEmailVerified}>
-            <CheckEmailToVerify disableCustomTheme />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "/email-verification",
-        element: (
-          <VerifyEmail />
-        ),
-      },
-    ]
-  );
+    {
+      path: "/sign-in",
+      element: <SignInSide disableCustomTheme />,
+    },
+    {
+      path: "/sign-up",
+      element: <SignUpSide disableCustomTheme />,
+    },
+    {
+      path: "/check-email",
+      element: (
+        <ProtectedRoute isEmailVerified={isEmailVerified}>
+          <CheckEmailToVerify disableCustomTheme />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/email-verification",
+      element: <VerifyEmail />,
+    },
+  ]);
 
   return <RouterProvider router={router} />;
 };
