@@ -23,7 +23,8 @@ export const isTokenExpired = (token: string) => {
     const decoded: DecodedToken = jwtDecode(token);
     const currentTime = Date.now() / 1000; // Current time in seconds
     return decoded.exp < currentTime;
-  } catch {
+  } catch (e) {
+    console.log('failed to verify token: '+e);
     return true; // If decoding fails, treat as expired
   }
 };

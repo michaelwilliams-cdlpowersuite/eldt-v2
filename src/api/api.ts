@@ -157,6 +157,18 @@ export const getMe = async () => {
   }
 };
 
+export const retrieveHandoff = async () => {
+  try {
+    const response = await apiClient.get("/eldt/retrieve-handoff", {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Failed to obtain handoff information", error);
+    throw error;
+  }
+};
+
 export const prepareHandoff = async () => {
   try {
     const response = await apiClient.post("/eldt/authenticated-handoff");

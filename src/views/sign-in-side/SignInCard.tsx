@@ -16,6 +16,7 @@ import { useLoginMutation } from "../../hooks/useLogin";
 import { brandColors } from "../../styles/brandColors";
 import { GoogleIcon } from "./CustomIcons";
 import ForgotPassword from "./ForgotPassword";
+import config from "../../config";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -183,7 +184,7 @@ export default function SignInCard() {
         <Button
           fullWidth
           variant="outlined"
-          onClick={() => alert("Sign in with Google")}
+          href={config.googleSignIn}
           startIcon={<GoogleIcon />}
         >
           Sign in with Google

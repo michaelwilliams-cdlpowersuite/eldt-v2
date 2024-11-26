@@ -21,6 +21,7 @@ import AppTheme from "../../styles/shared-theme/AppTheme";
 import ColorModeSelect from "../../styles/shared-theme/ColorModeSelect";
 import { GoogleIcon } from "./CustomIcons";
 import PasswordValidator from "./PasswordValidator";
+import config from "../../config";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -255,7 +256,7 @@ export default function SignUpCard(props: { disableCustomTheme?: boolean }) {
         <Button
           fullWidth
           variant="outlined"
-          onClick={() => alert("Sign up with Google")}
+          href={config.googleSignIn}
           startIcon={<GoogleIcon />}
         >
           Sign up with Google

@@ -15,6 +15,7 @@ import CheckEmailToVerify from "../views/verify-email/CheckEmailToVerify";
 import { ProtectedRoute } from "./ProtectedRoute";
 import VerifyEmail from "../views/verify-email/VerifyEmail";
 import { useAuth } from "../auth/AuthProvider";
+import OAuthHandoff from "../views/Auth/OAuthHandoff";
 
 const RouterWrapper = () => {
   const { isAuthenticated } = useAuth();
@@ -81,6 +82,10 @@ const RouterWrapper = () => {
       path: "/email-verification",
       element: <VerifyEmail />,
     },
+    {
+      path: "/oauth-handoff",
+      element: <OAuthHandoff />
+    }
   ]);
 
   return <RouterProvider router={router} />;
