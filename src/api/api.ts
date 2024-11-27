@@ -1,6 +1,7 @@
 import apiClient from "./apiClient";
 import config from "../config";
 import * as Sentry from "@sentry/react";
+import { useMe } from "../hooks/useMe";
 
 // Student API
 export const submitStepData = async (
@@ -17,7 +18,10 @@ export const submitStepData = async (
     return response.data;
   } catch (error) {
     Sentry.captureException(error);
-    console.error("Error submitting step data:", error);
+    console.error("Error submitting step data:", {
+      error: error,
+      studentId: studentId,
+    });
     throw error;
   }
 };
@@ -43,7 +47,7 @@ export const loginUser = async ({
     );
     return response.data;
   } catch (error) {
-    Sentry.captureException(error);
+    Sentry.captureException({ error: error, email: email });
     console.error("Error logging in:", error);
     throw error;
   }
@@ -74,7 +78,7 @@ export const signUpUser = async ({
     );
     return response.data;
   } catch (error) {
-    Sentry.captureException(error);
+    Sentry.captureException({ error: error, email: email });
     console.error("Error logging in:", error);
     throw error;
   }
@@ -90,7 +94,7 @@ export const forgotPassword = async ({ email }: { email: string }) => {
     });
     return response.data;
   } catch (error) {
-    Sentry.captureException(error);
+    Sentry.captureException({ error: error, email: email });
     console.error("Error sending forgot password email:", error);
     throw error;
   }
@@ -106,7 +110,7 @@ export const updateEmail = async (userId: number) => {
     );
     return response.data;
   } catch (error) {
-    Sentry.captureException(error);
+    Sentry.captureException({ error: error, userId: userId });
     console.error("Error updating email:", error);
     throw error;
   }
@@ -121,7 +125,7 @@ export const resendVerificationEmail = async (userId: number) => {
     );
     return response.data;
   } catch (error) {
-    Sentry.captureException(error);
+    Sentry.captureException({ error: error, userId: userId });
     console.error("Error resending verification email:", error);
     throw error;
   }
@@ -155,7 +159,7 @@ export const verifyEmail = async ({
     );
     return response.data;
   } catch (error) {
-    Sentry.captureException(error);
+    Sentry.captureException({ error: error, userId: userId });
     console.error("Error verifying email:", error);
     throw error;
   }
