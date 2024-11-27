@@ -7,6 +7,7 @@ import FormikTextField from "./components/FormikTextField";
 import { languages } from "./utilities/languages";
 import { states } from "./utilities/statesList";
 import { pxContainer, titleStyles } from "./utilities/styles";
+import PhoneNumberField from "./components/PhoneNumberField";
 
 interface Step2Props {}
 
@@ -24,15 +25,7 @@ const Step2: React.FC<Step2Props> = () => {
           <FormikTextField name="step2.lastName" label="Last Name" />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6 }}>
-          <FormikTextField
-            name="step2.phone"
-            label="Phone"
-            slotProps={{
-              input: {
-                inputComponent: TextMaskCustom as any,
-              },
-            }}
-          />
+          <PhoneNumberField name="phone" />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikDatePicker name="step2.dob" label="DOB" />

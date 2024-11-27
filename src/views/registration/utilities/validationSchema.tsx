@@ -9,8 +9,8 @@ import { states } from "./statesList";
 import { Student } from "../../../types/student";
 import dayjs from "dayjs";
 
-const MIN_DATE = dayjs().subtract(100, 'years');
-const MAX_DATE = dayjs().subtract(14, 'years');
+const MIN_DATE = dayjs().subtract(100, "years");
+const MAX_DATE = dayjs().subtract(14, "years");
 
 export const validationSchema = Yup.object({
   step1: Yup.object({
@@ -33,9 +33,9 @@ export const validationSchema = Yup.object({
     lastName: Yup.string().required("Required"),
     phone: Yup.string().required("Required"),
     dob: Yup.date()
-      .typeError('Please check you entry. Invalid date')
-      .min(MIN_DATE, `DOB must be after ${MIN_DATE.format('LL')}`)
-      .max(MAX_DATE, `DOB must be before ${MAX_DATE.format('LL')}`)
+      .typeError("Please check you entry. Invalid date")
+      .min(MIN_DATE, `DOB must be after ${MIN_DATE.format("LL")}`)
+      .max(MAX_DATE, `DOB must be before ${MAX_DATE.format("LL")}`)
       .required("Required"),
     driversLicense: Yup.string().required("Required"),
     confirmDriversLicense: Yup.string()
