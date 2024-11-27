@@ -1,3 +1,5 @@
+import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
   Box,
   Button,
@@ -14,9 +16,6 @@ import {
 import { Stack } from "@mui/system";
 import React from "react";
 import { Course, Endorsement, Product } from "../utilities/products";
-import { brandColors } from "../../../styles/brandColors";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 
 interface CourseCardProps {
   course: Course;
