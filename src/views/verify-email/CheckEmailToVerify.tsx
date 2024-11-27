@@ -24,7 +24,7 @@ import { useUpdateEmail } from "../../hooks/useUpdateEmail";
 import { brandColors } from "../../styles/brandColors";
 import AppTheme from "../../styles/shared-theme/AppTheme";
 import ColorModeSelect from "../../styles/shared-theme/ColorModeSelect";
-import {Navigate} from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -46,7 +46,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
 }));
 
 const SignUpContainer = styled(Stack)(({ theme }) => ({
-  height: "calc((1 - var(--template-frame-height, 0)) * 100dvh)",
+  height: "auto",
   minHeight: "100%",
   padding: theme.spacing(2),
   [theme.breakpoints.up("sm")]: {
