@@ -222,7 +222,11 @@ const CheckEmailToVerify: React.FC<CheckEmailToVerifyProps> = (props: {
               }}
             />
             <Stack
-              direction="row"
+              direction={{
+                xs: "column",
+                md: "row",
+              }}
+              sx={{ gap: 2 }}
               alignContent="center"
               justifyContent="space-around"
             >
