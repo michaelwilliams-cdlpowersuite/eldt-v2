@@ -16,6 +16,8 @@ import {
 import { Stack } from "@mui/system";
 import React from "react";
 import { Course, Endorsement, Product } from "../utilities/products";
+import { brandColors } from "../../../styles/brandColors";
+import { brand } from "../../../styles/shared-theme/themePrimitives";
 
 interface CourseCardProps {
   course: Course;
@@ -33,9 +35,13 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     <Card
       variant="outlined"
       onClick={onSelect}
-      sx={{ border: selected ? "primary.main" : "" }}
+      sx={{
+        border: selected
+          ? `4px solid ${brandColors.goGreen}`
+          : "1px solid primary.main",
+      }}
     >
-      <CardActionArea>
+      <CardActionArea sx={{ padding: selected ? "0px" : "3px" }}>
         <CardContent>
           <Box
             sx={{
@@ -57,7 +63,15 @@ export const CourseCard: React.FC<CourseCardProps> = ({
           </Typography>
         </CardContent>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Checkbox checked={selected} onChange={onSelect} />
+          <Checkbox
+            checked={selected}
+            onChange={onSelect}
+            sx={{
+              "&.Mui-checked": {
+                color: brandColors.goGreen,
+              },
+            }}
+          />
         </Box>
       </CardActionArea>
     </Card>
@@ -81,9 +95,13 @@ export const EndorsementCard: React.FC<EndorsementCardProps> = ({
     <Card
       variant="outlined"
       onClick={onSelect}
-      sx={{ border: selected ? "2px solid primary.main" : "" }}
+      sx={{
+        border: selected
+          ? `4px solid ${brandColors.goGreen}`
+          : "1px solid primary.main",
+      }}
     >
-      <CardActionArea>
+      <CardActionArea sx={{ padding: selected ? "0px" : "3px" }}>
         <CardContent>
           <Stack
             spacing={2}
@@ -100,7 +118,15 @@ export const EndorsementCard: React.FC<EndorsementCardProps> = ({
                 minWidth: "230px",
               }}
             >
-              <Checkbox checked={selected} onChange={onSelect} />
+              <Checkbox
+                checked={selected}
+                onChange={onSelect}
+                sx={{
+                  "&.Mui-checked": {
+                    color: brandColors.goGreen,
+                  },
+                }}
+              />
               <Typography variant="h6" textAlign="center">
                 {endorsement.title}
               </Typography>
