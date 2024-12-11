@@ -8,12 +8,14 @@ import { theme } from "./styles/theme";
 import * as amplitude from "@amplitude/analytics-browser";
 import config from "./config";
 import { AuthProvider } from "./auth/AuthProvider";
+import * as Sentry from "@sentry/react";
 
 const amplitudeApiKey = config.amplitudeApiKey;
 if (amplitudeApiKey) {
   amplitude.init(amplitudeApiKey);
 } else {
-  //console.error("Amplitude API key is not defined");
+  Sentry.captureException("Amplitude API key is not defined in ELDT react app");
+  console.error("Amplitude API key is not defined");
 }
 
 const App = () => {

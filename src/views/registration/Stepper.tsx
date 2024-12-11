@@ -14,6 +14,7 @@ import { snackOptions } from "./utilities/snackOptions";
 import { steps } from "./utilities/steps";
 import { transformFormikToApi } from "./utilities/transformData";
 import { RegistrationFormUIValues } from "./utilities/validationSchema";
+import config from "../../config";
 
 interface StepperOrchestrationProps {}
 
@@ -113,7 +114,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
         })}
       </Stepper>
       {activeStep === steps.length ? (
-        <Navigate to="checkout" />
+        <Navigate to={`${config.angularClientUrl}/eldt-handoff`} />
       ) : (
         <React.Fragment>
           <Box sx={{ mt: 2, mb: 1 }}>

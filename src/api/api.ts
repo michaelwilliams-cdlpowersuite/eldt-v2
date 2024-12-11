@@ -196,7 +196,7 @@ export const prepareHandoff = async () => {
     return response.data;
   } catch (error) {
     Sentry.captureException(error);
-    console.error("Error getting user data:", error);
+    console.error("Error handing off to Angular App:", error);
     throw error;
   }
 };
