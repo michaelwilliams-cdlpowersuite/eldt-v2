@@ -114,7 +114,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
         })}
       </Stepper>
       {activeStep === steps.length ? (
-        <Navigate to={`${config.angularClientUrl}/eldt-handoff`} />
+        (window.location.href = `${config.angularClientUrl}/eldt-handoff`)
       ) : (
         <React.Fragment>
           <Box sx={{ mt: 2, mb: 1 }}>
