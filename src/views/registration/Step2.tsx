@@ -28,51 +28,6 @@ const Step2: React.FC<Step2Props> = () => {
           <PhoneNumberField name="phone" />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6 }}>
-          <FormikDatePicker name="step2.dob" label="DOB" />
-        </Grid2>
-        <Grid2 size={{ xs: 12, sm: 6 }}>
-          <FormikTextField
-            name="step2.driversLicense"
-            label="Driver's License"
-          />
-        </Grid2>
-        <Grid2 size={{ xs: 12, sm: 6 }}>
-          <FormikTextField
-            name="step2.confirmDriversLicense"
-            label="Confirm Driver's License"
-            onPaste={(e) => e.preventDefault()}
-          />
-        </Grid2>
-        <Grid2 size={12}>
-          <FormikTextField name="step2.streetAddress" label="Address" />
-        </Grid2>
-        <Grid2 size={{ xs: 12, sm: 4 }}>
-          <FormikTextField
-            name="step2.zip"
-            label="Zip"
-            slotProps={{
-              input: {
-                inputProps: {
-                  maxLength: 5,
-                  inputMode: "numeric",
-                  pattern: "[0-9]*",
-                },
-              },
-            }}
-          />
-        </Grid2>
-        <Grid2 size={{ xs: 12, sm: 4 }}>
-          <FormikTextField name="step2.city" label="City" />
-        </Grid2>
-        <Grid2 size={{ xs: 12, sm: 4 }}>
-          <FormikAutocomplete
-            name="step2.state"
-            options={states}
-            getOptionLabel={(option: { label: any }) => option.label}
-            textFieldProps={{ label: "State" }}
-          />
-        </Grid2>
-        <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikAutocomplete
             name="step2.language"
             options={languages}
