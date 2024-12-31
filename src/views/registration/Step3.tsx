@@ -34,44 +34,6 @@ const Step3: React.FC<Step3Props> = () => {
       <Typography variant="h6" sx={{ px: pxContainer, ...titleStyles }}>
         Additional Info
       </Typography>
-
-      <Paper
-        variant="outlined"
-        sx={{ width: "100%", padding: 2, mt: 2, px: pxContainer }}
-      >
-        <Typography variant="h6">Training Details</Typography>
-        <Stack>
-          <FormControlLabel
-            control={<Checkbox value={true} />}
-            label="I prefer automatic trucks"
-            name="step3.prefersAutomatic"
-            onChange={stepField.onChange}
-          />
-          <Typography variant="caption">
-            Check this box if you would prefer to train in an automatic vehicle.
-            We recommend training in manual to have the most employment
-            opportunities.
-          </Typography>
-
-          <FormikDatePicker
-            sx={{ mt: 3 }}
-            open={open}
-            onOpen={() => setOpen(true)}
-            onClose={() => setOpen(false)}
-            name="step3.cdlDate"
-            label="When did you or will you complete your training?"
-            views={["month", "year"]}
-            format="MM-YYYY"
-            textFieldProps={{
-              onClick: () => setOpen(true),
-            }}
-          />
-          <FormikTextField
-            name="step3.where"
-            label="Where will you be training?"
-          />
-        </Stack>
-      </Paper>
       <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 4 }}>
         <Typography variant="h6">Once your training is complete...</Typography>
         <Grid2 container spacing={2}>

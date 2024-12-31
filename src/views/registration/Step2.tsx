@@ -35,6 +35,12 @@ const Step2: React.FC<Step2Props> = () => {
             textFieldProps={{ label: "Language" }}
           />
         </Grid2>
+        <Grid2 size={{ xs: 12, sm: 6 }}>
+          <FormikTextField
+              name="step2.where"
+              label="Where will you be training?"
+          />
+        </Grid2>
       </Grid2>
     </Box>
   );

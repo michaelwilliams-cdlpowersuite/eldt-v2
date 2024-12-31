@@ -33,13 +33,12 @@ export const validationSchema = Yup.object({
     lastName: Yup.string().required("Required"),
     phone: Yup.string().required("Required"),
     language: Yup.object().required("Required"),
+    where: Yup.string().required("Required"),
   }),
   step3: Yup.object({
-    cdlDate: Yup.string().required("Required"),
     cdlType: Yup.object().required("Required"),
     endorsements: Yup.array().required("Required"),
     workType: Yup.array().required("Required"),
-    where: Yup.string().required("Required"),
     referralSource: Yup.object().required("Required"),
   }),
   cart: Yup.object({
@@ -71,6 +70,7 @@ export const buildInitialValues = (user?: User): RegistrationFormUIValues => ({
       : null,
     zip: user?.student?.address.zip ?? "",
     language: { label: "English", code: "en", apiValue: 1 },
+    where: "",
   },
   step3: {
     optIn: true,
@@ -79,7 +79,6 @@ export const buildInitialValues = (user?: User): RegistrationFormUIValues => ({
     cdlType: null,
     endorsements: null,
     workType: null,
-    where: "",
     referralSource: "",
   },
   cart: {
@@ -105,6 +104,7 @@ interface Step2 {
   state: { label: string; abbreviation: string } | null;
   zip: string;
   language: { label: string; code: string; apiValue: number };
+  where: string;
 }
 
 interface Step3 {
@@ -114,7 +114,6 @@ interface Step3 {
   cdlType: { label: string } | null;
   endorsements: Endorsement[] | null;
   workType: [{ label: string; value: string }] | null;
-  where: string;
   referralSource: string;
 }
 
