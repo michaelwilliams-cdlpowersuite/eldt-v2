@@ -40,6 +40,7 @@ const PhoneNumberField: React.FC<TextFieldProps> = ({ name }) => {
         input: {
           inputProps: {
             maxLength: 14,
+            inputMode: 'numeric'
           },
         },
       }}

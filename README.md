@@ -44,3 +44,15 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+### For Mobile Development
+
+run `php artisan serve --port=8001 --host=172.16.102.43` to serve the API on the network
+
+In this project, go to config > index.js and change this line to this:
+
+```js
+const resolvedHost = hostMapping[window.location.hostname] ? window.location.hostname : 'localhost';
+```
+
+Then go to config > local.js and change apiUrl and googleSignIn to `172.16.102.43`
