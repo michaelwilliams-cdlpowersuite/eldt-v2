@@ -36,8 +36,6 @@ export const validationSchema = Yup.object({
     where: Yup.string().required("Required"),
   }),
   step3: Yup.object({
-    cdlType: Yup.object().required("Required"),
-    endorsements: Yup.array().required("Required"),
     workType: Yup.array().required("Required"),
     referralSource: Yup.object().required("Required"),
   }),
@@ -74,10 +72,6 @@ export const buildInitialValues = (user?: User): RegistrationFormUIValues => ({
   },
   step3: {
     optIn: true,
-    prefersAutomatic: false,
-    cdlDate: "",
-    cdlType: null,
-    endorsements: null,
     workType: null,
     referralSource: "",
   },
@@ -109,10 +103,6 @@ interface Step2 {
 
 interface Step3 {
   optIn: boolean;
-  prefersAutomatic: boolean;
-  cdlDate: string;
-  cdlType: { label: string } | null;
-  endorsements: Endorsement[] | null;
   workType: [{ label: string; value: string }] | null;
   referralSource: string;
 }

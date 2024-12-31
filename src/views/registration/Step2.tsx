@@ -25,7 +25,7 @@ const Step2: React.FC<Step2Props> = () => {
           <FormikTextField name="step2.lastName" label="Last Name" />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6 }}>
-          <PhoneNumberField name="phone" />
+          <PhoneNumberField name="step2.phone" />
         </Grid2>
         <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikAutocomplete

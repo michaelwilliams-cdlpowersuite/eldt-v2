@@ -35,85 +35,8 @@ const Step3: React.FC<Step3Props> = () => {
         Additional Info
       </Typography>
       <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 4 }}>
-        <Typography variant="h6">Once your training is complete...</Typography>
+        <Typography variant="h6">Recruitment</Typography>
         <Grid2 container spacing={2}>
-          <MobileOnly key="cdlType-mobile">
-            <Grid2 size={{ xs: 12 }}>
-              <FormikSelectWithCheckmarks
-                name="step3.cdlType"
-                options={cdlTypes}
-                getOptionValue={(option) => option.label}
-                getOptionLabel={(option) => option.label}
-                label="What type of CDL will you have?"
-              />
-            </Grid2>
-          </MobileOnly>
-          <DesktopOnly key="cdlType-desktop">
-            <Grid2 size={{ xs: 12 }}>
-              <FormikAutocomplete
-                name="step3.cdlType"
-                options={cdlTypes}
-                getOptionLabel={(option: { label: any }) => option.label}
-                textFieldProps={{ label: "What type of CDL will you have?" }}
-                disableCloseOnSelect
-                renderOption={(props, option, { selected }) => {
-                  const { key, ...optionProps } = props;
-                  return (
-                    <li key={key} {...optionProps}>
-                      <Checkbox
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                      />
-                      {option.label}
-                    </li>
-                  );
-                }}
-              />
-            </Grid2>
-          </DesktopOnly>
-          <MobileOnly key="endorsements-mobile">
-            <Grid2 size={{ xs: 12 }}>
-              <FormikSelectWithCheckmarks
-                name="step3.endorsements"
-                options={endorsements}
-                getOptionValue={(option) => option.title}
-                getOptionLabel={(option) => option.title}
-                label="What type of endorsements will you have?"
-                multiple
-              />
-            </Grid2>
-          </MobileOnly>
-          <DesktopOnly key="endorsements-desktop">
-            <Grid2 size={{ xs: 12 }}>
-              <FormikAutocomplete
-                name="step3.endorsements"
-                dependentAnswer="step1.endorsements"
-                options={endorsements}
-                getOptionLabel={(option) => option.title}
-                textFieldProps={{
-                  label: "What type of endorsements will you have?",
-                }}
-                disableCloseOnSelect
-                multiple
-                renderOption={(props, option, { selected }) => {
-                  const { key, ...optionProps } = props;
-                  return (
-                    <li key={key} {...optionProps}>
-                      <Checkbox
-                        icon={icon}
-                        checkedIcon={checkedIcon}
-                        style={{ marginRight: 8 }}
-                        checked={selected}
-                      />
-                      {option.title}
-                    </li>
-                  );
-                }}
-              />
-            </Grid2>
-          </DesktopOnly>
           <MobileOnly key="worktype-mobile">
             <Grid2 size={{ xs: 12 }}>
               <FormikSelectWithCheckmarks
@@ -154,6 +77,22 @@ const Step3: React.FC<Step3Props> = () => {
               />
             </Grid2>
           </DesktopOnly>
+        </Grid2>
+        <Grid2>
+          <FormControlLabel
+              control={<Checkbox defaultChecked />}
+              label="Connect me with employment opportunties please!"
+              name="step3.optIn"
+              onChange={stepField.onChange}
+          />
+          <Typography variant="caption" component="div">
+            ELDT.com is connected with hundreds of trucking companies across
+            America to help connect quality drivers with potential employment
+            opportunities. To create the best experience, recruiters use text,
+            phone, or email to communicate. If getting connected with
+            employment opportunities is something that interests you, let us
+            know by clicking the checkbox provided.
+          </Typography>
         </Grid2>
       </Paper>
       <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 4 }}>
@@ -197,22 +136,6 @@ const Step3: React.FC<Step3Props> = () => {
               />
             </Grid2>
           </DesktopOnly>
-          <Grid2>
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="Connect me with employment opportunties please!"
-              name="step3.optIn"
-              onChange={stepField.onChange}
-            />
-            <Typography variant="caption" component="div">
-              ELDT.com is connected with hundreds of trucking companies across
-              America to help connect quality drivers with potential employment
-              opportunities. To create the best experience, recruiters use text,
-              phone, or email to communicate. If getting connected with
-              employment opportunities is something that interests you, let us
-              know by clicking the checkbox provided.
-            </Typography>
-          </Grid2>
         </Grid>
       </Paper>
     </>
