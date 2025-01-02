@@ -8,10 +8,14 @@ import { languages } from "./utilities/languages";
 import { states } from "./utilities/statesList";
 import { pxContainer, titleStyles } from "./utilities/styles";
 import PhoneNumberField from "./components/PhoneNumberField";
+import {useMe} from "../../hooks/useMe";
 
 interface Step2Props {}
 
 const Step2: React.FC<Step2Props> = () => {
+    const {data} = useMe();
+
+    const referralSourcesLabel = data?.student?.customAttributes[0]?.attributeName || 'Where will you be training?';
   return (
     <Box sx={{ px: pxContainer }}>
       <Typography variant="h6" sx={titleStyles}>
@@ -38,7 +42,7 @@ const Step2: React.FC<Step2Props> = () => {
         <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikTextField
               name="step2.where"
-              label="Where will you be training?"
+              label={referralSourcesLabel}
           />
         </Grid2>
       </Grid2>

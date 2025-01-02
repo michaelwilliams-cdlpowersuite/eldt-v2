@@ -1,4 +1,5 @@
 import {Address} from "./address";
+import {CustomAttribute} from "./customAttribute";
 
 export interface Student {
     id: number;
@@ -126,7 +127,7 @@ export interface Student {
     passengerTprUnlockedBy: string;
     schoolBusTprUnlockedBy: string;
     languageId: number;
-    // customAttributes: CustomAttribute[];
+    customAttributes: CustomAttribute[];
     assessmentScore: number;
     assessmentScoreTotal: number;
     // longestBadEvent: StudentEvent;

@@ -1,23 +1,15 @@
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import {
-  Checkbox,
-  FormControlLabel,
-  Grid2,
-  Paper,
-  Typography,
-} from "@mui/material";
-import { Grid, Stack } from "@mui/system";
-import { useField } from "formik";
-import React, { useState } from "react";
-import { DesktopOnly, MobileOnly } from "../../components/ResponsiveWrappers";
+import {Checkbox, FormControlLabel, Grid2, Paper, Typography,} from "@mui/material";
+import {Grid} from "@mui/system";
+import {useField} from "formik";
+import React, {useState} from "react";
+import {DesktopOnly, MobileOnly} from "../../components/ResponsiveWrappers";
 import FormikAutocomplete from "./components/FormikAutocomplete";
-import FormikDatePicker from "./components/FormikDatePicker";
 import FormikSelectWithCheckmarks from "./components/FormikSelectWithCheckmarks";
-import FormikTextField from "./components/FormikTextField";
-import { cdlTypes, referralSources, workTypes } from "./utilities/optionsLists";
-import { endorsements } from "./utilities/products";
-import { pxContainer, titleStyles } from "./utilities/styles";
+import {workTypes} from "./utilities/optionsLists";
+import {pxContainer, titleStyles} from "./utilities/styles";
+import {useMe} from "../../hooks/useMe";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -28,6 +20,15 @@ const Step3: React.FC<Step3Props> = () => {
   const [field] = useField("step3.optIn");
   const [stepField] = useField("step3");
   const [open, setOpen] = useState(false);
+  const {data} = useMe();
+
+
+  const referralSourcesOptions = data?.student?.customAttributes[1]?.config?.options?.map(({ label, value }) => ({
+    label,
+    value
+  })) || [];
+
+  const referralSourcesLabel = data?.student?.customAttributes[1]?.attributeName || 'How did you hear about us?';
 
   return (
     <>
@@ -78,14 +79,20 @@ const Step3: React.FC<Step3Props> = () => {
             </Grid2>
           </DesktopOnly>
         </Grid2>
-        <Grid2>
+        <Grid2 sx={{mt: {xs: 2} }}>
           <FormControlLabel
               control={<Checkbox defaultChecked />}
               label="Connect me with employment opportunties please!"
               name="step3.optIn"
               onChange={stepField.onChange}
+              sx={{
+                alignItems: "flex-start",
+                "& .MuiTypography-root": {
+                  mt: "10px",
+                },
+              }}
           />
-          <Typography variant="caption" component="div">
+          <Typography variant="caption" component="div" sx={{mt: 2}}>
             ELDT.com is connected with hundreds of trucking companies across
             America to help connect quality drivers with potential employment
             opportunities. To create the best experience, recruiters use text,
@@ -102,10 +109,10 @@ const Step3: React.FC<Step3Props> = () => {
             <Grid2 size={{ xs: 12 }}>
               <FormikSelectWithCheckmarks
                 name="step3.referralSource"
-                options={referralSources}
+                options={referralSourcesOptions}
                 getOptionValue={(option) => option.label}
                 getOptionLabel={(option) => option.label}
-                label="How did you hear about us?"
+                label={referralSourcesLabel}
               />
             </Grid2>
           </MobileOnly>
@@ -113,10 +120,10 @@ const Step3: React.FC<Step3Props> = () => {
             <Grid2 size={{ xs: 12 }}>
               <FormikAutocomplete
                 name="step3.referralSource"
-                options={referralSources}
+                options={referralSourcesOptions}
                 getOptionLabel={(option: { label: any }) => option.label}
                 textFieldProps={{
-                  label: "How did you hear about us?",
+                  label: referralSourcesLabel,
                 }}
                 disableCloseOnSelect
                 renderOption={(props, option, { selected }) => {

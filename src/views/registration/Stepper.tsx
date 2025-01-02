@@ -15,6 +15,7 @@ import { steps } from "./utilities/steps";
 import { transformFormikToApi } from "./utilities/transformData";
 import { RegistrationFormUIValues } from "./utilities/validationSchema";
 import config from "../../config";
+import {useEffect} from "react";
 
 interface StepperOrchestrationProps {}
 
@@ -94,8 +95,15 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
     setActiveStep(0);
   };
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    console.log("scrolling to top");
+  }, [activeStep]);
+
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
+
   return (
-    <Box sx={{ width: "100%", pt: 2 }}>
+    <Box ref={containerRef} sx={{ width: "100%", pt: 2, minHeight: "100vh" }}>
       <Toolbar />
       <Stepper activeStep={activeStep}>
         {steps.map((step, index) => {
