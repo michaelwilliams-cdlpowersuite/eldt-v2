@@ -12,11 +12,31 @@ export const workTypes = [
   { label: "I don't care", value: "idc" },
 ];
 
-export const referralSources = [
-  { label: "My CDL School" },
-  { label: "Facebook Ads" },
-  { label: "Google Ads" },
-  { label: "From a friend" },
-  { label: "Online search" },
-  { label: "My employer sent me" },
+export const referralSourcesOptions = [
+
+    {
+      "label": "My CDL School sent me",
+      "value": 1,
+    },
+    {
+      "label": "Facebook Ads",
+      "value": 2,
+    },
+    {
+      "label": "Google Ads",
+      "value": 3,
+    },
+    {
+      "label": "Heard about it from a friend",
+      "value": 4,
+    },
+    {
+      "label": "I found ELDT.com online searching",
+      "value": 5,
+    },
+    {
+      "label": "My Employer sent me",
+      "value": 6,
+    }
+
 ];
