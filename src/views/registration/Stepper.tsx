@@ -1,28 +1,27 @@
-import { Toolbar } from "@mui/material";
+import {Toolbar} from "@mui/material";
 import Box from "@mui/material/Box";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
-import { setIn, useFormikContext } from "formik";
-import { enqueueSnackbar } from "notistack";
+import {setIn, useFormikContext} from "formik";
+import {enqueueSnackbar} from "notistack";
 import * as React from "react";
-import { Navigate } from "react-router-dom";
-import { useStudentMutation } from "../../hooks/useStudentMutation";
+import {useEffect} from "react";
+import {useStudentMutation} from "../../hooks/useStudentMutation";
 import FormActionButtons from "./components/FormActionButtons";
 import useValidateCurrentStep from "./hooks/useValidateCurrentStep";
-import { snackOptions } from "./utilities/snackOptions";
-import { steps } from "./utilities/steps";
-import { transformFormikToApi } from "./utilities/transformData";
-import { RegistrationFormUIValues } from "./utilities/validationSchema";
+import {snackOptions} from "./utilities/snackOptions";
+import {steps} from "./utilities/steps";
+import {transformFormikToApi} from "./utilities/transformData";
+import {RegistrationFormUIValues} from "./utilities/validationSchema";
 import config from "../../config";
-import {useEffect} from "react";
 
 interface StepperOrchestrationProps {}
 
 // This code is lifted from the MUI Stepper example
 // https://mui.com/material-ui/react-stepper/#linear
 const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(2);
   const [skipped, setSkipped] = React.useState(new Set<number>());
   const validateCurrentStep = useValidateCurrentStep();
   const { values, setTouched } = useFormikContext<RegistrationFormUIValues>();
@@ -97,7 +96,6 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    console.log("scrolling to top");
   }, [activeStep]);
 
   const containerRef = React.useRef<HTMLDivElement | null>(null);

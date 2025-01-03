@@ -1,8 +1,9 @@
 import dayjs from "dayjs";
-import { RegistrationFormUIValues } from "./validationSchema";
-import { courses, endorsements } from "./products";
+import {RegistrationFormUIValues} from "./validationSchema";
+import {courses, endorsements} from "./products";
 import config from "../../../config";
-import {bool} from "yup";
+import {CustomAttribute} from "../../../types/customAttribute";
+import {getBlankReferralSource, getBlankWhere} from "./customAttributes";
 
 interface ApiData {
   firstName?: string;
@@ -39,7 +40,9 @@ interface ApiData {
   enrollmentDesiredWorkOTR?: boolean;
   enrollmentDesiredWorkRegional?: boolean;
   enrollmentDesiredWorkIDC?: boolean;
+  customAttributes?: CustomAttribute[]
 }
+
 
 export const transformFormikToApi = (
   formikValues: Partial<RegistrationFormUIValues>
@@ -47,6 +50,7 @@ export const transformFormikToApi = (
   const apiData: ApiData = {
     locationId: config.locationId,
   };
+
 
   if (formikValues.step1) {
     // CDL Class
@@ -100,6 +104,8 @@ export const transformFormikToApi = (
     apiData.city = formikValues.step2.city;
     apiData.state = formikValues.step2.state?.abbreviation;
     apiData.languageId = formikValues.step2.language.apiValue;
+
+    apiData.customAttributes = [getBlankWhere(formikValues.step2.where)];
   }
 
   if (formikValues.step3) {
@@ -120,7 +126,13 @@ export const transformFormikToApi = (
     apiData.enrollmentDesiredWorkIDC = formikValues.step3.workType?.some(
       (workType: { value: string }) => workType.value.includes("idc")
     );
+    if(formikValues.step3.referralSource){
+
+    // @ts-ignore
+      apiData.customAttributes = [getBlankReferralSource(formikValues.step3.referralSource)];
+    }
   }
 
   return apiData;
 };
+

@@ -1,13 +1,16 @@
 import * as Yup from "yup";
-import {
-    Endorsement,
-    getCourseByType,
-    getEndorsementsByApiKeys,
-} from "./products";
+import {getCourseByType, getEndorsementsByApiKeys,} from "./products";
 import {User} from "../../../types/user";
 import {states} from "./statesList";
 import {Student} from "../../../types/student";
 import dayjs from "dayjs";
+import {
+    AttributeName,
+    getOptionFromValue,
+    getOptionsLabelsAndValues,
+    getValueByAttributeName
+} from "./customAttributes";
+import {getWorkTypeSelection} from "./workType";
 
 const MIN_DATE = dayjs().subtract(100, "years");
 const MAX_DATE = dayjs().subtract(14, "years");
@@ -45,11 +48,6 @@ export const validationSchema = Yup.object({
 });
 
 export const buildInitialValues = (user?: User): RegistrationFormUIValues => {
-    const referralSourceValue = user?.student?.customAttributes[1]?.value;
-    const referralSourceLabel = user?.student?.customAttributes[1]?.config.options?.find(
-        (option) => option.value === referralSourceValue
-    )?.label;
-    const where = user?.student?.customAttributes[0]?.value;
 
     return {
         step1: {
@@ -75,15 +73,12 @@ export const buildInitialValues = (user?: User): RegistrationFormUIValues => {
                 : null,
             zip: user?.student?.address.zip ?? "",
             language: {label: "English", code: "en", apiValue: 1},
-            where: where ?? "",
+            where: getValueByAttributeName(user?.student?.customAttributes, AttributeName.WHERE) ?? "",
         },
         step3: {
             optIn: true,
-            workType: null,
-            referralSource: {
-                label: referralSourceLabel ?? "",
-                value: referralSourceValue ?? "",
-            },
+            workType: getWorkTypeSelection(user?.student),
+            referralSource: getOptionFromValue(getValueByAttributeName(user?.student?.customAttributes, AttributeName.REFERRAL_SOURCES), getOptionsLabelsAndValues(user?.student?.customAttributes, AttributeName.REFERRAL_SOURCES)),
         },
         cart: {
             items: [],
@@ -114,8 +109,8 @@ interface Step2 {
 
 interface Step3 {
     optIn: boolean;
-    workType: [{ label: string; value: string }] | null;
-    referralSource: { label: string; value: string } | null;
+    workType: { label: string; value: string }[] | null;
+    referralSource: { label: string; value: string | number } | null;
 }
 
 export interface CartItem {

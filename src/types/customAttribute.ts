@@ -1,11 +1,11 @@
 
 export interface CustomAttribute {
-    id: number;
-    createdAt: Date;
-    updatedAt: Date;
-    deletedAt: Date;
+    id?: number;
+    createdAt?: Date;
+    updatedAt?: Date;
+    deletedAt?: Date;
     groupName: string;
-    groupDescription: string;
+    groupDescription: string | null;
     attributeName: string;
     adminEditable: boolean;
     value: any;

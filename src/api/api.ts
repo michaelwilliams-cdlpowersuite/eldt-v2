@@ -1,7 +1,6 @@
 import apiClient from "./apiClient";
 import config from "../config";
 import * as Sentry from "@sentry/react";
-import { useMe } from "../hooks/useMe";
 
 // Student API
 export const submitStepData = async (

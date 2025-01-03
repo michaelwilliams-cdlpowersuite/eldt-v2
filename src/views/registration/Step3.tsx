@@ -3,13 +3,14 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import {Checkbox, FormControlLabel, Grid2, Paper, Typography,} from "@mui/material";
 import {Grid} from "@mui/system";
 import {useField} from "formik";
-import React, {useState} from "react";
+import React from "react";
 import {DesktopOnly, MobileOnly} from "../../components/ResponsiveWrappers";
 import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikSelectWithCheckmarks from "./components/FormikSelectWithCheckmarks";
 import {workTypes} from "./utilities/optionsLists";
 import {pxContainer, titleStyles} from "./utilities/styles";
 import {useMe} from "../../hooks/useMe";
+import {AttributeName, getOptionsLabelsAndValues, getValueByAttributeName} from "./utilities/customAttributes";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -17,18 +18,10 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 interface Step3Props {}
 
 const Step3: React.FC<Step3Props> = () => {
-  const [field] = useField("step3.optIn");
   const [stepField] = useField("step3");
-  const [open, setOpen] = useState(false);
-  const {data} = useMe();
-
-
-  const referralSourcesOptions = data?.student?.customAttributes[1]?.config?.options?.map(({ label, value }) => ({
-    label,
-    value
-  })) || [];
-
-  const referralSourcesLabel = data?.student?.customAttributes[1]?.attributeName || 'How did you hear about us?';
+  const {data: user} = useMe();
+  const attributes = user?.student.customAttributes;
+  const options = getOptionsLabelsAndValues(attributes, AttributeName.REFERRAL_SOURCES);
 
   return (
     <>
@@ -109,10 +102,10 @@ const Step3: React.FC<Step3Props> = () => {
             <Grid2 size={{ xs: 12 }}>
               <FormikSelectWithCheckmarks
                 name="step3.referralSource"
-                options={referralSourcesOptions}
+                options={options}
                 getOptionValue={(option) => option.label}
                 getOptionLabel={(option) => option.label}
-                label={referralSourcesLabel}
+                label={AttributeName.REFERRAL_SOURCES}
               />
             </Grid2>
           </MobileOnly>
@@ -120,10 +113,10 @@ const Step3: React.FC<Step3Props> = () => {
             <Grid2 size={{ xs: 12 }}>
               <FormikAutocomplete
                 name="step3.referralSource"
-                options={referralSourcesOptions}
-                getOptionLabel={(option: { label: any }) => option.label}
+                options={options}
+                getOptionLabel={(option) => option.label}
                 textFieldProps={{
-                  label: referralSourcesLabel,
+                  label: AttributeName.REFERRAL_SOURCES,
                 }}
                 disableCloseOnSelect
                 renderOption={(props, option, { selected }) => {
