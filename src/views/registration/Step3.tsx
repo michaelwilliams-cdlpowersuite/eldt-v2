@@ -7,10 +7,10 @@ import React from "react";
 import {DesktopOnly, MobileOnly} from "../../components/ResponsiveWrappers";
 import FormikAutocomplete from "./components/FormikAutocomplete";
 import FormikSelectWithCheckmarks from "./components/FormikSelectWithCheckmarks";
-import {workTypes} from "./utilities/optionsLists";
+import {referralSourcesOptions, workTypes} from "./utilities/optionsLists";
 import {pxContainer, titleStyles} from "./utilities/styles";
 import {useMe} from "../../hooks/useMe";
-import {AttributeName, getOptionsLabelsAndValues, getValueByAttributeName} from "./utilities/customAttributes";
+import {AttributeName} from "./utilities/customAttributes";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -20,8 +20,6 @@ interface Step3Props {}
 const Step3: React.FC<Step3Props> = () => {
   const [stepField] = useField("step3");
   const {data: user} = useMe();
-  const attributes = user?.student.customAttributes;
-  const options = getOptionsLabelsAndValues(attributes, AttributeName.REFERRAL_SOURCES);
 
   return (
     <>
@@ -103,7 +101,7 @@ const Step3: React.FC<Step3Props> = () => {
             <Grid2 size={{ xs: 12 }}>
               <FormikSelectWithCheckmarks
                 name="step3.referralSource"
-                options={options}
+                options={referralSourcesOptions}
                 getOptionValue={(option) => option.label}
                 getOptionLabel={(option) => option.label}
                 label={AttributeName.REFERRAL_SOURCES}
@@ -114,7 +112,7 @@ const Step3: React.FC<Step3Props> = () => {
             <Grid2 size={{ xs: 12 }}>
               <FormikAutocomplete
                 name="step3.referralSource"
-                options={options}
+                options={referralSourcesOptions}
                 getOptionLabel={(option) => option.label}
                 textFieldProps={{
                   label: AttributeName.REFERRAL_SOURCES,
