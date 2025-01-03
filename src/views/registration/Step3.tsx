@@ -49,6 +49,7 @@ const Step3: React.FC<Step3Props> = () => {
                 name="step3.workType"
                 options={workTypes}
                 getOptionLabel={(option: { label: any }) => option.label}
+                isOptionEqualToValue={(option, value) => option.value === value.value}
                 textFieldProps={{
                   label: "What type of work are you looking for?",
                 }}
@@ -118,6 +119,7 @@ const Step3: React.FC<Step3Props> = () => {
                 textFieldProps={{
                   label: AttributeName.REFERRAL_SOURCES,
                 }}
+                isOptionEqualToValue={(option, value) => option.value === value.value}
                 disableCloseOnSelect
                 renderOption={(props, option, { selected }) => {
                   const { key, ...optionProps } = props;

@@ -30,6 +30,7 @@ const Step2: React.FC<Step2Props> = () => {
           <FormikAutocomplete
             name="step2.language"
             options={languages}
+            isOptionEqualToValue={(option, value) => option === value}
             getOptionLabel={(option: { label: any }) => option.label}
             textFieldProps={{ label: "Language" }}
           />
