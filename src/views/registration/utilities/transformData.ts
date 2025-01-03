@@ -86,6 +86,35 @@ export const transformFormikToApi = (
         }
       });
     }
+
+    // CDL Completion Hack
+    // enrollment completed
+      switch (selectedCourseId) {
+        case "1":
+          apiData.enrollmentClassAComplete = true;
+          break;
+        case "2":
+          apiData.enrollmentClassBComplete = true;
+          break;
+        case "3":
+          apiData.enrollmentClassAComplete = true;
+          apiData.enrollmentClassBComplete = true;
+          break;
+      }
+
+    // endorsements completed
+    if (formikValues.step1.selectedEndorsements) {
+      if (formikValues.step1.selectedEndorsements.includes("1")) {
+        apiData.enrollmentEndorsementHazComplete = true;
+      }
+      if (formikValues.step1.selectedEndorsements.includes("2")) {
+        apiData.enrollmentEndorsementPassengerComplete = true;
+      }
+      if (formikValues.step1.selectedEndorsements.includes("3")) {
+        apiData.enrollmentEndorsementSchoolBusComplete = true;
+      }
+    }
+
   }
 
   if (formikValues.step2) {
