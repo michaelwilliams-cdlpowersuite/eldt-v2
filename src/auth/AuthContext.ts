@@ -24,7 +24,7 @@ export const isTokenExpired = (token: string) => {
     const currentTime = Date.now() / 1000; // Current time in seconds
     return decoded.exp < currentTime;
   } catch (e) {
-    console.log('failed to verify token: '+e);
+    console.error('failed to verify token: '+e);
     return true; // If decoding fails, treat as expired
   }
 };

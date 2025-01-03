@@ -10,6 +10,7 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import { ReactComponent as Logo } from "../../../assets/eldt_white.svg";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useAuth } from "../../../auth/AuthProvider";
+import {DesktopOnly} from "../../../components/ResponsiveWrappers";
 
 interface RegistrationAppBarProps {}
 
@@ -40,20 +41,22 @@ const RegistrationAppBar: React.FC<RegistrationAppBarProps> = () => {
                 href="tel:+15092413987"
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <Typography variant="overline" sx={{ pl: 1 }}>
+                <Typography variant="overline" sx={{ pl: 1, whiteSpace: "nowrap" }}>
                   (509) 241-3987
                 </Typography>
               </a>
             </Box>
-            <Box display="flex" alignItems="center">
-              <IconButton
-                onClick={handleLogout}
-                color="inherit"
-                aria-label="Logout"
-              >
-                <LogoutIcon />
-              </IconButton>
-            </Box>
+            <DesktopOnly>
+              <Box display="flex" alignItems="center">
+                <IconButton
+                  onClick={handleLogout}
+                  color="inherit"
+                  aria-label="Logout"
+                >
+                  <LogoutIcon />
+                </IconButton>
+              </Box>
+            </DesktopOnly>
           </Box>
         </Container>
       </Toolbar>

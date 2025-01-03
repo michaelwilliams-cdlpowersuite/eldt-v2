@@ -1,8 +1,9 @@
 import dayjs from "dayjs";
-import { RegistrationFormUIValues } from "./validationSchema";
-import { courses, endorsements } from "./products";
+import {RegistrationFormUIValues} from "./validationSchema";
+import {courses, endorsements} from "./products";
 import config from "../../../config";
-import {bool} from "yup";
+import {CustomAttribute} from "../../../types/customAttribute";
+import {getBlankReferralSource, getBlankWhere} from "./customAttributes";
 
 interface ApiData {
   firstName?: string;
@@ -39,7 +40,9 @@ interface ApiData {
   enrollmentDesiredWorkOTR?: boolean;
   enrollmentDesiredWorkRegional?: boolean;
   enrollmentDesiredWorkIDC?: boolean;
+  customAttributes?: CustomAttribute[]
 }
+
 
 export const transformFormikToApi = (
   formikValues: Partial<RegistrationFormUIValues>
@@ -47,6 +50,7 @@ export const transformFormikToApi = (
   const apiData: ApiData = {
     locationId: config.locationId,
   };
+
 
   if (formikValues.step1) {
     // CDL Class
@@ -82,6 +86,35 @@ export const transformFormikToApi = (
         }
       });
     }
+
+    // CDL Completion Hack
+    // enrollment completed
+      switch (selectedCourseId) {
+        case "1":
+          apiData.enrollmentClassAComplete = true;
+          break;
+        case "2":
+          apiData.enrollmentClassBComplete = true;
+          break;
+        case "3":
+          apiData.enrollmentClassAComplete = true;
+          apiData.enrollmentClassBComplete = true;
+          break;
+      }
+
+    // endorsements completed
+    if (formikValues.step1.selectedEndorsements) {
+      if (formikValues.step1.selectedEndorsements.includes("1")) {
+        apiData.enrollmentEndorsementHazComplete = true;
+      }
+      if (formikValues.step1.selectedEndorsements.includes("2")) {
+        apiData.enrollmentEndorsementPassengerComplete = true;
+      }
+      if (formikValues.step1.selectedEndorsements.includes("3")) {
+        apiData.enrollmentEndorsementSchoolBusComplete = true;
+      }
+    }
+
   }
 
   if (formikValues.step2) {
@@ -100,36 +133,16 @@ export const transformFormikToApi = (
     apiData.city = formikValues.step2.city;
     apiData.state = formikValues.step2.state?.abbreviation;
     apiData.languageId = formikValues.step2.language.apiValue;
+
+    apiData.customAttributes = [getBlankWhere(formikValues.step2.where)];
   }
 
   if (formikValues.step3) {
-    apiData.automatic_transmission = formikValues.step3.prefersAutomatic ?? false
-
     // @see completedApplication() in student-form.service.ts
     apiData.customAgreementTerms = true;
     apiData.applicationCompletedAt = new Date();
     apiData.signature = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACWCAYAAABkW7XSAAAAAXNSR0IArs4c6QAABGhJREFUeF7t1IEJADAMAsF2/6EtdIuHywRyBu+2HUeAAIGAwDVYgZZEJEDgCxgsj0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIgYLD8AAECGQGDlalKUAIEDJYfIEAgI2CwMlUJSoCAwfIDBAhkBAxWpipBCRAwWH6AAIGMgMHKVCUoAQIGyw8QIJARMFiZqgQlQMBg+QECBDICBitTlaAECBgsP0CAQEbAYGWqEpQAAYPlBwgQyAgYrExVghIg8ACBlFZdWYR+vQAAAABJRU5ErkJggg==';
 
-    apiData.cdlCompletedDate = formikValues.step3.cdlDate
-      ? dayjs(formikValues.step3.cdlDate).toISOString()
-      : undefined;
-
-    apiData.enrollmentClassAComplete =
-      formikValues.step3.cdlType?.label.includes("Class A");
-    apiData.enrollmentClassBComplete =
-      formikValues.step3.cdlType?.label.includes("Class B");
-    apiData.enrollmentEndorsementHazComplete =
-      formikValues.step3.endorsements?.some((endorsement: { apiKey: string }) =>
-        endorsement.apiKey.includes("haz")
-      );
-    apiData.enrollmentEndorsementPassengerComplete =
-      formikValues.step3.endorsements?.some((endorsement: { apiKey: string }) =>
-        endorsement.apiKey.includes("passenger")
-      );
-    apiData.enrollmentEndorsementSchoolBusComplete =
-      formikValues.step3.endorsements?.some((endorsement: { apiKey: string }) =>
-        endorsement.apiKey.includes("schoolBus")
-      );
     apiData.enrollmentDesiredWorkLocal = formikValues.step3.workType?.some(
       (workType: { value: string }) => workType.value.includes("local")
     );
@@ -142,7 +155,13 @@ export const transformFormikToApi = (
     apiData.enrollmentDesiredWorkIDC = formikValues.step3.workType?.some(
       (workType: { value: string }) => workType.value.includes("idc")
     );
+    if(formikValues.step3.referralSource){
+
+    // @ts-ignore
+      apiData.customAttributes = [getBlankReferralSource(formikValues.step3.referralSource)];
+    }
   }
 
   return apiData;
 };
+
