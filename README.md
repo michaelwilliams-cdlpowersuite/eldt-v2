@@ -56,3 +56,7 @@ const resolvedHost = hostMapping[window.location.hostname] ? window.location.hos
 ```
 
 Then go to config > local.js and change apiUrl and googleSignIn to `172.16.102.43`
+
+```bash
+ HOST=172.16.102.43 npm start
+```
