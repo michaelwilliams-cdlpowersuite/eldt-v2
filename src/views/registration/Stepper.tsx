@@ -84,13 +84,14 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
       const apiData = transformFormikToApi({
         [stepKey]: values[stepKey],
       } as Partial<RegistrationFormUIValues>);
+
       // Submit the step if it is valid
       submitStep.mutate(apiData, {
         // Go to next step if successful
         onSuccess: () => {
           setActiveStep((prev) => prev + 1)
 
-          if (activeStep === steps.length) {
+          if ((activeStep + 1) === steps.length) {
             handleAuthRedirect();
           }
         },
