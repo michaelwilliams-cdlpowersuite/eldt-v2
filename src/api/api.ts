@@ -100,12 +100,13 @@ export const forgotPassword = async ({ email }: { email: string }) => {
 };
 
 // Update Email API
-export const updateEmail = async (userId: number) => {
+export const updateEmail = async (userId: number, email: string) => {
   const companyId = config.defaultCompanyId;
   const locationId = 0; // TODO: set to 0 for now
   try {
     const response = await apiClient.patch(
-      `https://api.cdlpowersuite.com/api/companies/${companyId}/locations/${locationId}/users/${userId}`
+      `/companies/${companyId}/locations/${locationId}/users/${userId}`,
+        { email }
     );
     return response.data;
   } catch (error) {
