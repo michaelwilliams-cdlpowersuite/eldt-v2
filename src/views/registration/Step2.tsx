@@ -39,6 +39,7 @@ const Step2: React.FC<Step2Props> = () => {
           <FormikTextField
               name="step2.where"
               label={AttributeName.WHERE}
+              helperText={AttributeName.WHERE}
           />
         </Grid2>
       </Grid2>
