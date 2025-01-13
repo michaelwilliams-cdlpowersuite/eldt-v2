@@ -19,11 +19,12 @@ const FormikTextField: React.FC<FormikTextFieldProps> = ({
             label={name.charAt(0).toUpperCase() + name.slice(1)}
             variant="outlined"
             {...props} // Optional: Spread any additional MUI TextField props
-            error={meta.touched && Boolean(meta.error)} helperText={
-            meta.touched && meta.error
-                ? meta.error
-                : props.helperText
-        }
+            error={meta.touched && Boolean(meta.error)}
+            helperText={
+                meta.touched && meta.error
+                    ? meta.error
+                    : props.helperText
+            }
             fullWidth
             margin="normal"
         />

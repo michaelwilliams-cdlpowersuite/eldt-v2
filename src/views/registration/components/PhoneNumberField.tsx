@@ -47,6 +47,8 @@ const PhoneNumberField: React.FC<TextFieldProps> = ({ name }) => {
       fullWidth
       margin="normal"
       variant="outlined"
+      error={meta.touched && Boolean(meta.error)}
+        helperText={meta.touched && meta.error ? meta.error : ""}
     />
   );
 };
