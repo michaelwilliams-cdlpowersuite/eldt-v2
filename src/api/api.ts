@@ -67,7 +67,7 @@ export const signUpUser = async ({
   try {
     const response = await apiClient.post(
       `/student-register`,
-      { email, password, companyId, studentType, code, source: "eldt.com" },
+      { email, password, companyId, studentType, code, source: 'react-registrations' },
       {
         // Override default headers for this request
         headers: {
