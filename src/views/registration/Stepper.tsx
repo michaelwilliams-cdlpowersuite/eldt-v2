@@ -1,4 +1,4 @@
-import {Toolbar} from "@mui/material";
+import {Toolbar, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
@@ -15,6 +15,8 @@ import {steps} from "./utilities/steps";
 import {transformFormikToApi} from "./utilities/transformData";
 import {RegistrationFormUIValues} from "./utilities/validationSchema";
 import config from "../../config";
+import {prepareHandoff} from "../../api/api";
+import FullpageLoader from "../../components/FullpageLoader";
 
 interface StepperOrchestrationProps {}
 
@@ -57,6 +59,12 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
 
   const isLastStep = activeStep === steps.length - 1;
 
+  const handleAuthRedirect = async () => {
+    await prepareHandoff()
+
+    window.location.replace(config.angularClientUrl+'/eldt-handoff');
+  };
+
   const handleNextStep = async () => {
     const stepKey = `step${activeStep + 1}` as keyof RegistrationFormUIValues; // step1, step2, step3, etc.
 
@@ -79,7 +87,13 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
       // Submit the step if it is valid
       submitStep.mutate(apiData, {
         // Go to next step if successful
-        onSuccess: () => setActiveStep((prev) => prev + 1),
+        onSuccess: () => {
+          setActiveStep((prev) => prev + 1)
+
+          if (activeStep === steps.length) {
+            handleAuthRedirect();
+          }
+        },
       });
     } else {
       // step was not valid
@@ -120,7 +134,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
         })}
       </Stepper>
       {activeStep === steps.length ? (
-        (window.location.href = `${config.angularClientUrl}/eldt-handoff`)
+        <FullpageLoader />
       ) : (
         <React.Fragment>
           <Box sx={{ mt: 2, mb: 1 }}>
