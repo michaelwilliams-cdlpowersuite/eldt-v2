@@ -38,7 +38,8 @@ const Step2: React.FC<Step2Props> = () => {
         <Grid2 size={{ xs: 12, sm: 6 }}>
           <FormikTextField
               name="step2.where"
-              label={AttributeName.WHERE}
+              label="Name of BTW trainer?"
+              helperText="What School or Agency will you be attending for your Public Road and Range Training (BTW)?"
           />
         </Grid2>
       </Grid2>

@@ -25,6 +25,11 @@ import { brandColors } from "../../styles/brandColors";
 import AppTheme from "../../styles/shared-theme/AppTheme";
 import ColorModeSelect from "../../styles/shared-theme/ColorModeSelect";
 import { Navigate } from "react-router-dom";
+import Dialog from "@mui/material/Dialog";
+import TextField from "@mui/material/TextField";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -75,6 +80,9 @@ interface CheckEmailToVerifyProps {
 const CheckEmailToVerify: React.FC<CheckEmailToVerifyProps> = (props: {
   disableCustomTheme?: boolean;
 }) => {
+  const [openUpdateEmail, setOpenUpdateEmail] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+
   const { data: me } = useMe();
   const { mutate: resendEmail, isPending: isPendingResendEmail } =
     useResendVerificationEmail();
@@ -85,9 +93,18 @@ const CheckEmailToVerify: React.FC<CheckEmailToVerifyProps> = (props: {
     resendEmail();
   };
 
-  const handleUpdateEmail = () => {
-    updateEmail();
+  const handleOpenUpdateEmail = () => {
+    setOpenUpdateEmail(true);
+  }
+
+  const handleUpdateEmail = (email: string) => {
+    updateEmail(email);
+    setOpenUpdateEmail(false);
   };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  }
 
   if (me?.emailVerifiedAt) {
     return <Navigate to="/register" />;
@@ -156,7 +173,7 @@ const CheckEmailToVerify: React.FC<CheckEmailToVerifyProps> = (props: {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleUpdateEmail}
+                onClick={handleOpenUpdateEmail}
                 fullWidth
               >
                 Update Email
@@ -180,7 +197,7 @@ const CheckEmailToVerify: React.FC<CheckEmailToVerifyProps> = (props: {
                 <Stack direction="row" alignItems="center" spacing={1}>
                   <PhoneIcon sx={{ color: "primary.main" }} />
                   <Link
-                    href="tel:15092412987"
+                    href="tel:15092413987"
                     underline="none"
                     sx={{
                       fontSize: "1rem",
@@ -189,14 +206,14 @@ const CheckEmailToVerify: React.FC<CheckEmailToVerifyProps> = (props: {
                       "&:hover": { color: "primary.main" },
                     }}
                   >
-                    1.509.241.2987
+                    1.509.241.3987
                   </Link>
                 </Stack>
                 {/* Email Address */}
                 <Stack direction="row" alignItems="center" spacing={1}>
                   <EmailIcon sx={{ color: "primary.main" }} />
                   <Link
-                    href="mailto:info@cdlpowersuite.com"
+                    href="mailto:info@eldt.com"
                     underline="none"
                     sx={{
                       fontSize: "1rem",
@@ -205,7 +222,7 @@ const CheckEmailToVerify: React.FC<CheckEmailToVerifyProps> = (props: {
                       "&:hover": { color: "primary.main" },
                     }}
                   >
-                    info@cdlpowersuite.com
+                    info@eldt.com
                   </Link>
                 </Stack>
               </Box>
@@ -239,7 +256,7 @@ const CheckEmailToVerify: React.FC<CheckEmailToVerifyProps> = (props: {
               >
                 <PhoneIcon sx={{ color: "primary.main" }} />
                 <Link
-                  href="tel:15092412987"
+                  href="tel:15092413987"
                   underline="none"
                   sx={{
                     fontSize: "1rem",
@@ -248,7 +265,7 @@ const CheckEmailToVerify: React.FC<CheckEmailToVerifyProps> = (props: {
                     "&:hover": { color: "primary.main" },
                   }}
                 >
-                  1.509.241.2987
+                  1.509.241.3987
                 </Link>
               </Stack>
 
@@ -261,7 +278,7 @@ const CheckEmailToVerify: React.FC<CheckEmailToVerifyProps> = (props: {
               >
                 <EmailIcon sx={{ color: "primary.main" }} />
                 <Link
-                  href="mailto:info@cdlpowersuite.com"
+                  href="mailto:info@eldt.com"
                   underline="none"
                   sx={{
                     fontSize: "1rem",
@@ -270,13 +287,28 @@ const CheckEmailToVerify: React.FC<CheckEmailToVerifyProps> = (props: {
                     "&:hover": { color: "primary.main" },
                   }}
                 >
-                  info@cdlpowersuite.com
+                  info@eldt.com
                 </Link>
               </Stack>
             </Stack>
           </Box>
         </Card>
       </SignUpContainer>
+      <Dialog open={openUpdateEmail} onClose={() => setOpenUpdateEmail(false)}>
+        <DialogTitle>Update Email</DialogTitle>
+        <DialogContent>
+          <Typography component="p" variant="body1" mb={2}>
+            Enter your new email address below.
+            </Typography>
+        <TextField value={email} onChange={handleEmailChange} label="New Email" sx={{mt: 1}} fullWidth />
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={() => setOpenUpdateEmail(false)}>Cancel</Button>
+            <Button onClick={() => handleUpdateEmail(email)} disabled={isPendingUpdateEmail} color="primary">
+                Update Email
+            </Button>
+        </DialogActions>
+      </Dialog>
     </AppTheme>
   );
 };

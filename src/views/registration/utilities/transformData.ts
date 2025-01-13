@@ -126,12 +126,12 @@ export const transformFormikToApi = (
       : undefined;
 
     apiData.phone = formikValues.step2.phone;
-    apiData.driversLicense = formikValues.step2.driversLicense;
-    apiData.confirmDriversLicense = formikValues.step2.confirmDriversLicense;
-    apiData.address1 = formikValues.step2.streetAddress;
-    apiData.zip = formikValues.step2.zip;
-    apiData.city = formikValues.step2.city;
-    apiData.state = formikValues.step2.state?.abbreviation;
+    // apiData.driversLicense = formikValues.step2.driversLicense;
+    // apiData.confirmDriversLicense = formikValues.step2.confirmDriversLicense;
+    // apiData.address1 = formikValues.step2.streetAddress;
+    // apiData.zip = formikValues.step2.zip;
+    // apiData.city = formikValues.step2.city;
+    // apiData.state = formikValues.step2.state?.abbreviation;
     apiData.languageId = formikValues.step2.language.apiValue;
 
     apiData.customAttributes = [getBlankWhere(formikValues.step2.where)];
