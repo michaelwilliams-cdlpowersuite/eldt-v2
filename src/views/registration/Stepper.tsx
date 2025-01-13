@@ -17,6 +17,7 @@ import {RegistrationFormUIValues} from "./utilities/validationSchema";
 import config from "../../config";
 import {prepareHandoff} from "../../api/api";
 import FullpageLoader from "../../components/FullpageLoader";
+import {useMe} from "../../hooks/useMe";
 
 interface StepperOrchestrationProps {}
 
@@ -28,6 +29,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
   const validateCurrentStep = useValidateCurrentStep();
   const { values, setTouched } = useFormikContext<RegistrationFormUIValues>();
   const submitStep = useStudentMutation();
+  const { data: me } = useMe();
 
   const isStepOptional = (step: number) => {
     // return step === 1;
@@ -90,10 +92,6 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
         // Go to next step if successful
         onSuccess: () => {
           setActiveStep((prev) => prev + 1)
-
-          if ((activeStep + 1) === steps.length) {
-            handleAuthRedirect();
-          }
         },
       });
     } else {
@@ -111,6 +109,11 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // if we have completed the application then get them into the student dashbaord
+    if (activeStep === steps.length || me?.student.applicationCompletedAt !== null) {
+      handleAuthRedirect();
+    }
   }, [activeStep]);
 
   const containerRef = React.useRef<HTMLDivElement | null>(null);
