@@ -13,6 +13,7 @@ const config = {
     },
     stripePublicKey: 'pk_test_51KVilWEqooDHZwmck4VuUymwm3Bw75Fuyryrd0o3MiIlhowWiYpgJg0RgyrNIKufGU4lwTGYZxoIcsSSgP2ZaDmJ00Lb7M2O9G',
     sentryKey: '',
+    forceCompletedApplicationRedirect: false,
 }
 
 export default config;

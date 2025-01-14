@@ -17,6 +17,9 @@ import VerifyEmail from "../views/verify-email/VerifyEmail";
 import { useAuth } from "../auth/AuthProvider";
 import OAuthHandoff from "../views/Auth/OAuthHandoff";
 import * as Sentry from "@sentry/react";
+import {prepareHandoff} from "../api/api";
+import config from "../config";
+import FullpageLoader from "../components/FullpageLoader";
 
 const RouterWrapper = () => {
   const { isAuthenticated } = useAuth();
@@ -28,6 +31,12 @@ const RouterWrapper = () => {
     setIsEmailVerified(!!me?.emailVerifiedAt);
   }, [me]);
 
+  const handleAuthRedirect = async () => {
+    await prepareHandoff()
+    localStorage.removeItem('apiToken');
+    window.location.replace(config.angularClientUrl+'/eldt-handoff');
+  };
+
   const sentryCreateBrowserRouter =
     Sentry.wrapCreateBrowserRouter(createBrowserRouter);
 
@@ -35,9 +44,15 @@ const RouterWrapper = () => {
     {
       path: "/",
       element: isAuthenticated ? (
-        <Navigate to="/register" replace />
+          me?.student?.applicationCompletedAt !== null &&
+          config.forceCompletedApplicationRedirect ? (
+              // Redirect to a specific page if the application is completed
+              <Navigate to="/completed" replace />
+          ) : (
+              <Navigate to="/register" replace />
+          )
       ) : (
-        <Navigate to="/sign-up" replace />
+          <Navigate to="/sign-up" replace />
       ),
     },
     {
@@ -65,7 +80,10 @@ const RouterWrapper = () => {
         },
       ],
     },
-
+    {
+      path: "/completed",
+      element: <FullpageLoader onComplete={handleAuthRedirect} />,
+    },
     {
       path: "/sign-in",
       element: <SignInSide disableCustomTheme />,
