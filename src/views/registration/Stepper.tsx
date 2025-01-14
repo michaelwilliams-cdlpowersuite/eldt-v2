@@ -63,6 +63,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
 
   const handleAuthRedirect = async () => {
     await prepareHandoff()
+    localStorage.removeItem('apiToken');
 
     window.location.replace(config.angularClientUrl+'/eldt-handoff');
   };
