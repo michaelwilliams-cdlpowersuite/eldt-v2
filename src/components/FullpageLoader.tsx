@@ -5,10 +5,17 @@ import * as React from "react";
 
 interface FullpageLoaderProps {
   loadingText?: string;
+  onComplete?: () => void;
 }
 
-const FullpageLoader: React.FC<FullpageLoaderProps> = ({ loadingText }) => {
-  return (
+const FullpageLoader: React.FC<FullpageLoaderProps> = ({ loadingText, onComplete }) => {
+    React.useEffect(() => {
+        if (onComplete) {
+            onComplete();
+        }
+    }, [onComplete]);
+
+    return (
     <div style={{
       display: 'flex',
       justifyContent: 'center',

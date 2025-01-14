@@ -1,4 +1,4 @@
-import {Toolbar, Typography} from "@mui/material";
+import {Toolbar} from "@mui/material";
 import Box from "@mui/material/Box";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
@@ -14,10 +14,10 @@ import {snackOptions} from "./utilities/snackOptions";
 import {steps} from "./utilities/steps";
 import {transformFormikToApi} from "./utilities/transformData";
 import {RegistrationFormUIValues} from "./utilities/validationSchema";
-import config from "../../config";
-import {prepareHandoff} from "../../api/api";
 import FullpageLoader from "../../components/FullpageLoader";
 import {useMe} from "../../hooks/useMe";
+import config from "../../config";
+import {prepareHandoff} from "../../api/api";
 
 interface StepperOrchestrationProps {}
 
@@ -64,7 +64,6 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
   const handleAuthRedirect = async () => {
     await prepareHandoff()
     localStorage.removeItem('apiToken');
-
     window.location.replace(config.angularClientUrl+'/eldt-handoff');
   };
 
@@ -110,11 +109,6 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // if we have completed the application then get them into the student dashbaord
-    if (activeStep === steps.length || me?.student.applicationCompletedAt !== null) {
-      handleAuthRedirect();
-    }
   }, [activeStep]);
 
   const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -139,7 +133,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
         })}
       </Stepper>
       {activeStep === steps.length ? (
-        <FullpageLoader />
+        <FullpageLoader onComplete={handleAuthRedirect} />
       ) : (
         <React.Fragment>
           <Box sx={{ mt: 2, mb: 1 }}>
