@@ -19,7 +19,7 @@
       ],
       "environment": [],
       "image": "",
-      "name": "prod-client"
+      "name": "prod-registrations"
     }
   ],
   "memory": "512",
