@@ -151,10 +151,10 @@ export default function SignInCard() {
             color={passwordError ? "error" : "primary"}
           />
         </FormControl>
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        />
+        {/*<FormControlLabel*/}
+        {/*  control={<Checkbox value="remember" color="primary" />}*/}
+        {/*  label="Remember me"*/}
+        {/*/>*/}
         <ForgotPassword open={open} handleClose={handleClose} />
         <Button
           type="submit"
