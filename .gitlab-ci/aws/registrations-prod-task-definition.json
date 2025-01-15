@@ -23,7 +23,7 @@
     }
   ],
   "memory": "512",
-  "family": "service_prod-client",
+  "family": "service_prod-registrations",
   "networkMode": "awsvpc",
   "cpu": "256"
 }
