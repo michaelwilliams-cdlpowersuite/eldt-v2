@@ -46,17 +46,6 @@ const RegistrationAppBar: React.FC<RegistrationAppBarProps> = () => {
                 </Typography>
               </a>
             </Box>
-            <DesktopOnly>
-              <Box display="flex" alignItems="center">
-                <IconButton
-                  onClick={handleLogout}
-                  color="inherit"
-                  aria-label="Logout"
-                >
-                  <LogoutIcon />
-                </IconButton>
-              </Box>
-            </DesktopOnly>
           </Box>
         </Container>
       </Toolbar>
