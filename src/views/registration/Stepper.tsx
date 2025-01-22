@@ -18,7 +18,6 @@ import FullpageLoader from "../../components/FullpageLoader";
 import {useMe} from "../../hooks/useMe";
 import config from "../../config";
 import {prepareHandoff} from "../../api/api";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 
 interface StepperOrchestrationProps {
 }
