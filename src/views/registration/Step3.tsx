@@ -27,7 +27,7 @@ const Step3: React.FC<Step3Props> = () => {
         Additional Info
       </Typography>
       <Paper variant="outlined" sx={{ width: "100%", padding: 2, mt: 4 }}>
-        <Typography variant="h6">Recruitment</Typography>
+        <Typography variant="h6">Find Jobs Tailored to You</Typography>
         <Grid2 container spacing={2}>
           <MobileOnly key="worktype-mobile">
             <Grid2 size={{ xs: 12 }}>
