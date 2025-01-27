@@ -1,7 +1,7 @@
 const config = {
     apiUrl: 'https://api-eap.eldt.com/api',
     googleSignIn: 'https://api-eap.eldt.com/oauth/google',
-    angularClientUrl: 'https://dev.eldt.com',
+    angularClientUrl: 'https://eap.eldt.com',
     amplitudeApiKey: '',
     defaultCompanyId: 73,
     defaultLocationId: 18,
