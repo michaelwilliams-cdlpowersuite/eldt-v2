@@ -73,7 +73,7 @@ export const endorsements: Endorsement[] = [
     id: "1",
     title: "Hazmat",
     icon: Hazmat,
-    iconStyles: { maxHeight: "30px" },
+    iconStyles: { maxHeight: "30px", minHeight: "30px" },
     price: 25,
     apiKey: "haz",
     sku: "hazmat_theory",

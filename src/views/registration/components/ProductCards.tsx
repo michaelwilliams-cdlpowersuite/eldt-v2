@@ -52,7 +52,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
               pt: { xs: 2, sm: 0 },
             }}
           >
-            {course.icon && <course.icon style={{ maxHeight: "70" }} />}
+            {course.icon && <course.icon style={{ maxHeight: "70", minHeight: "70" }} />}
           </Box>
 
           <Typography variant="h6" textAlign="center">
@@ -136,6 +136,7 @@ export const EndorsementCard: React.FC<EndorsementCardProps> = ({
                     endorsement.iconStyles || {
                       maxHeight: "23px",
                       maxWidth: "50px",
+                      minHeight: "23px",
                     }
                   }
                 />
