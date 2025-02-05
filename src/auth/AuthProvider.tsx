@@ -18,11 +18,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   });
 
   const setAuthentication = (token: string) => {
-    console.log("Setting authentication with token:", token);
     localStorage.setItem("apiToken", token);
 
     const expired = isTokenExpired(token);
-    console.log("Is token expired?", expired);
 
     setIsAuthenticated(!expired);
 
@@ -73,10 +71,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Automatically check for token expiry every 5 minutes
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log("Checking token for refresh...");
       const token = localStorage.getItem("apiToken");
       if (token && shouldTokenBeRefreshed(token)) {
-        console.log("Calling handleRefresh...");
         handleRefresh();
       }
     }, 5 * 60 * 1000); // 5 minutes
