@@ -1,20 +1,17 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef } from "react";
+import {useEffect, useRef, useState} from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import FullpageLoader from "../../components/FullpageLoader";
 import { useVerifyEmail } from "../../hooks/useVerifyEmail";
+import { useMe } from "../../hooks/useMe";
 
 const EmailVerify = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const userId = searchParams.get("userId");
   const token = searchParams.get("token");
   const emailVerificationMutation = useVerifyEmail();
-  const queryClient = useQueryClient();
-
-  // work around to only trigger the useEffect once in dev since we use strict mode
-  // @see https://taig.medium.com/prevent-react-from-triggering-useeffect-twice-307a475714d7
-  const initialized = useRef(false);
+  const { data: me, refetch } = useMe();
+  const [polling, setPolling] = useState(false);
 
   useEffect(() => {
     if (!userId || !token) {
@@ -23,16 +20,36 @@ const EmailVerify = () => {
     }
 
     emailVerificationMutation.mutate(
-      { userId: parseInt(userId), token },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ["me"] });
-          navigate("/register");
-        },
-        onError: () => navigate("/sign-in"),
-      }
+        { userId: parseInt(userId, 10), token },
+        {
+          onSuccess: () => {
+            setPolling(true);
+          },
+          onError: (error: Error) => {
+            console.error("Email verification error:", error);
+            navigate("/sign-in");
+          },
+        }
     );
   }, []);
+
+  useEffect(() => {
+    let intervalId: ReturnType<typeof setInterval> | undefined;
+    if (polling) {
+      intervalId = setInterval(() => {
+        refetch();
+      }, 250);
+    }
+    return () => {
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [polling, refetch]);
+
+  useEffect(() => {
+    if (me?.emailVerifiedAt) {
+      navigate("/register");
+    }
+  }, [me, navigate]);
 
   return <FullpageLoader loadingText="Verifying Email..." />;
 };
