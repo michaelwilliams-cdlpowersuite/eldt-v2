@@ -45,6 +45,7 @@ const RouterWrapper = () => {
     {
       path: "/",
       element: (() => {
+        if (isMeLoading) return <FullpageLoader />;
         if (!isAuthenticated) {
           return <Navigate to="/sign-up" replace />;
         }
