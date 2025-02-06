@@ -1,47 +1,36 @@
-import { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useAuth } from "../auth/AuthProvider";
+import { Navigate, useLocation } from "react-router-dom";
 import FullpageLoader from "../components/FullpageLoader";
+import { useAuth } from "../auth/AuthProvider";
 
-export const ProtectedRoute = ({
-  isEmailVerified,
-  fallback,
-  isLoading,
-  children,
-}: {
-  isEmailVerified?: boolean;
-  fallback?: JSX.Element;
-  isLoading?: boolean;
-  children: JSX.Element;
-}) => {
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+export function ProtectedRoute({
+                                   children,
+                                   isLoading,
+                                   isEmailVerified,
+                                   fallback,
+                               }: {
+    isLoading?: boolean;
+    isEmailVerified?: boolean;
+    fallback?: JSX.Element;
+    children: JSX.Element;
+}) {
+    const { isAuthenticated } = useAuth();
+    const location = useLocation();
 
-  useEffect(() => {
-    if (
-      isAuthenticated &&
-      isEmailVerified &&
-      window.location.pathname === "/check-email"
-    ) {
-      navigate("/", { replace: true });
+    if (isLoading) {
+        return fallback || <FullpageLoader />;
     }
-  }, [isAuthenticated, isEmailVerified, navigate]);
 
-  if (isLoading) {
-    return fallback || <FullpageLoader></FullpageLoader>;
-  }
+    if (!isAuthenticated) {
+        return <Navigate to="/sign-in" replace />;
+    }
 
-  if (!isAuthenticated) {
-    return <Navigate to="/sign-in" />;
-  }
+    if (
+        !isEmailVerified &&
+        location.pathname !== "/check-email" &&
+        location.pathname !== "/email-verification"
+    ) {
+        return <Navigate to="/check-email" replace />;
+    }
 
-  // TODO: Figure out a better way to handle this
-  //   if (
-  //     isEmailVerified === false &&
-  //     window.location.pathname !== "/verify-email"
-  //   ) {
-  //     return <Navigate to="/verify-email" />;
-  //   }
-
-  return children;
-};
+    return children;
+}
