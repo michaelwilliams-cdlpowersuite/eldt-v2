@@ -48,7 +48,7 @@ const RouterWrapper = () => {
         if (!isAuthenticated) {
           return <Navigate to="/sign-up" replace />;
         }
-        if (me?.student?.applicationCompletedAt !== null) {
+        if (me?.student?.applicationCompletedAt != null) {
           return <Navigate to="/completed" replace />;
         }
         return <Navigate to="/register" replace />;
