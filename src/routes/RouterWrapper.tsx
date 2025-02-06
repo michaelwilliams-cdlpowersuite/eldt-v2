@@ -44,17 +44,15 @@ const RouterWrapper = () => {
   const router = sentryCreateBrowserRouter([
     {
       path: "/",
-      element: isAuthenticated ? (
-          me?.student?.applicationCompletedAt !== null &&
-          config.forceCompletedApplicationRedirect ? (
-              // Redirect to a specific page if the application is completed
-              <Navigate to="/completed" replace />
-          ) : (
-              <Navigate to="/register" replace />
-          )
-      ) : (
-          <Navigate to="/sign-up" replace />
-      ),
+      element: (() => {
+        if (!isAuthenticated) {
+          return <Navigate to="/sign-up" replace />;
+        }
+        if (me?.student?.applicationCompletedAt !== null) {
+          return <Navigate to="/completed" replace />;
+        }
+        return <Navigate to="/register" replace />;
+      })(),
     },
     {
       path: "/register",
