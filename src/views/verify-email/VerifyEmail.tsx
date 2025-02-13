@@ -4,6 +4,7 @@ import FullpageLoader from "../../components/FullpageLoader";
 import { useVerifyEmail } from "../../hooks/useVerifyEmail";
 import { useMe } from "../../hooks/useMe";
 import {useAuth} from "../../auth/AuthProvider";
+import {useQueryClient} from "@tanstack/react-query";
 
 const EmailVerify = () => {
   const navigate = useNavigate();
@@ -11,9 +12,9 @@ const EmailVerify = () => {
   const userId = searchParams.get("userId");
   const token = searchParams.get("token");
   const emailVerificationMutation = useVerifyEmail();
-  const { data: me, refetch } = useMe();
-  const [polling, setPolling] = useState(false);
+  const { data: me } = useMe();
   const { setAuthentication } = useAuth();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (!userId || !token) {
@@ -22,34 +23,16 @@ const EmailVerify = () => {
     }
 
     emailVerificationMutation.mutate(
-        { userId: parseInt(userId, 10), token },
-        {
-          onSuccess: (response) => {
-            if (response.token) {
-              setAuthentication(response.token);
-            }
-
-            setPolling(true);
-          },
-          onError: (error: Error) => {
-            console.error("Email verification error:", error);
-            navigate("/sign-in");
-          },
-        }
+      { userId: parseInt(userId, 10), token },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ["me"] });
+          navigate("/register");
+        },
+        onError: () => navigate("/sign-in"),
+      }
     );
   }, []);
-
-  useEffect(() => {
-    let intervalId: ReturnType<typeof setInterval> | undefined;
-    if (polling) {
-      intervalId = setInterval(() => {
-        refetch();
-      }, 250);
-    }
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, [polling, refetch]);
 
   useEffect(() => {
     if (me?.emailVerifiedAt) {
