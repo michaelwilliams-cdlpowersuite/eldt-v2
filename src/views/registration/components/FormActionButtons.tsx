@@ -9,6 +9,7 @@ interface FormActionButtonsProps {
   activeStep: number;
   isStepOptional: (step: number) => boolean;
   isLastStep: boolean;
+  isLoading: boolean;
 }
 
 const FormActionButtons: React.FC<FormActionButtonsProps> = ({
@@ -18,6 +19,7 @@ const FormActionButtons: React.FC<FormActionButtonsProps> = ({
   activeStep,
   isStepOptional,
   isLastStep,
+  isLoading,
 }) => {
   const { submitForm, values } = useFormikContext();
 
@@ -57,6 +59,7 @@ const FormActionButtons: React.FC<FormActionButtonsProps> = ({
         onClick={handleSubmit}
         variant="contained"
         disableElevation
+        disabled={isLoading}
         sx={{
           mr: 1,
           backgroundColor: brandColors.goGreen,
@@ -64,7 +67,7 @@ const FormActionButtons: React.FC<FormActionButtonsProps> = ({
           "&:hover": { backgroundColor: brandColors.goGreenHover },
         }}
       >
-        {isLastStep ? "Done" : "Next"}
+        {isLoading ? "Saving..." : (isLastStep ? "Done" : "Next")}
       </Button>
     </Box>
   );

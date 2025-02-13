@@ -27,6 +27,7 @@ interface StepperOrchestrationProps {
 const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set<number>());
+    const [isLoading, setIsLoading] = React.useState(false);
     const validateCurrentStep = useValidateCurrentStep();
     const {values, setTouched} = useFormikContext<RegistrationFormUIValues>();
     const submitStep = useStudentMutation();
@@ -88,12 +89,18 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
                 [stepKey]: values[stepKey],
             } as Partial<RegistrationFormUIValues>);
 
+            setIsLoading(true);
+
             // Submit the step if it is valid
             submitStep.mutate(apiData, {
                 // Go to next step if successful
                 onSuccess: () => {
+                    setIsLoading(false);
                     setActiveStep((prev) => prev + 1)
                 },
+                onError: () => {
+                    setIsLoading(false);
+                }
             });
         } else {
             // step was not valid
@@ -147,6 +154,7 @@ const StepperOrchestration: React.FC<StepperOrchestrationProps> = () => {
                         activeStep={activeStep}
                         isStepOptional={isStepOptional}
                         isLastStep={isLastStep}
+                        isLoading={isLoading}
                     />
                 </React.Fragment>
             )}
