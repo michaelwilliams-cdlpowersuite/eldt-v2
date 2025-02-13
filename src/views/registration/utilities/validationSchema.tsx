@@ -14,6 +14,7 @@ import {getWorkTypeSelection} from "./workType";
 
 const MIN_DATE = dayjs().subtract(100, "years");
 const MAX_DATE = dayjs().subtract(14, "years");
+const phoneRegExp = /\d{9}$/
 
 export const validationSchema = Yup.object({
     step1: Yup.object({
@@ -34,7 +35,7 @@ export const validationSchema = Yup.object({
     step2: Yup.object({
         firstName: Yup.string().required("Required"),
         lastName: Yup.string().required("Required"),
-        phone: Yup.string().required("Required"),
+        phone: Yup.string().required("Required").matches(phoneRegExp, 'Phone number is not valid'),
         language: Yup.object().required("Required"),
         where: Yup.string().required("Required"),
     }),
