@@ -55,7 +55,7 @@ const Step1: React.FC<Step1Props> = () => {
       )}
       <Grid container spacing={2} sx={{ mt: 2 }}>
         {courses.map((course, index) => (
-          <Grid size={{ xs: 12, sm: 4 }} key={index}>
+          <Grid size={{ xs: 12, md: 4 }} key={index}>
             <CourseCard
               course={course}
               selected={values.step1.selectedCourse === course.id}
@@ -69,7 +69,7 @@ const Step1: React.FC<Step1Props> = () => {
       </Typography>
       <Grid container spacing={2}>
         {endorsements.map((endorsement, index) => (
-          <Grid size={{ xs: 12, sm: 4 }} key={index}>
+          <Grid size={{ xs: 12, md: 4 }} key={index}>
             <EndorsementCard
               endorsement={endorsement}
               selected={values.step1.selectedEndorsements.includes(
