@@ -1,9 +1,9 @@
 const config = {
     apiUrl: 'http://localhost:8001/api',
-    googleSignIn: 'http://localhost:8001/oauth/google',
+    googleSignIn: 'http://localhost:8001/oauth/google?target=react',
     angularClientUrl: 'http://localhost:4200',
     amplitudeApiKey: '',
-    defaultCompanyId: 15,
+    defaultCompanyId: 22,
     defaultLocationId: 23,
     packageIds: {
         'Class A': 1,

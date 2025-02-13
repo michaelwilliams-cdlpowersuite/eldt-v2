@@ -1,6 +1,6 @@
 const config = {
     apiUrl: 'https://api.eldt.com/api',
-    googleSignIn: 'https://api.eldt.com/oauth/google',
+    googleSignIn: 'https://api.eldt.com/oauth/google?target=react',
     angularClientUrl: 'https://app.eldt.com',
     amplitudeApiKey: '',
     defaultCompanyId: 22,
