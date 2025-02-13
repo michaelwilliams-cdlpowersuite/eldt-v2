@@ -33,11 +33,6 @@ export const getAuthToken = () => {
 
     return token;
   } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error retrieving auth token:", error.message);
-    } else {
-      console.error("Error retrieving auth token:", error);
-    }
     return null;
   }
 };
