@@ -53,7 +53,7 @@ const EmailVerify = () => {
 
   useEffect(() => {
     if (me?.emailVerifiedAt) {
-      navigate("/register");
+      navigate("/register", { replace: true });
     }
   }, [me, navigate]);
 
