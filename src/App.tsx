@@ -13,9 +13,6 @@ import * as Sentry from "@sentry/react";
 const amplitudeApiKey = config.amplitudeApiKey;
 if (amplitudeApiKey) {
   amplitude.init(amplitudeApiKey);
-} else {
-  Sentry.captureException("Amplitude API key is not defined in ELDT react app");
-  console.error("Amplitude API key is not defined");
 }
 
 const App = () => {
