@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import FullpageLoader from "../../components/FullpageLoader";
 import { useVerifyEmail } from "../../hooks/useVerifyEmail";
 import { useMe } from "../../hooks/useMe";
+import {useAuth} from "../../auth/AuthProvider";
 
 const EmailVerify = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const EmailVerify = () => {
   const emailVerificationMutation = useVerifyEmail();
   const { data: me, refetch } = useMe();
   const [polling, setPolling] = useState(false);
+  const { setAuthentication } = useAuth();
 
   useEffect(() => {
     if (!userId || !token) {
@@ -22,7 +24,11 @@ const EmailVerify = () => {
     emailVerificationMutation.mutate(
         { userId: parseInt(userId, 10), token },
         {
-          onSuccess: () => {
+          onSuccess: (response) => {
+            if (response.token) {
+              setAuthentication(response.token);
+            }
+
             setPolling(true);
           },
           onError: (error: Error) => {

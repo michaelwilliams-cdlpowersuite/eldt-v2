@@ -10,6 +10,7 @@ interface VerifyEmailVariables {
 
 interface VerifyEmailResponse {
   success: boolean;
+  token: string;
 }
 
 let hasShownEmailVerificationSuccess = false;
