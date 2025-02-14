@@ -14,7 +14,7 @@ import {getWorkTypeSelection} from "./workType";
 
 const MIN_DATE = dayjs().subtract(100, "years");
 const MAX_DATE = dayjs().subtract(14, "years");
-const phoneRegExp = /\d{9}$/
+const phoneRegExp = /\d{10}$/
 
 export const validationSchema = Yup.object({
     step1: Yup.object({
