@@ -3,7 +3,7 @@ import {workTypes} from "./optionsLists";
 export const getWorkTypeSelection = (apiData: any) => {
     // We'll check each of the four known API fields
     // and return matching items from the workTypes array.
-    const result = [];
+    const result: { label: string, value: string }[] = [];
 
     if (!apiData) {
         return result;
