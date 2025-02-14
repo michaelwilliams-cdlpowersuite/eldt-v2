@@ -64,8 +64,8 @@ export const buildInitialValues = (user?: User): RegistrationFormUIValues => {
             lastName: user?.lastName ?? "",
             phone: user?.student?.phone ?? "",
             dob: "",
-            driversLicense: user?.student.driversLicense ?? "",
-            confirmDriversLicense: user?.student.driversLicense ?? "",
+            driversLicense: user?.student?.driversLicense ?? "",
+            confirmDriversLicense: user?.student?.driversLicense ?? "",
             streetAddress: user?.student?.address.address1 ?? "",
             city: user?.student?.address.city ?? "",
             state: user?.student?.address.state
