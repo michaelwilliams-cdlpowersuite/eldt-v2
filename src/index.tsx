@@ -17,7 +17,11 @@ if (config.sentryKey) {
     dsn: config.sentryKey,
     integrations: [
       Sentry.browserTracingIntegration(),
-      Sentry.replayIntegration(),
+      Sentry.replayIntegration({
+        mask: ['.sentry-mask'],
+        maskAllText: false,
+        blockAllMedia: false,
+      }),
       Sentry.reactRouterV6BrowserTracingIntegration({
         useEffect: React.useEffect,
         useLocation,
