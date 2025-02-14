@@ -59,7 +59,7 @@ const FormActionButtons: React.FC<FormActionButtonsProps> = ({
         onClick={handleSubmit}
         variant="contained"
         disableElevation
-        disabled={isLoading}
+        loading={isLoading}
         sx={{
           mr: 1,
           backgroundColor: brandColors.goGreen,

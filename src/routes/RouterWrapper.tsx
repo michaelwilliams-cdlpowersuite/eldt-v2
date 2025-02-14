@@ -20,7 +20,6 @@ import config from "../config";
 import Registration from "../views/registration/Registration";
 import StepperOrchestration from "../views/registration/Stepper";
 import Checkout from "../views/registration/Checkout";
-import Payment from "../views/registration/Payment";
 import SignInSide from "../views/sign-in-side/SignInSide";
 import SignUpSide from "../views/sign-up/SignUpSide";
 import CheckEmailToVerify from "../views/verify-email/CheckEmailToVerify";
@@ -60,14 +59,6 @@ export default function RouterWrapper() {
           {
             index: true,
             element: <StepperOrchestration />,
-          },
-          {
-            path: "checkout",
-            element: <Checkout />,
-          },
-          {
-            path: "payment",
-            element: <Payment />,
           },
         ],
       },

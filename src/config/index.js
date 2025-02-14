@@ -10,12 +10,8 @@ const hostMapping = {
     'registrations.cdlpowersuite.com': 'prod',
 };
 
-console.log('In new version', window.location.hostname);
-
 const resolvedHost = hostMapping[window.location.hostname] ? window.location.hostname : 'prod';
 
 const config = { dev, local, prod }[hostMapping[resolvedHost]];
-
-console.log(config);
 
 export default config;

@@ -23,7 +23,6 @@ const Registration: React.FC<RegistrationProps> = () => {
           <Formik
             initialValues={buildInitialValues(me)}
             validationSchema={validationSchema}
-            onSubmit={(values) => console.log(values)}
           >
             <Form>
               <Outlet />
