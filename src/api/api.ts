@@ -46,9 +46,12 @@ export const loginUser = async ({
     );
     return response.data;
   } catch (error) {
-    Sentry.captureException({ error: error, email: email });
-    console.error("Error logging in:", error);
-    throw error;
+    // @ts-ignore
+    if (error?.response?.status !== 401) {
+      Sentry.captureException({error: error, email: email});
+      console.error("Error logging in:", error);
+      throw error;
+    }
   }
 };
 
