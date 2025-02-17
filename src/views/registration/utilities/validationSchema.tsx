@@ -1,8 +1,8 @@
 import * as Yup from "yup";
-import {getCourseByType, getEndorsementsByApiKeys,} from "./products";
-import {User} from "../../../types/user";
-import {states} from "./statesList";
-import {Student} from "../../../types/student";
+import { getCourseByType, getEndorsementsByApiKeys, } from "./products";
+import { User } from "../../../types/user";
+import { states } from "./statesList";
+import { Student } from "../../../types/student";
 import dayjs from "dayjs";
 import {
     AttributeName,
@@ -10,7 +10,7 @@ import {
     getOptionsLabelsAndValues,
     getValueByAttributeName
 } from "./customAttributes";
-import {getWorkTypeSelection} from "./workType";
+import { getWorkTypeSelection } from "./workType";
 
 const MIN_DATE = dayjs().subtract(100, "years");
 const MAX_DATE = dayjs().subtract(14, "years");
@@ -37,7 +37,16 @@ export const validationSchema = Yup.object({
         lastName: Yup.string().required("Required"),
         phone: Yup.string().required("Required").matches(phoneRegExp, 'Phone number is not valid'),
         language: Yup.object().required("Required"),
-        where: Yup.string().required("Required"),
+        where: Yup.string().when(['$step1.selectedEndorsements', '$step1.selectedCourse'], {
+            is: (selectedEndorsements: string[] | undefined, selectedCourse: string | undefined, schema: any, context: any) => {
+                const hasOnlyHaz = (selectedEndorsements?.length ?? 0) > 0 &&
+                    selectedEndorsements?.every(endorsement => endorsement === '1') &&
+                    !selectedCourse;
+                return hasOnlyHaz;
+            },
+            then: (schema) => schema,
+            otherwise: (schema) => schema.required("Please enter your behind the wheel trainer")
+        }),
     }),
     step3: Yup.object({
         workType: Yup.array().required("Required"),
@@ -73,7 +82,7 @@ export const buildInitialValues = (user?: User): RegistrationFormUIValues => {
                 null
                 : null,
             zip: user?.student?.address.zip ?? "",
-            language: {label: "English", code: "en", apiValue: 1},
+            language: { label: "English", code: "en", apiValue: 1 },
             where: getValueByAttributeName(user?.student?.customAttributes, AttributeName.WHERE) ?? "",
         },
         step3: {

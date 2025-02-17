@@ -51,9 +51,9 @@ const getBlankWhere = (value: string) => {
              "fieldType": CustomAttributeFieldType.Textarea,
              "config": {
                "options": undefined,
-               "required": true
+               "required": false
              },
-             "value": value,
+             "value": value && value != '' ? value : 'N/A - Haz only',
              "adminEditable": false,
              "groupDescription": null
            }

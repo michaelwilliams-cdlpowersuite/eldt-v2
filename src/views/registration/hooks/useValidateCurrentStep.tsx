@@ -8,7 +8,12 @@ const useValidateCurrentStep = () => {
   const validateCurrentStep = async (stepKey: string) => {
     const stepSchema = Yup.reach(validationSchema, stepKey);
     if (stepSchema && "isValid" in stepSchema) {
-      return await (stepSchema as Yup.AnySchema).isValid(values[stepKey]);
+      return await (stepSchema as Yup.AnySchema).isValid(values[stepKey], {
+        context: {
+          ...values,
+          step1: values.step1  // Explicitly pass step1 values for the validation
+        }
+      });
     }
     return false;
   };
