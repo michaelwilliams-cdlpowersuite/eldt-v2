@@ -16,11 +16,11 @@ export const submitStepData = async (
     );
     return response.data;
   } catch (error) {
-    Sentry.captureException(error);
-    console.error("Error submitting step data:", {
-      error: error,
-      studentId: studentId,
-    });
+    // @ts-ignore
+    if (error?.response?.status !== 422) {
+      Sentry.captureException(error);
+    }
+
     throw error;
   }
 };
@@ -174,8 +174,12 @@ export const getMe = async () => {
     const response = await apiClient.get("user/me");
     return response.data;
   } catch (error) {
-    Sentry.captureException(error);
-    console.error("Error getting user data:", error);
+    // @ts-ignore
+    if (error?.response?.status !== 401) {
+      Sentry.captureException(error);
+      console.error("Error getting user data:", error);
+    }
+
     throw error;
   }
 };
