@@ -51,6 +51,8 @@ export const loginUser = async ({
       Sentry.captureException({error: error, email: email});
       console.error("Error logging in:", error);
       throw error;
+    } else {
+      throw error;
     }
   }
 };
