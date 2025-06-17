@@ -7,7 +7,7 @@ stages:
   - deploy-prod
 
 .docker: &docker
-  image: registry.gitlab.com/cdl-powersuite/drive509/deployments/build:1f251b51329b937013dd3d33fe1bb9c9debba295
+  image: registry.gitlab.com/cdl-powersuite/deployments/build:1f251b51329b937013dd3d33fe1bb9c9debba295
   services:
     - docker:20.10-dind
 
