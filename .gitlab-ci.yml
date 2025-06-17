@@ -55,7 +55,7 @@ Build Image - Client:
     DOCKERFILE_PATH: docker/app/Dockerfile
     REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-registrations
     SERVICE_NAME: cdl-registrations
-  image: registry.gitlab.com/cdl-powersuite/drive509/deployments/build:1f251b51329b937013dd3d33fe1bb9c9debba295
+  image: registry.gitlab.com/cdl-powersuite/deployments/build:1f251b51329b937013dd3d33fe1bb9c9debba295
   services:
     - name: docker:20.10.16-dind
       command: ["--mtu=1300"]
@@ -70,7 +70,7 @@ Deploy to Dev - Client:
     - "Build Image - Client"
   only:
     - main   # don't auto deploy hotfix branches to dev as that will rollback changes - we get hotfixes onto dev via merge into master
-  image: registry.gitlab.com/cdl-powersuite/drive509/deployments/deploy:1f251b51329b937013dd3d33fe1bb9c9debba295
+  image: registry.gitlab.com/cdl-powersuite/deployments/deploy:1f251b51329b937013dd3d33fe1bb9c9debba295
   variables:
     SERVICE_NAME: dev-registrations
     AWS_ECS_CLUSTER: fargate
@@ -87,7 +87,7 @@ trigger prod release:
   stage: deploy
   needs:
     - "Build Image - Client"
-  image: registry.gitlab.com/cdl-powersuite/drive509/deployments/build:1f251b51329b937013dd3d33fe1bb9c9debba295
+  image: registry.gitlab.com/cdl-powersuite/deployments/build:1f251b51329b937013dd3d33fe1bb9c9debba295
   rules:
     - if: $CI_COMMIT_REF_NAME == "main"
       when: manual
@@ -162,7 +162,7 @@ Deploy to Prod - Client:
   <<: *is-release
   stage: deploy-prod
   resource_group: prod
-  image: registry.gitlab.com/cdl-powersuite/drive509/deployments/deploy:1f251b51329b937013dd3d33fe1bb9c9debba295
+  image: registry.gitlab.com/cdl-powersuite/deployments/deploy:1f251b51329b937013dd3d33fe1bb9c9debba295
   variables:
     SERVICE_NAME: prod-registrations
     AWS_ECS_CLUSTER: fargate
