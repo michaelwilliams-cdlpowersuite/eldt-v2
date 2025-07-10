@@ -726,21 +726,26 @@ const Step4_UpgradeSave = ({
         <Paper
           sx={{
             p: 3,
-            bgcolor: 'warning.light',
+            bgcolor: 'grey.100',
             borderLeft: 4,
-            borderColor: 'warning.main',
+            borderColor: 'primary.main',
             borderRadius: '0 8px 8px 0',
           }}
         >
-          <Typography variant="h6" fontWeight="bold" color="warning.dark" gutterBottom>
+          <Typography variant="h6" fontWeight="bold" color="text.primary" gutterBottom>
             Upgrade to the Video Master Course!
           </Typography>
-          <Stack direction="row" spacing={2} alignItems="flex-start" sx={{ mt: 2 }}>
+          <Stack
+            direction={{ xs: 'column', md: 'row' }}
+            spacing={2}
+            alignItems={{ xs: 'center', md: 'flex-start' }}
+            sx={{ mt: 2 }}
+          >
             <Box
               sx={{
                 position: 'relative',
-                width: 96,
-                height: 54, // 16:9 aspect ratio
+                width: { xs: 120, md: 96 },
+                height: { xs: 67.5, md: 54 }, // 16:9 aspect ratio
                 borderRadius: 1,
                 overflow: 'hidden',
                 flexShrink: 0,
@@ -784,17 +789,21 @@ const Step4_UpgradeSave = ({
                 </Typography>
               </Box>
             </Box>
-            <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="body2" color="warning.dark" sx={{ mb: 2 }}>
+            <Box sx={{ flexGrow: 1, textAlign: { xs: 'center', md: 'left' } }}>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                 Save 10% on your endorsements by upgrading to our most popular theory course.
               </Typography>
-              <Stack direction="row" spacing={1}>
+              <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={1}
+                justifyContent={{ xs: 'center', md: 'flex-start' }}
+              >
                 <Button
                   onClick={onUpgrade}
                   variant="contained"
                   color="success"
                   size="small"
-                  sx={{ fontWeight: 'bold' }}
+                  sx={{ fontWeight: 'bold', minWidth: { xs: '200px', sm: 'auto' } }}
                 >
                   Upgrade to Video & Save
                 </Button>
@@ -804,7 +813,7 @@ const Step4_UpgradeSave = ({
                   color="inherit"
                   size="small"
                   startIcon={<PlayCircle size={16} />}
-                  sx={{ fontWeight: 'bold' }}
+                  sx={{ fontWeight: 'bold', minWidth: { xs: '200px', sm: 'auto' } }}
                 >
                   Preview
                 </Button>
