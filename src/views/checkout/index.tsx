@@ -23,6 +23,8 @@ import {
   FormControl,
   Grid,
   Avatar,
+  AppBar,
+  Toolbar,
 } from "@mui/material"
 import {
   CheckCircle,
@@ -35,7 +37,13 @@ import {
   UserPlus,
   PlayCircle,
 } from "lucide-react"
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone'
+import { ReactComponent as Logo } from '../../assets/eldt_white.svg'
+import { ReactComponent as ClassA } from '../../assets/icons-05.svg'
+import { ReactComponent as ClassB } from '../../assets/icons-07.svg'
+import { ReactComponent as ClassBA } from '../../assets/icons-06.svg'
 import { useTheme } from "@mui/material/styles"
+import { useMediaQuery } from "@mui/material"
 
 // --- Data Definitions ---
 const mainCourses = [
@@ -43,58 +51,19 @@ const mainCourses = [
     id: "class-a",
     title: "Class A CDL Training",
     description: "For tractor-trailers, such as big rigs.",
-    icon: (
-      <Avatar
-        sx={{
-          bgcolor: "#2C5F7C",
-          color: "white",
-          width: 64,
-          height: 64,
-          fontSize: "1.5rem",
-          fontWeight: "bold",
-        }}
-      >
-        A
-      </Avatar>
-    ),
+    icon: <ClassA style={{ width: "60px", height: "60px", objectFit: "contain" }} />,
   },
   {
     id: "class-b",
     title: "Class B CDL Training",
     description: "For straight trucks, buses, and dump trucks.",
-    icon: (
-      <Avatar
-        sx={{
-          bgcolor: "#2C5F7C",
-          color: "white",
-          width: 64,
-          height: 64,
-          fontSize: "1.5rem",
-          fontWeight: "bold",
-        }}
-      >
-        B
-      </Avatar>
-    ),
+    icon: <ClassB style={{ width: "60px", height: "60px", objectFit: "contain" }} />,
   },
   {
     id: "class-b-a",
     title: "Class B to A Upgrade",
     description: "Upgrade your existing Class B license.",
-    icon: (
-      <Avatar
-        sx={{
-          bgcolor: "#2C5F7C",
-          color: "white",
-          width: 64,
-          height: 64,
-          fontSize: "1.25rem",
-          fontWeight: "bold",
-        }}
-      >
-        B▸A
-      </Avatar>
-    ),
+    icon: <ClassBA style={{ width: "60px", height: "60px", objectFit: "contain" }} />,
   },
   {
     id: "endorsement-only",
@@ -105,11 +74,11 @@ const mainCourses = [
         sx={{
           bgcolor: "grey.200",
           color: "#2C5F7C",
-          width: 64,
-          height: 64,
+          width: 60,
+          height: 60,
         }}
       >
-        <Star size={36} />
+        <Star size={32} />
       </Avatar>
     ),
   },
@@ -238,121 +207,185 @@ const OptionCard = ({
           <CheckCircle size={20} />
         </Box>
       )}
-      <CardContent>
-        <Stack direction="row" spacing={2} alignItems="center">
-          {item.icon && <Box>{item.icon}</Box>}
-          <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary">
-              {item.title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {item.description}
-            </Typography>
-          </Box>
-          {item.imageUrl && onPreview && (
-            <Stack spacing={1} alignItems="center">
-              <Box
-                sx={{
-                  position: 'relative',
-                  width: 120,
-                  height: 67.5, // 16:9 aspect ratio
-                  borderRadius: 1,
-                  overflow: 'hidden',
-                  cursor: 'pointer',
-                  '&:hover .play-overlay': {
-                    opacity: 1,
-                  },
-                }}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onPreview()
-                }}
-              >
-                <Box
-                  component="img"
-                  src={item.imageUrl}
-                  alt="Course video thumbnail"
-                  sx={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    display: 'block',
-                  }}
-                  onError={(e: any) => {
-                    // Fallback to a custom placeholder
-                    e.target.style.display = 'none'
-                    e.target.nextSibling.style.display = 'flex'
-                  }}
-                />
-                {/* Fallback placeholder */}
+      <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
+        {item.imageUrl && onPreview ? (
+          // Layout for video courses - vertical on mobile, horizontal on desktop
+          <Stack spacing={2}>
+            <Stack direction="row" spacing={2} alignItems="center">
+              {item.icon && (
                 <Box
                   sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    display: 'none',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    bgcolor: 'grey.200',
-                    flexDirection: 'column',
-                    gap: 1,
-                  }}
-                >
-                  <Film size={24} color="#666" />
-                  <Typography variant="caption" color="text.secondary" textAlign="center">
-                    Video Course
-                  </Typography>
-                </Box>
-                {/* Play button overlay */}
-                <Box
-                  className="play-overlay"
-                  sx={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
+                    width: 60,
+                    height: 60,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    bgcolor: 'rgba(0, 0, 0, 0.4)',
-                    opacity: 0,
-                    transition: 'opacity 0.2s ease-in-out',
+                    flexShrink: 0,
+                  }}
+                >
+                  {item.icon}
+                </Box>
+              )}
+              <Box sx={{ flexGrow: 1 }}>
+                <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
+                  <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary">
+                    {item.title}
+                  </Typography>
+                  {item.id === 'theory-video' && (
+                    <Box
+                      sx={{
+                        bgcolor: '#ff9800',
+                        color: 'white',
+                        px: 1,
+                        py: 0.25,
+                        borderRadius: 1,
+                        fontSize: '0.75rem',
+                        fontWeight: 'bold',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px',
+                      }}
+                    >
+                      10% Off Endorsements
+                    </Box>
+                  )}
+                </Stack>
+                <Typography variant="body2" color="text.secondary">
+                  {item.description}
+                </Typography>
+              </Box>
+            </Stack>
+            {/* Video preview section - separate row for better spacing */}
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Stack spacing={1} alignItems="center">
+                <Box
+                  sx={{
+                    position: 'relative',
+                    width: 120,
+                    height: 67.5, // 16:9 aspect ratio
+                    borderRadius: 1,
+                    overflow: 'hidden',
+                    cursor: 'pointer',
+                    '&:hover .play-overlay': {
+                      opacity: 1,
+                    },
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onPreview()
                   }}
                 >
                   <Box
+                    component="img"
+                    src={item.imageUrl}
+                    alt="Course video thumbnail"
                     sx={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: '50%',
-                      bgcolor: 'rgba(255, 255, 255, 0.9)',
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      display: 'block',
+                    }}
+                    onError={(e: any) => {
+                      // Fallback to a custom placeholder
+                      e.target.style.display = 'none'
+                      e.target.nextSibling.style.display = 'flex'
+                    }}
+                  />
+                  {/* Fallback placeholder */}
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      display: 'none',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      bgcolor: 'grey.200',
+                      flexDirection: 'column',
+                      gap: 1,
+                    }}
+                  >
+                    <Film size={24} color="#666" />
+                    <Typography variant="caption" color="text.secondary" textAlign="center">
+                      Video Course
+                    </Typography>
+                  </Box>
+                  {/* Play button overlay */}
+                  <Box
+                    className="play-overlay"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      bgcolor: 'rgba(0, 0, 0, 0.4)',
+                      opacity: 0,
+                      transition: 'opacity 0.2s ease-in-out',
                     }}
                   >
-                    <PlayCircle size={20} color="#333" />
+                    <Box
+                      sx={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: '50%',
+                        bgcolor: 'rgba(255, 255, 255, 0.9)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <PlayCircle size={20} color="#333" />
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-              <Button
-                size="small"
-                variant="outlined"
-                color="inherit"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onPreview()
+                <Button
+                  size="small"
+                  variant="outlined"
+                  color="inherit"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onPreview()
+                  }}
+                  startIcon={<PlayCircle size={16} />}
+                  sx={{ fontSize: '0.75rem', fontWeight: 'bold' }}
+                >
+                  Preview
+                </Button>
+              </Stack>
+            </Box>
+          </Stack>
+        ) : (
+          // Standard layout for non-video courses
+          <Stack direction="row" spacing={2} alignItems="center">
+            {item.icon && (
+              <Box
+                sx={{
+                  width: 60,
+                  height: 60,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
                 }}
-                startIcon={<PlayCircle size={16} />}
-                sx={{ fontSize: '0.75rem', fontWeight: 'bold' }}
               >
-                Preview
-              </Button>
-            </Stack>
-          )}
-        </Stack>
+                {item.icon}
+              </Box>
+            )}
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary" sx={{ mb: 0.5 }}>
+                {item.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {item.description}
+              </Typography>
+            </Box>
+          </Stack>
+        )}
       </CardContent>
     </Card>
   )
@@ -362,10 +395,14 @@ const CheckboxOptionCard = ({
   item,
   isSelected,
   onToggle,
+  showDiscount = false,
+  discountPercent = 0,
 }: {
   item: any
   isSelected: boolean
   onToggle: () => void
+  showDiscount?: boolean
+  discountPercent?: number
 }) => {
   const theme = useTheme()
 
@@ -385,25 +422,49 @@ const CheckboxOptionCard = ({
         },
       }}
     >
-      <CardContent>
+      <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
         <Stack direction="row" spacing={2} alignItems="center">
           <Checkbox
             checked={isSelected}
             readOnly
             color="success"
-            sx={{ '& .MuiSvgIcon-root': { fontSize: 24 } }}
+            sx={{ '& .MuiSvgIcon-root': { fontSize: 22 } }}
           />
           <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary">
+            <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary" sx={{ mb: 0.5 }}>
               {item.title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {item.description}
             </Typography>
+            {showDiscount && (
+              <Box sx={{ mt: 0.5 }}>
+                <Typography variant="caption" color="success.main" fontWeight="bold">
+                  {discountPercent}% off with Video Course!
+                </Typography>
+              </Box>
+            )}
           </Box>
-          <Typography variant="h6" fontWeight="bold" color="text.primary">
-            ${item.price.toFixed(2)}
-          </Typography>
+          <Box sx={{ textAlign: 'right' }}>
+            {showDiscount ? (
+              <Stack alignItems="flex-end" spacing={0.25}>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ textDecoration: 'line-through' }}
+                >
+                  ${item.price.toFixed(2)}
+                </Typography>
+                <Typography variant="h6" fontWeight="bold" color="success.main">
+                  ${(item.price * (1 - discountPercent / 100)).toFixed(2)}
+                </Typography>
+              </Stack>
+            ) : (
+              <Typography variant="h6" fontWeight="bold" color="text.primary">
+                ${item.price.toFixed(2)}
+              </Typography>
+            )}
+          </Box>
         </Stack>
       </CardContent>
     </Card>
@@ -496,21 +557,34 @@ const Step1_MainCourse = ({
 }: {
   selected: string
   onSelect: (id: string) => void
-}) => (
-  <Stack spacing={3}>
-    <Typography variant="h5" fontWeight="bold" color="text.primary">
-      What is your starting point?
-    </Typography>
-    {mainCourses.map((course) => (
-      <OptionCard
-        key={course.id}
-        item={course}
-        isSelected={selected === course.id}
-        onSelect={() => onSelect(course.id)}
-      />
-    ))}
-  </Stack>
-)
+}) => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
+  // Reorder courses for mobile - put "Endorsement Only" first
+  const orderedCourses = isMobile
+    ? [
+      ...mainCourses.filter(course => course.id === 'endorsement-only'),
+      ...mainCourses.filter(course => course.id !== 'endorsement-only')
+    ]
+    : mainCourses
+
+  return (
+    <Stack spacing={3}>
+      <Typography variant="h5" fontWeight="bold" color="text.primary">
+        What is your starting point?
+      </Typography>
+      {orderedCourses.map((course) => (
+        <OptionCard
+          key={course.id}
+          item={course}
+          isSelected={selected === course.id}
+          onSelect={() => onSelect(course.id)}
+        />
+      ))}
+    </Stack>
+  )
+}
 
 const Step2_Theory = ({
   selected,
@@ -540,24 +614,51 @@ const Step2_Theory = ({
 const Step3_Endorsements = ({
   selected,
   onToggle,
+  selectedTheoryOption,
 }: {
   selected: Set<string>
   onToggle: (id: string) => void
-}) => (
-  <Stack spacing={3}>
-    <Typography variant="h5" fontWeight="bold" color="text.primary">
-      Select any additional endorsements.
-    </Typography>
-    {endorsements.map((course) => (
-      <CheckboxOptionCard
-        key={course.id}
-        item={course}
-        isSelected={selected.has(course.id)}
-        onToggle={() => onToggle(course.id)}
-      />
-    ))}
-  </Stack>
-)
+  selectedTheoryOption: string
+}) => {
+  const hasVideoDiscount = selectedTheoryOption === 'theory-video'
+  const discountPercent = 10
+
+  return (
+    <Stack spacing={3}>
+      <Typography variant="h5" fontWeight="bold" color="text.primary">
+        Select any additional endorsements.
+      </Typography>
+      {hasVideoDiscount && (
+        <Paper
+          sx={{
+            p: 2,
+            bgcolor: 'success.light',
+            borderLeft: 4,
+            borderColor: 'success.main',
+            borderRadius: '0 8px 8px 0',
+          }}
+        >
+          <Typography variant="body1" fontWeight="bold" color="success.dark">
+            🎉 Video Course Bonus: Get 10% off all endorsements!
+          </Typography>
+          <Typography variant="body2" color="success.dark">
+            Save money on endorsements because you chose our Video Master Course.
+          </Typography>
+        </Paper>
+      )}
+      {endorsements.map((course) => (
+        <CheckboxOptionCard
+          key={course.id}
+          item={course}
+          isSelected={selected.has(course.id)}
+          onToggle={() => onToggle(course.id)}
+          showDiscount={hasVideoDiscount}
+          discountPercent={discountPercent}
+        />
+      ))}
+    </Stack>
+  )
+}
 
 const Step4_UpgradeSave = ({
   theoryOptionId,
@@ -862,12 +963,12 @@ export default function App() {
 
   // Calculation Logic
   const theoryPrice = theoryOptions.find((o) => o.id === selectedTheoryOption)?.price || 0
-  const endorsementsSubtotal = Array.from(selectedEndorsements).reduce((sum, id) => {
+  const endorsementsFullPrice = Array.from(selectedEndorsements).reduce((sum, id) => {
     return sum + (endorsements.find((e) => e.id === id)?.price || 0)
   }, 0)
-  const discount =
-    selectedTheoryOption === "theory-video" && selectedEndorsements.size > 0 ? endorsementsSubtotal * 0.1 : 0
-  const subtotal = theoryPrice + endorsementsSubtotal - discount
+  const endorsementDiscount = selectedTheoryOption === "theory-video" ? endorsementsFullPrice * 0.1 : 0
+  const endorsementsSubtotal = endorsementsFullPrice - endorsementDiscount
+  const subtotal = theoryPrice + endorsementsSubtotal
   const processingFee = subtotal > 0 ? subtotal * 0.035 : 0
   const total = subtotal + processingFee
 
@@ -909,6 +1010,7 @@ export default function App() {
         return (
           <Step3_Endorsements
             selected={selectedEndorsements}
+            selectedTheoryOption={selectedTheoryOption}
             onToggle={(id) => {
               const newSet = new Set(selectedEndorsements)
               if (newSet.has(id)) newSet.delete(id)
@@ -925,7 +1027,7 @@ export default function App() {
             selectedEndorsements={Array.from(selectedEndorsements)
               .map((id) => endorsements.find((e) => e.id === id))
               .filter(Boolean)}
-            discount={discount}
+            discount={endorsementDiscount}
             total={total}
             onUpgrade={() => setSelectedTheoryOption("theory-video")}
             onPreview={() => openVideoModal(theoryOptions.find((t) => t.id === "theory-video")?.videoId || "")}
@@ -967,44 +1069,45 @@ export default function App() {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'grey.50' }}>
-      {/* Fixed Header */}
-      <Paper
-        elevation={1}
-        sx={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1100,
-          borderRadius: 0,
-        }}
-      >
-        <Container maxWidth="lg">
-          <Box sx={{
-            py: 2,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}>
-            <Typography variant="h5" fontWeight="bold" color="text.primary">
-              Enrollment
-            </Typography>
-            <IconButton onClick={closeVideoModal} color="inherit" size="small">
-              <X size={20} />
-            </IconButton>
-          </Box>
-        </Container>
-      </Paper>
+      {/* Blue Header */}
+      <AppBar position="fixed" elevation={0} sx={{ bgcolor: "#0E537B" }}>
+        <Toolbar>
+          <Container
+            maxWidth="lg"
+            disableGutters
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Box display="flex" alignItems="center">
+              <Logo style={{ height: "40px" }} />
+            </Box>
+            <Box display="flex" alignItems="center">
+              <LocalPhoneIcon sx={{ color: 'white' }} />
+              <a
+                href="tel:+15092413987"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                <Typography variant="overline" sx={{ pl: 1, whiteSpace: "nowrap" }}>
+                  (509) 241-3987
+                </Typography>
+              </a>
+            </Box>
+          </Container>
+        </Toolbar>
+      </AppBar>
 
       {/* Main Content */}
-      <Box sx={{ pt: 10, pb: 12 }}>
+      <Box sx={{ pt: 9, pb: 10 }}>
         <Container maxWidth="md">
           {/* Progress Bar */}
           <Paper
             elevation={0}
             sx={{
-              p: 3,
-              mb: 3,
+              p: 2,
+              mb: 2,
               bgcolor: 'white',
               borderRadius: 2,
             }}
@@ -1020,10 +1123,10 @@ export default function App() {
           <Paper
             elevation={0}
             sx={{
-              p: { xs: 3, sm: 4 },
+              p: { xs: 2, sm: 3 },
               bgcolor: 'white',
               borderRadius: 2,
-              minHeight: '60vh',
+              minHeight: '50vh',
             }}
           >
             {getStepContent()}
