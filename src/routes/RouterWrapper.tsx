@@ -20,6 +20,7 @@ import config from "../config";
 import Registration from "../views/registration/Registration";
 import StepperOrchestration from "../views/registration/Stepper";
 import Checkout from "../views/registration/Checkout";
+import CheckoutFlow from "../views/checkout/index";
 import SignInSide from "../views/sign-in-side/SignInSide";
 import SignUpSide from "../views/sign-up/SignUpSide";
 import CheckEmailToVerify from "../views/verify-email/CheckEmailToVerify";
@@ -48,12 +49,12 @@ export default function RouterWrapper() {
       {
         path: "/register",
         element: (
-            <ProtectedRoute
-                isEmailVerified={!!me?.emailVerifiedAt}
-                isLoading={isMeLoading}
-            >
-              <Registration />
-            </ProtectedRoute>
+          <ProtectedRoute
+            isEmailVerified={!!me?.emailVerifiedAt}
+            isLoading={isMeLoading}
+          >
+            <Registration />
+          </ProtectedRoute>
         ),
         children: [
           {
@@ -69,28 +70,28 @@ export default function RouterWrapper() {
       {
         path: "/sign-in",
         element: isAuthenticated ? (
-            <Navigate to="/register" replace />
+          <Navigate to="/register" replace />
         ) : (
-            <SignInSide disableCustomTheme />
+          <SignInSide disableCustomTheme />
         ),
       },
       {
         path: "/sign-up",
         element: isAuthenticated ? (
-            <Navigate to="/register" replace />
+          <Navigate to="/register" replace />
         ) : (
-            <SignUpSide disableCustomTheme />
+          <SignUpSide disableCustomTheme />
         ),
       },
       {
         path: "/check-email",
         element: (
-            <ProtectedRoute
-                isEmailVerified={!!me?.emailVerifiedAt}
-                isLoading={isMeLoading}
-            >
-              <CheckEmailToVerify disableCustomTheme />
-            </ProtectedRoute>
+          <ProtectedRoute
+            isEmailVerified={!!me?.emailVerifiedAt}
+            isLoading={isMeLoading}
+          >
+            <CheckEmailToVerify disableCustomTheme />
+          </ProtectedRoute>
         ),
       },
       {
@@ -100,6 +101,10 @@ export default function RouterWrapper() {
       {
         path: "/oauth-handoff",
         element: <OAuthHandoff />,
+      },
+      {
+        path: "/checkout",
+        element: <CheckoutFlow />,
       },
     ]);
   }, [isAuthenticated, me?.emailVerifiedAt, isMeLoading, sentryCreateBrowserRouter]);
