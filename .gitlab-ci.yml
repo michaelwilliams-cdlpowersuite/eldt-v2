@@ -51,6 +51,8 @@ Build Image - Client:
     - if: $CI_COMMIT_REF_NAME == "main"      # auto build master
     - if: $CI_COMMIT_REF_NAME =~ /hotfix\/*/
       when: manual                             # manual build hotfix branches (we could auto build, this just saves build resources in case we don't want to)
+    - if: $CI_COMMIT_REF_NAME != "main" && $CI_COMMIT_REF_NAME !~ /hotfix\/*/
+      when: manual                             # manual build feature branches
   variables:
     DOCKERFILE_PATH: docker/app/Dockerfile
     REGISTRY_IMAGE: 965142579563.dkr.ecr.us-west-2.amazonaws.com/cdl-registrations
@@ -68,8 +70,10 @@ Deploy to Dev - Client:
   resource_group: dev
   needs:
     - "Build Image - Client"
-  only:
-    - main   # don't auto deploy hotfix branches to dev as that will rollback changes - we get hotfixes onto dev via merge into master
+  rules:
+    - if: $CI_COMMIT_REF_NAME == "main"      # auto deploy main branch
+    - if: $CI_COMMIT_REF_NAME != "main" && $CI_COMMIT_REF_NAME !~ /hotfix\/*/
+      when: manual                             # manual deploy feature branches to dev
   image: registry.gitlab.com/cdl-powersuite/deployments/deploy:1f251b51329b937013dd3d33fe1bb9c9debba295
   variables:
     SERVICE_NAME: dev-registrations
