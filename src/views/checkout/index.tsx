@@ -176,7 +176,6 @@ const OptionCard = ({
     <Card
       onClick={onSelect}
       sx={{
-        position: 'relative',
         cursor: 'pointer',
         transition: 'all 0.2s ease-in-out',
         border: 2,
@@ -189,30 +188,18 @@ const OptionCard = ({
         },
       }}
     >
-      {isSelected && (
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 12,
-            right: 12,
-            bgcolor: theme.palette.success.main,
-            color: 'white',
-            borderRadius: '50%',
-            p: 0.5,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <CheckCircle size={20} />
-        </Box>
-      )}
       <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
         {item.imageUrl && onPreview ? (
           // Layout for video courses - vertical on mobile, horizontal on desktop
           <Stack spacing={2}>
             <Stack direction="row" spacing={2} alignItems="center">
-              {item.icon && (
+              <Radio
+                checked={isSelected}
+                readOnly
+                color="success"
+                sx={{ '& .MuiSvgIcon-root': { fontSize: 22 } }}
+              />
+              {item.icon && !item.price && (
                 <Box
                   sx={{
                     width: 60,
@@ -227,32 +214,54 @@ const OptionCard = ({
                 </Box>
               )}
               <Box sx={{ flexGrow: 1 }}>
-                <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
-                  <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary">
+                {item.price ? (
+                  // Theory options layout (with inline icon)
+                  <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
+                    <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary">
+                      {item.title}
+                    </Typography>
+                  </Stack>
+                ) : (
+                  // Main course layout (block icon already shown above)
+                  <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary" sx={{ mb: 0.5 }}>
                     {item.title}
                   </Typography>
-                  {item.id === 'theory-video' && (
-                    <Box
-                      sx={{
-                        bgcolor: '#ff9800',
-                        color: 'white',
-                        px: 1,
-                        py: 0.25,
-                        borderRadius: 1,
-                        fontSize: '0.75rem',
-                        fontWeight: 'bold',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.5px',
-                      }}
-                    >
-                      10% Off Endorsements
-                    </Box>
-                  )}
-                </Stack>
+                )}
+                {item.id === 'theory-video' && (
+                  <Box
+                    sx={{
+                      bgcolor: '#ff9800',
+                      color: 'white',
+                      px: 1,
+                      py: 0.25,
+                      borderRadius: 1,
+                      fontSize: '0.75rem',
+                      fontWeight: 'bold',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px',
+                      mb: 0.5,
+                      display: 'inline-block',
+                    }}
+                  >
+                    Unlock 10% Off Endorsements
+                  </Box>
+                )}
                 <Typography variant="body2" color="text.secondary">
                   {item.description}
                 </Typography>
+                {item.id === 'theory-reading' && (
+                  <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block', fontStyle: 'italic' }}>
+                    Save $25 vs Video Course (but miss out on 10% endorsement discount)
+                  </Typography>
+                )}
               </Box>
+              {item.price && (
+                <Box sx={{ textAlign: 'right' }}>
+                  <Typography variant="h6" fontWeight="bold" color="primary.main">
+                    ${item.price}
+                  </Typography>
+                </Box>
+              )}
             </Stack>
             {/* Video preview section - separate row for better spacing */}
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -362,7 +371,13 @@ const OptionCard = ({
         ) : (
           // Standard layout for non-video courses
           <Stack direction="row" spacing={2} alignItems="center">
-            {item.icon && (
+            <Radio
+              checked={isSelected}
+              readOnly
+              color="success"
+              sx={{ '& .MuiSvgIcon-root': { fontSize: 22 } }}
+            />
+            {item.icon && !item.price && (
               <Box
                 sx={{
                   width: 60,
@@ -377,13 +392,35 @@ const OptionCard = ({
               </Box>
             )}
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary" sx={{ mb: 0.5 }}>
-                {item.title}
-              </Typography>
+              {item.price ? (
+                // Theory options layout (with inline icon)
+                <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5 }}>
+                  <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary">
+                    {item.title}
+                  </Typography>
+                </Stack>
+              ) : (
+                // Main course layout (block icon already shown above)
+                <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary" sx={{ mb: 0.5 }}>
+                  {item.title}
+                </Typography>
+              )}
               <Typography variant="body2" color="text.secondary">
                 {item.description}
               </Typography>
+              {item.id === 'theory-reading' && (
+                <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block', fontStyle: 'italic' }}>
+                  Save $25 vs Video Course (but miss out on 10% endorsement discount)
+                </Typography>
+              )}
             </Box>
+            {item.price && (
+              <Box sx={{ textAlign: 'right' }}>
+                <Typography variant="h6" fontWeight="bold" color="primary.main">
+                  ${item.price}
+                </Typography>
+              </Box>
+            )}
           </Stack>
         )}
       </CardContent>

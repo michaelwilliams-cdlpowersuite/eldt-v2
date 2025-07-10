@@ -24,7 +24,10 @@ const App = () => {
         <CssBaseline />
         <AuthProvider>
           <QueryClientProvider client={queryClient}>
-            <ReactQueryDevtools initialIsOpen={false} />
+            <ReactQueryDevtools
+              initialIsOpen={false}
+              buttonPosition="top-left"
+            />
             <SnackbarProvider>
               <RouterWrapper />
             </SnackbarProvider>
