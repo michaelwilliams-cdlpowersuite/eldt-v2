@@ -147,7 +147,7 @@ export const CheckoutApp: React.FC = () => {
 
             {/* Main Content */}
             <Box sx={{ pt: 9, pb: 10 }}>
-                <Container maxWidth="md">
+                <Container maxWidth="lg">
                     {/* Progress Bar */}
                     <Paper
                         elevation={0}
@@ -247,31 +247,27 @@ export const CheckoutApp: React.FC = () => {
                         </Box>
 
                         {/* Next Button */}
-                        <Box sx={{ textAlign: 'right' }}>
-                            <Button
-                                onClick={handleNext}
-                                disabled={isNextDisabled()}
-                                variant="contained"
-                                sx={{
-                                    fontWeight: 'bold',
-                                    minWidth: { xs: 'auto', sm: 140 },
-                                    px: { xs: 3, sm: 4 },
-                                    py: 1.5,
-                                    borderRadius: 2,
-                                    backgroundColor: '#00C058',
-                                    '&:hover': {
-                                        backgroundColor: '#00a048',
-                                    },
-                                    '&:disabled': {
-                                        backgroundColor: 'grey.300',
-                                    }
-                                }}
-                            >
-                                {currentStep === 5 ? (
-                                    <Box component="span">
-                                        🔒 Complete Secure Order
-                                    </Box>
-                                ) : (
+                        {currentStep < 5 && (
+                            <Box sx={{ textAlign: 'right' }}>
+                                <Button
+                                    onClick={handleNext}
+                                    disabled={isNextDisabled()}
+                                    variant="contained"
+                                    sx={{
+                                        fontWeight: 'bold',
+                                        minWidth: { xs: 'auto', sm: 140 },
+                                        px: { xs: 3, sm: 4 },
+                                        py: 1.5,
+                                        borderRadius: 2,
+                                        backgroundColor: '#00C058',
+                                        '&:hover': {
+                                            backgroundColor: '#00a048',
+                                        },
+                                        '&:disabled': {
+                                            backgroundColor: 'grey.300',
+                                        }
+                                    }}
+                                >
                                     <>
                                         <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
                                             Continue
@@ -280,9 +276,9 @@ export const CheckoutApp: React.FC = () => {
                                             →
                                         </Box>
                                     </>
-                                )}
-                            </Button>
-                        </Box>
+                                </Button>
+                            </Box>
+                        )}
                     </Box>
                 </Container>
             </Paper>

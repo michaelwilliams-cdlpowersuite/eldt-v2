@@ -11,9 +11,16 @@ import {
     FormControlLabel,
     Box,
 } from '@mui/material'
+import { useCallback } from "react";
 import { UserPlus, CreditCard } from 'lucide-react'
 import { SummaryLine } from '../components/SummaryLine'
 import type { Step5Props } from '../types'
+import config from "../../../config";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+    EmbeddedCheckout,
+    EmbeddedCheckoutProvider,
+} from "@stripe/react-stripe-js";
 
 const Input = ({
     id,
@@ -33,7 +40,6 @@ const Input = ({
         {...props}
     />
 )
-
 export const Step5_Payment: React.FC<Step5Props> = ({
     total,
     accountDetails,
@@ -41,85 +47,34 @@ export const Step5_Payment: React.FC<Step5Props> = ({
     paymentMethod,
     setPaymentMethod,
 }) => {
+    const stripePromise = config ? loadStripe(config.stripePublicKey) : null;
+
+    const fetchClientSecret = useCallback(async () => {
+        return 'cs_test_b1vBhmBHjKp9bqiyEcUj7KfBYXZRLbfp5a6hx8nLuUoFqJcSLxHUlg8LQc_secret_fidkdWxOYHwnPyd1blpxYHZxWjA0TlNsaVJAdGpqQU1fcmhmbjFTcFB8aHJoNkdyMjBDcHx3fHdhNWo2SGxMaW1qclJsXHViT2I1V2J8d0tMTnBjQlAxaXJRQlxffWpMZnZWVmJVN19kQWhPNTVJZzJIN0o8QicpJ3BsSGphYCc%2FJ2BoZ2BhYWBhJyknaWR8anBxUXx1YCc%2FJ2hwaXFsWmxxYGgnKSd3YGFsd2BmcUprRmpodWlgcWxqayc%2FJ2RpcmR8dicpJ2dkZm5id2pwa2FGamlqdyc%2FJyZjY2NjY2MneCUl';
+        // const response = await createCheckoutSession(
+        //     [{ price: 3, sku: "sms_communication" }],
+        //     "cart.value.signature",
+        // );
+        // return response.clientSecret;
+    }, []);
+
+    const onComplete = () => {
+        // setIsComplete(true);
+    };
+
+    const options = {
+        fetchClientSecret,
+        onComplete,
+    };
+
     return (
         <Stack spacing={3}>
             <Typography variant="h5" fontWeight="bold" color="text.primary">
                 Create Your Account & Pay
             </Typography>
-            <Grid container spacing={4}>
-                <Grid item xs={12} md={6}>
-                    <Stack spacing={3}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <UserPlus size={20} />
-                            <Typography variant="h6" fontWeight="bold" color="text.secondary">
-                                Account Details
-                            </Typography>
-                        </Box>
-                        <Input
-                            id="name"
-                            label="Full Name"
-                            value={accountDetails.name}
-                            onChange={(e: any) => setAccountDetails({ ...accountDetails, name: e.target.value })}
-                        />
-                        <Input
-                            id="email"
-                            type="email"
-                            label="Email Address"
-                            value={accountDetails.email}
-                            onChange={(e: any) => setAccountDetails({ ...accountDetails, email: e.target.value })}
-                        />
-                        <Input
-                            id="password"
-                            type="password"
-                            label="Create Password"
-                            value={accountDetails.password}
-                            onChange={(e: any) => setAccountDetails({ ...accountDetails, password: e.target.value })}
-                        />
-                    </Stack>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Stack spacing={3}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <CreditCard size={20} />
-                            <Typography variant="h6" fontWeight="bold" color="text.secondary">
-                                Payment
-                            </Typography>
-                        </Box>
-                        <Paper sx={{ p: 2, bgcolor: 'grey.50' }}>
-                            <SummaryLine label="Total Amount" value={`$${total.toFixed(2)}`} isTotal />
-                        </Paper>
-                        <FormControl component="fieldset">
-                            <RadioGroup
-                                row
-                                value={paymentMethod}
-                                onChange={(e) => setPaymentMethod(e.target.value)}
-                            >
-                                <FormControlLabel
-                                    value="card"
-                                    control={<Radio color="success" />}
-                                    label="Card"
-                                    sx={{ flex: 1 }}
-                                />
-                                <FormControlLabel
-                                    value="gpay"
-                                    control={<Radio color="success" />}
-                                    label="Google Pay"
-                                    sx={{ flex: 1 }}
-                                />
-                            </RadioGroup>
-                        </FormControl>
-                        {paymentMethod === "card" && (
-                            <Stack spacing={2}>
-                                <Input id="card-number" placeholder="Card Number" />
-                                <Stack direction="row" spacing={2}>
-                                    <Input id="expiry" placeholder="MM/YY" />
-                                    <Input id="cvc" placeholder="CVC" />
-                                </Stack>
-                            </Stack>
-                        )}
-                    </Stack>
-                </Grid>
-            </Grid>
+            <EmbeddedCheckoutProvider stripe={stripePromise} options={options}>
+                <EmbeddedCheckout />
+            </EmbeddedCheckoutProvider>
         </Stack>
     )
 } 
