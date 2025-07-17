@@ -1,15 +1,21 @@
 import React from 'react'
 import { Stack, Typography } from '@mui/material'
 import { OptionCard } from '../components/OptionCard'
-import { THEORY_OPTIONS } from '../constants'
-import type { StepProps, TheoryOption } from '../types'
+import type { TheoryOption } from '../types'
 
-export const Step2_Theory: React.FC<StepProps> = ({
+interface Step2Props {
+    selected: string
+    onSelect: (id: string) => void
+    onPreview?: (videoId: string) => void
+    theoryOptions: TheoryOption[]
+}
+
+export const Step2_Theory: React.FC<Step2Props> = ({
     selected,
     onSelect,
     onPreview,
+    theoryOptions,
 }) => {
-    const options: TheoryOption[] = THEORY_OPTIONS;
     return (
         <Stack spacing={3}>
             <Stack spacing={1} sx={{ mb: 1 }}>
@@ -23,7 +29,7 @@ export const Step2_Theory: React.FC<StepProps> = ({
                     </Typography>
                 </Typography>
             </Stack>
-            {options.map((option) => (
+            {theoryOptions.map((option) => (
                 <OptionCard
                     key={option.id}
                     item={option as TheoryOption}

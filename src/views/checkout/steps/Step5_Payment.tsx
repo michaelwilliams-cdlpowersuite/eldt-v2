@@ -50,7 +50,7 @@ export const Step5_Payment: React.FC<Step5Props> = ({
     const stripePromise = config ? loadStripe(config.stripePublicKey) : null;
 
     const fetchClientSecret = useCallback(async () => {
-        return 'cs_test_b1vBhmBHjKp9bqiyEcUj7KfBYXZRLbfp5a6hx8nLuUoFqJcSLxHUlg8LQc_secret_fidkdWxOYHwnPyd1blpxYHZxWjA0TlNsaVJAdGpqQU1fcmhmbjFTcFB8aHJoNkdyMjBDcHx3fHdhNWo2SGxMaW1qclJsXHViT2I1V2J8d0tMTnBjQlAxaXJRQlxffWpMZnZWVmJVN19kQWhPNTVJZzJIN0o8QicpJ3BsSGphYCc%2FJ2BoZ2BhYWBhJyknaWR8anBxUXx1YCc%2FJ2hwaXFsWmxxYGgnKSd3YGFsd2BmcUprRmpodWlgcWxqayc%2FJ2RpcmR8dicpJ2dkZm5id2pwa2FGamlqdyc%2FJyZjY2NjY2MneCUl';
+        return 'cs_test_b1gwaBwDYV3eeEbxJDijmPv3PMczyf5MsDmdyz4DrFgfyWOnpvAsQ2iF2D_secret_fidkdWxOYHwnPyd1blpxYHZxWjA0TlNsaVJAdGpqQU1fcmhmbjFTcFB8aHJoNkdyMjBDcHx3fHdhNWo2SGxMaW1qclJsXHViT2I1V2J8d0tMTnBjQlAxaXJRQlxffWpMZnZWVmJVN19kQWhPNTVJZzJIN0o8QicpJ3BsSGphYCc%2FJ2BoZ2BhYWBhJyknaWR8anBxUXx1YCc%2FJ2hwaXFsWmxxYGgnKSd3YGFsd2BmcUprRmpodWlgcWxqayc%2FJ2RpcmR8dicpJ2dkZm5id2pwa2FGamlqdyc%2FJyZjY2NjY2MneCUl';
         // const response = await createCheckoutSession(
         //     [{ price: 3, sku: "sms_communication" }],
         //     "cart.value.signature",

@@ -48,7 +48,7 @@ export const loginUser = async ({
   } catch (error) {
     // @ts-ignore
     if (error?.response?.status !== 401) {
-      Sentry.captureException({error: error, email: email});
+      Sentry.captureException({ error: error, email: email });
       console.error("Error logging in:", error);
       throw error;
     } else {
@@ -206,6 +206,19 @@ export const prepareHandoff = async () => {
   } catch (error) {
     Sentry.captureException(error);
     console.error("Error handing off to Angular App:", error);
+    throw error;
+  }
+}
+
+// Products API
+export const getProducts = async (cdlClass?: string) => {
+  try {
+    const params = cdlClass ? `?cdlClass=${encodeURIComponent(cdlClass)}` : '';
+    const response = await apiClient.get(`/eldt/v2/products${params}`);
+    return response.data;
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error("Error fetching products:", error);
     throw error;
   }
 };

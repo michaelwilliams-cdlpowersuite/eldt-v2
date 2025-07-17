@@ -10,6 +10,7 @@ import {
     IconButton,
     Dialog,
     DialogContent,
+    CircularProgress,
 } from '@mui/material'
 import { ChevronLeft, X } from 'lucide-react'
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone'
@@ -22,7 +23,6 @@ import { Step3_Endorsements } from './steps/Step3_Endorsements'
 import { Step4_UpgradeSave } from './steps/Step4_UpgradeSave'
 import { Step5_Payment } from './steps/Step5_Payment'
 import { ModernProgressBar } from './components/ModernProgressBar'
-import { THEORY_OPTIONS } from './constants';
 
 export const CheckoutApp: React.FC = () => {
     const {
@@ -37,6 +37,12 @@ export const CheckoutApp: React.FC = () => {
         theoryPrice,
         endorsementDiscount,
         total,
+        courses,
+        theoryOptions,
+        endorsements,
+        products,
+        isLoading,
+        isError,
         setSelectedMainCourse,
         setSelectedTheoryOption,
         setAccountDetails,
@@ -48,6 +54,38 @@ export const CheckoutApp: React.FC = () => {
         closeVideoModal,
         isNextDisabled,
     } = useCheckout()
+
+    // Show loading state only for step 2 when waiting for theory options
+    if (isLoading && currentStep === 2) {
+        return (
+            <Box sx={{
+                minHeight: '100vh',
+                bgcolor: 'grey.50',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                <CircularProgress />
+            </Box>
+        )
+    }
+
+    // Show error state if API call failed and we're on step 2
+    if (isError && currentStep === 2) {
+        return (
+            <Box sx={{
+                minHeight: '100vh',
+                bgcolor: 'grey.50',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+            }}>
+                <Typography variant="h6" color="error">
+                    Failed to load course options. Please try again later.
+                </Typography>
+            </Box>
+        )
+    }
 
     const getStepContent = () => {
         switch (currentStep) {
@@ -64,6 +102,7 @@ export const CheckoutApp: React.FC = () => {
                         selected={selectedTheoryOption}
                         onSelect={setSelectedTheoryOption}
                         onPreview={openVideoModal}
+                        theoryOptions={theoryOptions}
                     />
                 )
             case 3:
@@ -72,13 +111,14 @@ export const CheckoutApp: React.FC = () => {
                         selected={selectedEndorsements}
                         selectedTheoryOption={selectedTheoryOption}
                         onToggle={toggleEndorsement}
+                        products={products || []}
                     />
                 )
             case 4:
                 return (
                     <Step4_UpgradeSave
                         theoryOptionId={selectedTheoryOption}
-                        theoryOption={THEORY_OPTIONS.find(o => o.id === selectedTheoryOption)}
+                        theoryOption={theoryOptions.find(o => o.id === selectedTheoryOption)}
                         selectedEndorsements={Array.from(selectedEndorsements)}
                         discount={endorsementDiscount}
                         total={total}

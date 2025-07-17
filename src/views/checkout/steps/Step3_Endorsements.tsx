@@ -1,15 +1,47 @@
-import React from 'react'
-import { Stack, Typography, Paper } from '@mui/material'
+import React, { useMemo } from 'react'
+import { Stack, Typography, Paper, Box, Divider } from '@mui/material'
 import { CheckboxOptionCard } from '../components/CheckboxOptionCard'
-import { ENDORSEMENTS, DISCOUNT_PERCENT } from '../constants'
-import type { Step3Props } from '../types'
+import { DISCOUNT_PERCENT } from '../constants'
+import type { Product } from '../types'
+
+interface Step3Props {
+    selected: Set<string>
+    onToggle: (id: string) => void
+    selectedTheoryOption: string
+    products: Product[]
+}
 
 export const Step3_Endorsements: React.FC<Step3Props> = ({
     selected,
     onToggle,
     selectedTheoryOption,
+    products,
 }) => {
     const hasVideoDiscount = selectedTheoryOption === 'theory-video'
+
+    // Group products by category, excluding course type
+    const groupedProducts = useMemo(() => {
+        const groups: Record<string, Product[]> = {}
+
+        products
+            .filter(product => product.type !== 'course')
+            .forEach(product => {
+                const category = product.category || 'Other'
+                if (!groups[category]) {
+                    groups[category] = []
+                }
+                groups[category].push(product)
+            })
+
+        // Sort categories to put "Endorsements" first
+        const sortedEntries = Object.entries(groups).sort(([a], [b]) => {
+            if (a.toLowerCase().includes('endorsement')) return -1
+            if (b.toLowerCase().includes('endorsement')) return 1
+            return a.localeCompare(b)
+        })
+
+        return Object.fromEntries(sortedEntries)
+    }, [products])
 
     return (
         <Stack spacing={3}>
@@ -39,15 +71,40 @@ export const Step3_Endorsements: React.FC<Step3Props> = ({
                     </Typography>
                 </Paper>
             )}
-            {ENDORSEMENTS.map((endorsement) => (
-                <CheckboxOptionCard
-                    key={endorsement.id}
-                    item={endorsement}
-                    isSelected={selected.has(endorsement.id)}
-                    onToggle={() => onToggle(endorsement.id)}
-                    showDiscount={hasVideoDiscount}
-                    discountPercent={DISCOUNT_PERCENT}
-                />
+
+            {Object.entries(groupedProducts).map(([category, categoryProducts]) => (
+                <Box key={category}>
+                    <Typography
+                        variant="h6"
+                        fontWeight="bold"
+                        color="text.primary"
+                        sx={{ mb: 2, mt: 3 }}
+                    >
+                        {category}
+                    </Typography>
+                    <Stack spacing={2}>
+                        {categoryProducts.map((product) => (
+                            <CheckboxOptionCard
+                                key={product.sku}
+                                item={{
+                                    id: product.sku,
+                                    price: product.price / 100,
+                                    title: product.uiOptions?.htmlTitle || product.title,
+                                    description: product.shortDescription,
+                                    htmlTitle: product.uiOptions?.htmlTitle,
+                                    courseLabel: product.uiOptions?.courseLabel,
+                                }}
+                                isSelected={selected.has(product.sku)}
+                                onToggle={() => onToggle(product.sku)}
+                                showDiscount={hasVideoDiscount}
+                                discountPercent={DISCOUNT_PERCENT}
+                            />
+                        ))}
+                    </Stack>
+                    {category !== Object.keys(groupedProducts)[Object.keys(groupedProducts).length - 1] && (
+                        <Divider sx={{ mt: 3, mb: 1 }} />
+                    )}
+                </Box>
             ))}
         </Stack>
     )

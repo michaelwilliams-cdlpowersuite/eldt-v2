@@ -4,9 +4,14 @@ import { useTheme } from '@mui/material/styles'
 import { useMediaQuery } from '@mui/material'
 import { OptionCard } from '../components/OptionCard'
 import { MAIN_COURSES } from '../constants'
-import type { StepProps, Course } from '../types'
+import type { Course } from '../types'
 
-export const Step1_MainCourse: React.FC<StepProps> = ({
+interface Step1Props {
+    selected: string
+    onSelect: (id: string) => void
+}
+
+export const Step1_MainCourse: React.FC<Step1Props> = ({
     selected,
     onSelect,
 }) => {

@@ -1,9 +1,30 @@
+export interface Product {
+    id: number;
+    sku: string;
+    title: string;
+    shortDescription: string;
+    longDescription?: string;
+    price: number;
+    type: 'course' | 'theory' | 'endorsement';
+    uiOptions?: {
+        htmlTitle?: string;
+        courseLabel?: string;
+        isPopular?: boolean;
+        icon?: string;
+    };
+    creditPrice?: number;
+    creditPriceFormatted?: number;
+    uniquePurchaseWithinCategory?: boolean;
+    category?: string;
+}
+
 export interface Course {
     id: string
     title: string
     description: string
     icon: any
     isPopular?: boolean
+    price?: number
 }
 
 export interface TheoryOption {
@@ -23,6 +44,8 @@ export interface Endorsement {
     price: number
     title: string
     description: string
+    htmlTitle?: string
+    courseLabel?: string
 }
 
 export interface Step {

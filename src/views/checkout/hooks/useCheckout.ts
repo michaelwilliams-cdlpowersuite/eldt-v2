@@ -1,6 +1,11 @@
 import { useState, useMemo } from 'react'
 import type { CheckoutState, AccountDetails } from '../types'
-import { THEORY_OPTIONS, ENDORSEMENTS, DISCOUNT_PERCENT, PROCESSING_FEE_RATE } from '../constants'
+import { DISCOUNT_PERCENT, PROCESSING_FEE_RATE, MAIN_COURSES } from '../constants'
+import { useProducts } from './useProducts'
+import {
+    transformProductsToTheoryOptions,
+    transformProductsToEndorsements
+} from '../utilities/productTransformers'
 
 export const useCheckout = () => {
     const [currentStep, setCurrentStep] = useState(1)
@@ -16,16 +21,34 @@ export const useCheckout = () => {
     const [showVideoModal, setShowVideoModal] = useState(false)
     const [currentVideoId, setCurrentVideoId] = useState("")
 
+    // Use static data for courses (Step 1)
+    const courses = useMemo(() => {
+        return MAIN_COURSES
+    }, [])
+
+    // Fetch products based on selected course
+    const { data: products, isLoading, isError } = useProducts(selectedMainCourse)
+
+    // Transform API data to component format for other steps
+    const theoryOptions = useMemo(() => {
+        return products ? transformProductsToTheoryOptions(products) : []
+    }, [products])
+
+    const endorsements = useMemo(() => {
+        return products ? transformProductsToEndorsements(products) : []
+    }, [products])
+
     // Calculation Logic
     const theoryPrice = useMemo(() => {
-        return THEORY_OPTIONS.find((o) => o.id === selectedTheoryOption)?.price || 0
-    }, [selectedTheoryOption])
+        return theoryOptions.find((o) => o.id === selectedTheoryOption)?.price || 0
+    }, [selectedTheoryOption, theoryOptions])
 
     const endorsementsFullPrice = useMemo(() => {
-        return Array.from(selectedEndorsements).reduce((sum, id) => {
-            return sum + (ENDORSEMENTS.find((e) => e.id === id)?.price || 0)
+        return Array.from(selectedEndorsements).reduce((sum, sku) => {
+            const product = products?.find(p => p.sku === sku)
+            return sum + (product ? product.price / 100 : 0)
         }, 0)
-    }, [selectedEndorsements])
+    }, [selectedEndorsements, products])
 
     const endorsementDiscount = useMemo(() => {
         return selectedTheoryOption === "theory-video" ? endorsementsFullPrice * (DISCOUNT_PERCENT / 100) : 0
@@ -94,6 +117,16 @@ export const useCheckout = () => {
     }
 
     return {
+        // API State
+        products,
+        isLoading,
+        isError,
+
+        // Data
+        courses,
+        theoryOptions,
+        endorsements,
+
         // State
         currentStep,
         selectedMainCourse,

@@ -44,9 +44,25 @@ export const CheckboxOptionCard: React.FC<CheckboxOptionCardProps> = ({
                         sx={{ '& .MuiSvgIcon-root': { fontSize: 22 } }}
                     />
                     <Box sx={{ flexGrow: 1 }}>
-                        <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary" sx={{ mb: 0.5 }}>
-                            {item.title}
-                        </Typography>
+                        {item.htmlTitle ? (
+                            <Typography
+                                variant="h6"
+                                component="h4"
+                                fontWeight="bold"
+                                color="text.primary"
+                                sx={{ mb: 0.5 }}
+                                dangerouslySetInnerHTML={{ __html: item.htmlTitle }}
+                            />
+                        ) : (
+                            <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary" sx={{ mb: 0.5 }}>
+                                {item.title}
+                            </Typography>
+                        )}
+                        {item.courseLabel && (
+                            <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+                                {item.courseLabel}
+                            </Typography>
+                        )}
                         <Typography variant="body2" color="text.secondary">
                             {item.description}
                         </Typography>
