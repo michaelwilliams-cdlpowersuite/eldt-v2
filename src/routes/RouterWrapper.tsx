@@ -20,7 +20,7 @@ import config from "../config";
 import Registration from "../views/registration/Registration";
 import StepperOrchestration from "../views/registration/Stepper";
 import Checkout from "../views/registration/Checkout";
-import CheckoutFlow from "../views/checkout/index";
+import { CheckoutApp as CheckoutFlow } from "../views/checkout";
 import SignInSide from "../views/sign-in-side/SignInSide";
 import SignUpSide from "../views/sign-up/SignUpSide";
 import CheckEmailToVerify from "../views/verify-email/CheckEmailToVerify";
