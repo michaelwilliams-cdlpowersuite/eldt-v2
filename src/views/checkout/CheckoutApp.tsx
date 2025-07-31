@@ -43,6 +43,8 @@ export const CheckoutApp: React.FC = () => {
         products,
         isLoading,
         isError,
+        existingClientSecret,
+        isRestoring,
         setSelectedMainCourse,
         setSelectedTheoryOption,
         setAccountDetails,
@@ -53,7 +55,29 @@ export const CheckoutApp: React.FC = () => {
         openVideoModal,
         closeVideoModal,
         isNextDisabled,
+        createCheckoutSession,
+        checkoutSessionMutation,
     } = useCheckout()
+
+    // Show loading state when restoring session
+    if (isRestoring) {
+        return (
+            <Box sx={{
+                minHeight: '100vh',
+                bgcolor: 'grey.50',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                gap: 2
+            }}>
+                <CircularProgress />
+                <Typography variant="h6" color="text.secondary">
+                    Restoring your checkout session...
+                </Typography>
+            </Box>
+        )
+    }
 
     // Show loading state only for step 2 when waiting for theory options
     if (isLoading && currentStep === 2) {
@@ -122,8 +146,9 @@ export const CheckoutApp: React.FC = () => {
                         selectedEndorsements={Array.from(selectedEndorsements)}
                         discount={endorsementDiscount}
                         total={total}
-                        onUpgrade={() => setSelectedTheoryOption("theory-video")}
+                        onUpgrade={() => setSelectedTheoryOption("video")}
                         onPreview={() => openVideoModal("l4Qx4Z4JmLM")}
+                        products={products}
                     />
                 )
             case 5:
@@ -134,6 +159,8 @@ export const CheckoutApp: React.FC = () => {
                         setAccountDetails={setAccountDetails}
                         paymentMethod={paymentMethod}
                         setPaymentMethod={setPaymentMethod}
+                        createCheckoutSession={createCheckoutSession}
+                        checkoutSessionMutation={checkoutSessionMutation}
                     />
                 )
             default:

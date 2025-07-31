@@ -38,7 +38,7 @@ export const transformProductsToTheoryOptions = (products: Product[]): TheoryOpt
         .filter(product => product.type === 'course')
         .map(product => {
             const isVideoVersion = product.sku.includes('master');
-            const theoryType = isVideoVersion ? 'theory-video' : 'theory-reading';
+            const theoryType = isVideoVersion ? 'video' : 'reading';
             const iconType = isVideoVersion ? 'video' : 'reading';
 
             return {

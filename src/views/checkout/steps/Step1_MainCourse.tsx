@@ -29,7 +29,7 @@ export const Step1_MainCourse: React.FC<Step1Props> = ({
     return (
         <Stack spacing={3}>
             <Stack spacing={1} sx={{ mb: 1 }}>
-                <Typography variant="h5" fontWeight="bold" color="text.primary">
+                <Typography variant="h6" color="text.primary">
                     Which type of CDL License do you need?
                 </Typography>
                 <Typography variant="body2" color="text.secondary">

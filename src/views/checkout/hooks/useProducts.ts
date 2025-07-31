@@ -8,7 +8,8 @@ export interface Product {
     shortDescription: string;
     longDescription?: string;
     price: number;
-    type: 'course' | 'theory' | 'endorsement';
+    type: 'course' | 'theory' | 'endorsement' | 'custom_unit';
+    forCourse?: string;
     uiOptions?: {
         htmlTitle?: string;
         courseLabel?: string;

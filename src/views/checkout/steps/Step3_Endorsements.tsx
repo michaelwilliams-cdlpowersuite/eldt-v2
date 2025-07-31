@@ -17,7 +17,15 @@ export const Step3_Endorsements: React.FC<Step3Props> = ({
     selectedTheoryOption,
     products,
 }) => {
-    const hasVideoDiscount = selectedTheoryOption === 'theory-video'
+    const hasVideoDiscount = selectedTheoryOption === 'video'
+
+    // Check if there are any discountable products (endorsements or custom_units)
+    const hasDiscountableProducts = useMemo(() => {
+        return Array.from(selected).some(sku => {
+            const product = products?.find(p => p.sku === sku)
+            return product && (product.type === 'endorsement' || product.type === 'custom_unit')
+        })
+    }, [selected, products])
 
     // Group products by category, excluding course type
     const groupedProducts = useMemo(() => {
@@ -46,14 +54,14 @@ export const Step3_Endorsements: React.FC<Step3Props> = ({
     return (
         <Stack spacing={3}>
             <Stack spacing={1} sx={{ mb: 1 }}>
-                <Typography variant="h5" fontWeight="bold" color="text.primary">
+                <Typography variant="h6" color="text.primary">
                     Want to earn more? Add extras
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     These help you get better jobs. You can skip and add later.
                 </Typography>
             </Stack>
-            {hasVideoDiscount && (
+            {hasVideoDiscount && hasDiscountableProducts && (
                 <Paper
                     sx={{
                         p: 2,
@@ -96,7 +104,7 @@ export const Step3_Endorsements: React.FC<Step3Props> = ({
                                 }}
                                 isSelected={selected.has(product.sku)}
                                 onToggle={() => onToggle(product.sku)}
-                                showDiscount={hasVideoDiscount}
+                                showDiscount={hasVideoDiscount && (product.type === 'endorsement' || product.type === 'custom_unit')}
                                 discountPercent={DISCOUNT_PERCENT}
                             />
                         ))}

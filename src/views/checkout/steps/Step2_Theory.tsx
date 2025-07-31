@@ -19,7 +19,7 @@ export const Step2_Theory: React.FC<Step2Props> = ({
     return (
         <Stack spacing={3}>
             <Stack spacing={1} sx={{ mb: 1 }}>
-                <Typography variant="h5" fontWeight="bold" color="text.primary">
+                <Typography variant="h6" color="text.primary">
                     How do you learn?
                 </Typography>
                 <Typography variant="body2" color="text.secondary">

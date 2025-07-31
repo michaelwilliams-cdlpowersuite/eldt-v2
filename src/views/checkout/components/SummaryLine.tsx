@@ -7,15 +7,15 @@ export const SummaryLine: React.FC<SummaryLineProps> = ({
     value,
     isDiscount,
     isTotal,
+    htmlTitle,
 }) => (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
         <Typography
             variant={isTotal ? "h6" : "body1"}
             color={isDiscount ? "success.main" : "text.primary"}
             fontWeight={isTotal || isDiscount ? "bold" : "normal"}
-        >
-            {label}
-        </Typography>
+            {...(htmlTitle ? { dangerouslySetInnerHTML: { __html: htmlTitle } } : { children: label })}
+        />
         <Typography
             variant={isTotal ? "h6" : "body1"}
             color="text.primary"

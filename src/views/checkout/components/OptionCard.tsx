@@ -102,7 +102,7 @@ export const OptionCard = ({
                                         Most Popular
                                     </Box>
                                 )}
-                                {('id' in item && item.id === 'theory-video') && (
+                                {('id' in item && item.id === 'video') && (
                                     <Box
                                         sx={{
                                             bgcolor: '#ff9800',
@@ -125,7 +125,7 @@ export const OptionCard = ({
                                     {(item as Course | TheoryOption).description}
                                 </Typography>
 
-                                {('id' in item && item.id === 'theory-reading') && (
+                                {('id' in item && item.id === 'reading') && (
                                     <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block', fontStyle: 'italic' }}>
                                         Save $25 vs Video Course (but miss out on 10% endorsement discount)
                                     </Typography>
@@ -308,7 +308,7 @@ export const OptionCard = ({
                                 {(item as Course | TheoryOption).description}
                             </Typography>
 
-                            {('id' in item && item.id === 'theory-reading') && (
+                            {('id' in item && item.id === 'reading') && (
                                 <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block', fontStyle: 'italic' }}>
                                     Save $25 vs Video Course (but miss out on 10% endorsement discount)
                                 </Typography>

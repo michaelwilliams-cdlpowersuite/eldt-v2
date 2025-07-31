@@ -11,12 +11,12 @@ import { useField, useFormikContext } from "formik";
 import { useRef, useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { brandColors } from "../../../styles/brandColors";
-import {Cart, RegistrationFormUIValues} from "../utilities/validationSchema";
+import { Cart, RegistrationFormUIValues } from "../utilities/validationSchema";
 
-interface RefundPolicyProps {}
+interface RefundPolicyProps { }
 
 const RefundPolicy: React.FC<RefundPolicyProps> = () => {
-  const sigCanvas = useRef<SignatureCanvas | null>(null);
+  const sigCanvas = useRef<any>(null);
   const [field, meta] = useField("cart.signature");
   const { setFieldValue, setFieldTouched, validateField } = useFormikContext<RegistrationFormUIValues>();
 
@@ -65,6 +65,7 @@ const RefundPolicy: React.FC<RefundPolicyProps> = () => {
               submitted and payment is processed. For additional information,
               please contact us at info@eldt.com or call us at (509) 241-3987.
             </Typography>
+            {/* @ts-ignore */}
             <SignatureCanvas
               ref={sigCanvas}
               canvasProps={{ width: 400, height: 100, className: "sigCanvas" }}

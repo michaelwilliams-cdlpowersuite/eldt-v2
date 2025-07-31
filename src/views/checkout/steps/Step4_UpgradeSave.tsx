@@ -9,10 +9,14 @@ import {
 } from '@mui/material'
 import { PlayCircle, Film } from 'lucide-react'
 import { SummaryLine } from '../components/SummaryLine'
-import { THEORY_OPTIONS, ENDORSEMENTS, MIN_ORDER_FOR_PAYMENT_PLANS } from '../constants'
-import type { Step4Props } from '../types'
+import { MIN_ORDER_FOR_PAYMENT_PLANS } from '../constants'
+import type { Step4Props, Product } from '../types'
 
-export const Step4_UpgradeSave: React.FC<Step4Props> = ({
+interface Step4PropsExtended extends Step4Props {
+    products?: Product[];
+}
+
+export const Step4_UpgradeSave: React.FC<Step4PropsExtended> = ({
     theoryOptionId,
     theoryOption,
     selectedEndorsements,
@@ -20,16 +24,17 @@ export const Step4_UpgradeSave: React.FC<Step4Props> = ({
     total,
     onUpgrade,
     onPreview,
+    products,
 }) => {
-    const videoCourse = THEORY_OPTIONS.find((t) => t.id === "theory-video")
+    const videoCourse = theoryOption
 
     return (
         <Stack spacing={3}>
-            <Typography variant="h5" fontWeight="bold" color="text.primary">
+            <Typography variant="h6" color="text.primary">
                 Upgrade & Save
             </Typography>
 
-            {theoryOptionId === "theory-reading" && selectedEndorsements.length > 0 && (
+            {theoryOptionId === "reading" && selectedEndorsements.length > 0 && (
                 <Paper
                     sx={{
                         p: 3,
@@ -98,7 +103,7 @@ export const Step4_UpgradeSave: React.FC<Step4Props> = ({
                         </Box>
                         <Box sx={{ flexGrow: 1, textAlign: { xs: 'center', md: 'left' } }}>
                             <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                                Save 10% on your endorsements by upgrading to our most popular theory course.
+                                Switch to video learning and save 10% on all your endorsements!
                             </Typography>
                             <Stack
                                 direction={{ xs: 'column', sm: 'row' }}
@@ -130,7 +135,7 @@ export const Step4_UpgradeSave: React.FC<Step4Props> = ({
                 </Paper>
             )}
 
-            {theoryOptionId === "theory-video" && (
+            {theoryOptionId === "video" && (
                 <Paper
                     sx={{
                         p: 3,
@@ -165,10 +170,15 @@ export const Step4_UpgradeSave: React.FC<Step4Props> = ({
                 </Typography>
                 <Stack spacing={0.5}>
                     {theoryOption && <SummaryLine label={theoryOption.title} value={`$${theoryOption.price.toFixed(2)}`} />}
-                    {selectedEndorsements.map((endorsementId) => {
-                        const endorsement = ENDORSEMENTS.find(e => e.id === endorsementId)
-                        return endorsement ? (
-                            <SummaryLine key={endorsement.id} label={endorsement.title} value={`$${endorsement.price.toFixed(2)}`} />
+                    {selectedEndorsements.map((productSku) => {
+                        const product = products?.find(p => p.sku === productSku)
+                        return product ? (
+                            <SummaryLine
+                                key={product.sku}
+                                label={product.uiOptions?.htmlTitle || product.title}
+                                value={`$${(product.price / 100).toFixed(2)}`}
+                                htmlTitle={product.uiOptions?.htmlTitle}
+                            />
                         ) : null
                     })}
                     {discount > 0 && (

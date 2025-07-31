@@ -47,7 +47,7 @@ export const MAIN_COURSES: Course[] = [
 
 export const THEORY_OPTIONS: TheoryOption[] = [
     {
-        id: 'theory-video',
+        id: 'video',
         price: 75,
         title: 'Watch Videos',
         description: 'Learn by watching. Easier to understand.',
@@ -70,7 +70,7 @@ export const THEORY_OPTIONS: TheoryOption[] = [
         estimatedTime: '3-4 hours',
     },
     {
-        id: 'theory-reading',
+        id: 'reading',
         price: 50,
         title: 'Read Text',
         description: 'Learn by reading. Costs less.',
@@ -100,11 +100,11 @@ export const ENDORSEMENTS: Endorsement[] = [
 ];
 
 export const STEPS: Step[] = [
-    { number: 1, title: 'Pick Your License', description: 'What do you want to drive?', estimatedTime: '30 seconds' },
-    { number: 2, title: 'How You Learn', description: 'Watch videos or read?', estimatedTime: '1 minute' },
-    { number: 3, title: 'Extra Training', description: 'Add more if you want', estimatedTime: '1 minute' },
-    { number: 4, title: 'Review', description: 'Check your order', estimatedTime: '30 seconds' },
-    { number: 5, title: 'Pay', description: 'Finish your order', estimatedTime: '2 minutes' },
+    { number: 1, title: 'Pick Your License', description: 'What do you want to drive?' },
+    { number: 2, title: 'How You Learn', description: 'Watch videos or read?' },
+    { number: 3, title: 'Extra Training', description: 'Add more if you want' },
+    { number: 4, title: 'Review', description: 'Check your order' },
+    { number: 5, title: 'Pay', description: 'Complete your purchase to unlock your trucking career!' },
 ];
 
 export const DISCOUNT_PERCENT = 10;

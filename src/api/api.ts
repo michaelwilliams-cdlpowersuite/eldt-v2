@@ -111,7 +111,7 @@ export const updateEmail = async (userId: number, email: string) => {
   try {
     const response = await apiClient.patch(
       `/companies/${companyId}/locations/${locationId}/users/${userId}`,
-        { email }
+      { email }
     );
     return response.data;
   } catch (error) {
@@ -214,11 +214,113 @@ export const prepareHandoff = async () => {
 export const getProducts = async (cdlClass?: string) => {
   try {
     const params = cdlClass ? `?cdlClass=${encodeURIComponent(cdlClass)}` : '';
-    const response = await apiClient.get(`/eldt/v2/products${params}`);
+    const response = await apiClient.get(`/eldt/v2/products${params}`, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     Sentry.captureException(error);
     console.error("Error fetching products:", error);
+    throw error;
+  }
+};
+
+// Checkout Session API
+export const createCheckoutSession = async (products: Array<{ sku: string; quantity: number }>) => {
+  try {
+    const response = await apiClient.post('/eldt/v2/checkout-session', {
+      products
+    }, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error("Error creating checkout session:", error);
+    throw error;
+  }
+};
+
+export const getCheckoutSession = async (clientSecret: string) => {
+  try {
+    const response = await apiClient.get(`/eldt/v2/checkout-session/${clientSecret}`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error("Error fetching checkout session:", error);
+    throw error;
+  }
+};
+
+// Guest Session API
+export const createGuestSession = async () => {
+  try {
+    const response = await apiClient.post('/eldt/v2/guest-session', {}, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error("Error creating guest session:", error);
+    throw error;
+  }
+};
+
+export const getGuestSession = async () => {
+  try {
+    const response = await apiClient.get('/eldt/v2/guest-session', {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error: any) {
+    // Don't log 404 errors as they're expected when no session exists
+    if (error?.response?.status !== 404) {
+      Sentry.captureException(error);
+      console.error("Error getting guest session:", error);
+    }
+    throw error;
+  }
+};
+
+export const updateGuestSessionMetadata = async (metadata: Record<string, any>) => {
+  try {
+    const response = await apiClient.put('/eldt/v2/guest-session', {
+      metadata
+    }, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error("Error updating guest session metadata:", error);
+    throw error;
+  }
+};
+
+export const deleteGuestSession = async () => {
+  try {
+    const response = await apiClient.delete('/eldt/v2/guest-session', {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error("Error deleting guest session:", error);
+    throw error;
+  }
+};
+
+export const refreshGuestSession = async () => {
+  try {
+    const response = await apiClient.post('/eldt/v2/guest-session/refresh', {}, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error("Error refreshing guest session:", error);
     throw error;
   }
 };
