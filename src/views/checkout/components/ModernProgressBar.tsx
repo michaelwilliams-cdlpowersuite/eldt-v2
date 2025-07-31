@@ -23,11 +23,6 @@ export const ModernProgressBar: React.FC<ModernProgressBarProps> = ({
                         </Typography>
                     )}
                 </Box>
-                <Box sx={{ textAlign: 'right' }}>
-                    <Typography variant="body2" color="text.secondary">
-                        {Math.round(progressPercentage)}% Complete
-                    </Typography>
-                </Box>
             </Box>
             <LinearProgress
                 variant="determinate"
