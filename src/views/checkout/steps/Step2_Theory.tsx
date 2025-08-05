@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stack, Typography } from '@mui/material'
+import { Stack, Typography, Grid2 } from '@mui/material'
 import { OptionCard } from '../components/OptionCard'
 import type { TheoryOption } from '../types'
 
@@ -24,20 +24,21 @@ export const Step2_Theory: React.FC<Step2Props> = ({
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     Both work the same. Pick what you like!
-                    <Typography component="span" sx={{ color: 'success.main', fontWeight: 'bold', ml: 1 }}>
-                        ✓ Government Approved
-                    </Typography>
                 </Typography>
             </Stack>
-            {theoryOptions.map((option) => (
-                <OptionCard
-                    key={option.id}
-                    item={option as TheoryOption}
-                    isSelected={selected === option.id}
-                    onSelect={() => onSelect(option.id)}
-                    onPreview={option.videoId && onPreview ? () => onPreview(option.videoId!) : undefined}
-                />
-            ))}
+            <Grid2 container spacing={2}>
+                {theoryOptions.map((option) => (
+                    <Grid2 size={{ xs: 12, sm: 6 }} key={option.id}>
+                        <OptionCard
+                            key={option.id}
+                            item={option as TheoryOption}
+                            isSelected={selected === option.id}
+                            onSelect={() => onSelect(option.id)}
+                            onPreview={option.videoId && onPreview ? () => onPreview(option.videoId!) : undefined}
+                        />
+                    </Grid2>
+                ))}
+            </Grid2>
         </Stack>
     )
 } 

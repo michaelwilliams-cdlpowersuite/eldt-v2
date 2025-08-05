@@ -241,18 +241,7 @@ export const createCheckoutSession = async (products: Array<{ sku: string; quant
   }
 };
 
-export const getCheckoutSession = async (clientSecret: string) => {
-  try {
-    const response = await apiClient.get(`/eldt/v2/checkout-session/${clientSecret}`, {
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (error) {
-    Sentry.captureException(error);
-    console.error("Error fetching checkout session:", error);
-    throw error;
-  }
-};
+
 
 // Guest Session API
 export const createGuestSession = async () => {

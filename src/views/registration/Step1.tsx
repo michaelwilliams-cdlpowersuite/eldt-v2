@@ -12,6 +12,7 @@ import {
   endorsements,
 } from "./utilities/products";
 import { pxContainer, titleStyles } from "./utilities/styles";
+import Checkout from "./Checkout";
 
 interface Step1Props {}
 
@@ -32,56 +33,7 @@ const Step1: React.FC<Step1Props> = () => {
   };
 
   return (
-    <Box sx={{ px: pxContainer }}>
-      <Typography
-        variant="h6"
-        sx={{
-          color:
-            touched.step1?.selectedCourse && errors.step1?.selectedCourse
-              ? brandColors.cdlRed
-              : "inherit",
-          ...titleStyles,
-        }}
-      >
-        Choose your CDL Class
-        {errors.step1 && !values.step1?.selectedCourse && (
-          <Alert severity="error">{errors.step1 as string}</Alert>
-        )}
-      </Typography>
-      {touched.step1?.selectedCourse && errors.step1?.selectedCourse && (
-        <Typography color="error" variant="body2" sx={{ mt: 1 }}>
-          {errors.step1.selectedCourse}
-        </Typography>
-      )}
-      <Grid container spacing={2} sx={{ mt: 2 }}>
-        {courses.map((course, index) => (
-          <Grid size={{ xs: 12, md: 4 }} key={index}>
-            <CourseCard
-              course={course}
-              selected={values.step1.selectedCourse === course.id}
-              onSelect={() => handleSelectCourse(course.id)}
-            />
-          </Grid>
-        ))}
-      </Grid>
-      <Typography variant="h6" sx={{ my: 2, ...titleStyles }}>
-        Choose your Endorsements
-      </Typography>
-      <Grid container spacing={2}>
-        {endorsements.map((endorsement, index) => (
-          <Grid size={{ xs: 12, md: 4 }} key={index}>
-            <EndorsementCard
-              endorsement={endorsement}
-              selected={values.step1.selectedEndorsements.includes(
-                endorsement.id
-              )}
-              onSelect={() => handleSelectEndorsement(endorsement.id)}
-            />
-          </Grid>
-        ))}
-      </Grid>
-      <Stack spacing={2}></Stack>
-    </Box>
+    <Checkout />
   );
 };
 

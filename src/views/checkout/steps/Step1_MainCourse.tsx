@@ -2,7 +2,7 @@ import React from 'react'
 import { Stack, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useMediaQuery } from '@mui/material'
-import { OptionCard } from '../components/OptionCard'
+import { SimpleOptionCard } from '../components/SimpleOptionCard'
 import { MAIN_COURSES } from '../constants'
 import type { Course } from '../types'
 
@@ -37,7 +37,7 @@ export const Step1_MainCourse: React.FC<Step1Props> = ({
                 </Typography>
             </Stack>
             {orderedCourses.map((course) => (
-                <OptionCard
+                <SimpleOptionCard
                     key={course.id}
                     item={course as Course}
                     isSelected={selected === course.id}

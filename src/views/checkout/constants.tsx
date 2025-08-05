@@ -1,6 +1,16 @@
 import React from 'react';
 import { Box, Avatar } from '@mui/material';
 import { Star, Film, BookOpen } from 'lucide-react';
+import {
+    DirectionsRun as DirectionsRunIcon,
+    AccessTime as AccessTimeIcon,
+    Verified as VerifiedIcon,
+    AssuredWorkload as AssuredWorkloadIcon,
+    Engineering as EngineeringIcon,
+    ThumbUp as ThumbUpIcon,
+    Devices as DevicesIcon,
+    Save as SaveIcon
+} from '@mui/icons-material';
 import { ReactComponent as ClassA } from '../../assets/icons-05.svg';
 import { ReactComponent as ClassB } from '../../assets/icons-07.svg';
 import { ReactComponent as ClassBA } from '../../assets/icons-06.svg';
@@ -68,6 +78,36 @@ export const THEORY_OPTIONS: TheoryOption[] = [
         imageUrl: 'https://img.youtube.com/vi/l4Qx4Z4JmLM/mqdefault.jpg',
         isPopular: true,
         estimatedTime: '3-4 hours',
+        benefits: [
+            {
+                icon: DirectionsRunIcon,
+                title: 'Self-Paced',
+            },
+            {
+                icon: AccessTimeIcon,
+                title: 'Available 24/7',
+            },
+            {
+                icon: VerifiedIcon,
+                title: 'Includes certificate of completion',
+            },
+            {
+                icon: AssuredWorkloadIcon,
+                title: 'Submits to TPR',
+            },
+            {
+                icon: EngineeringIcon,
+                title: 'Learn by Watching Real CDL Instructors',
+            },
+            {
+                icon: ThumbUpIcon,
+                title: 'Over 1,200 reviews and counting',
+            },
+            {
+                icon: DevicesIcon,
+                title: 'For Visual Learners',
+            },
+        ],
     },
     {
         id: 'reading',
@@ -88,6 +128,28 @@ export const THEORY_OPTIONS: TheoryOption[] = [
             />
         ),
         estimatedTime: '4-5 hours',
+        benefits: [
+            {
+                icon: DirectionsRunIcon,
+                title: 'Self-Paced',
+            },
+            {
+                icon: AccessTimeIcon,
+                title: 'Available 24/7',
+            },
+            {
+                icon: VerifiedIcon,
+                title: 'Includes certificate of completion',
+            },
+            {
+                icon: AssuredWorkloadIcon,
+                title: 'Submits to TPR',
+            },
+            {
+                icon: SaveIcon,
+                title: 'Save $25 vs Video Course',
+            },
+        ],
     },
 ];
 

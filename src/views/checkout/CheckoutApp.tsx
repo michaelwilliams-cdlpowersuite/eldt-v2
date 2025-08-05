@@ -44,7 +44,6 @@ export const CheckoutApp: React.FC = () => {
         isLoading,
         isError,
         existingClientSecret,
-        isRestoring,
         setSelectedMainCourse,
         setSelectedTheoryOption,
         setAccountDetails,
@@ -58,26 +57,6 @@ export const CheckoutApp: React.FC = () => {
         createCheckoutSession,
         checkoutSessionMutation,
     } = useCheckout()
-
-    // Show loading state when restoring session
-    if (isRestoring) {
-        return (
-            <Box sx={{
-                minHeight: '100vh',
-                bgcolor: 'grey.50',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'column',
-                gap: 2
-            }}>
-                <CircularProgress />
-                <Typography variant="h6" color="text.secondary">
-                    Restoring your checkout session...
-                </Typography>
-            </Box>
-        )
-    }
 
     // Show loading state only for step 2 when waiting for theory options
     if (isLoading && currentStep === 2) {

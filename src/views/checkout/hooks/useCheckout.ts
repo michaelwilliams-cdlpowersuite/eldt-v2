@@ -4,7 +4,6 @@ import { DISCOUNT_PERCENT, PROCESSING_FEE_RATE, MAIN_COURSES } from '../constant
 import { useProducts } from './useProducts'
 import { useCheckoutSession } from './useCheckoutSession'
 import { useGuestSession } from './useGuestSession'
-import { useCheckoutSessionRestoration } from './useCheckoutSessionRestoration'
 import {
     transformProductsToTheoryOptions,
     transformProductsToEndorsements
@@ -24,13 +23,11 @@ export const useCheckout = () => {
     const [showVideoModal, setShowVideoModal] = useState(false)
     const [currentVideoId, setCurrentVideoId] = useState("")
     const [existingClientSecret, setExistingClientSecret] = useState<string | null>(null)
-    const [isRestoring, setIsRestoring] = useState(false)
     const [hasUserSelectedTheory, setHasUserSelectedTheory] = useState(false)
     const [hasUserSelectedEndorsements, setHasUserSelectedEndorsements] = useState(false)
-    const hasRestoredFromGuestSessionRef = useRef(false)
 
     // Guest session management
-    const { session: guestSession, updateMetadata, forceUpdateMetadata } = useGuestSession()
+    const { session: guestSession, updateMetadata } = useGuestSession()
 
     // Debounce metadata updates
     const lastUpdateRef = useRef<number>(0)
@@ -41,110 +38,6 @@ export const useCheckout = () => {
         theory: string;
         endorsements: string[];
     } | null>(null)
-
-    // Session restoration handlers
-    const handleSessionRestored = useCallback((sessionData: any) => {
-        console.log('Restoring session data:', sessionData) // Debug log
-
-        // Restore state from session data
-        if (sessionData.step) {
-            setCurrentStep(sessionData.step)
-        }
-        if (sessionData.selectedCourse) {
-            setSelectedMainCourse(sessionData.selectedCourse)
-        }
-        if (sessionData.selectedTheory) {
-            setSelectedTheoryOption(sessionData.selectedTheory)
-        }
-        if (sessionData.selectedEndorsements) {
-            setSelectedEndorsements(new Set(sessionData.selectedEndorsements))
-        }
-        if (sessionData.clientSecret) {
-            setExistingClientSecret(sessionData.clientSecret)
-        }
-
-        // Restore guest session metadata if available
-        if (sessionData.metadata && guestSession) {
-            const guestSessionMetadata = {
-                last_page: `checkout_step_${sessionData.step || 1}`,
-                checkout_progress: {
-                    step: sessionData.step || 1,
-                    selected_course: sessionData.selectedCourse || '',
-                    selected_theory: sessionData.selectedTheory || '',
-                    selected_endorsements: sessionData.selectedEndorsements || [],
-                    timestamp: new Date().toISOString()
-                },
-                // Restore any other metadata from the session
-                ...sessionData.metadata
-            }
-
-            // Force update guest session with restored metadata (bypasses rate limiting)
-            forceUpdateMetadata(guestSessionMetadata).catch(console.error)
-        }
-
-        setIsRestoring(false)
-        // Reset restoration flags since we've restored from API session
-        hasRestoredFromGuestSessionRef.current = true
-    }, [guestSession, updateMetadata, forceUpdateMetadata, currentStep, selectedMainCourse, selectedTheoryOption, selectedEndorsements])
-
-    const handleSessionNotFound = useCallback(() => {
-        // No existing session found, start fresh
-        setIsRestoring(false)
-        setHasUserSelectedTheory(false) // Reset theory selection flag
-        setHasUserSelectedEndorsements(false) // Reset endorsements selection flag
-        hasRestoredFromGuestSessionRef.current = false // Reset restoration flag for fresh start
-    }, [])
-
-    // Session restoration hook
-    const { isRestoring: isRestoringSession, error: restorationError } = useCheckoutSessionRestoration({
-        onSessionRestored: handleSessionRestored,
-        onSessionNotFound: handleSessionNotFound
-    })
-
-    // Combine restoration states
-    const isAnyRestoring = isRestoring || isRestoringSession
-
-    // Restore checkout state from guest session metadata
-    useEffect(() => {
-        if (guestSession?.metadata?.checkout_progress && !isAnyRestoring && !hasRestoredFromGuestSessionRef.current && !hasUserSelectedEndorsements && currentStep !== 3) {
-            console.log('Restoring checkout state from guest session:', guestSession.metadata.checkout_progress)
-
-            const checkoutData = guestSession.metadata.checkout_progress
-
-            // Always restore step and course (these are safe to restore)
-            if (checkoutData.step) {
-                console.log('Restoring step from', currentStep, 'to', checkoutData.step)
-                setCurrentStep(checkoutData.step)
-            }
-            if (checkoutData.selected_course) {
-                console.log('Restoring course to:', checkoutData.selected_course)
-                setSelectedMainCourse(checkoutData.selected_course)
-            }
-
-            // Only restore theory and endorsements if user hasn't interacted
-            if (!hasUserSelectedTheory && checkoutData.selected_theory) {
-                setSelectedTheoryOption(checkoutData.selected_theory)
-            }
-            if (!hasUserSelectedEndorsements && checkoutData.selected_endorsements) {
-                setSelectedEndorsements(new Set(checkoutData.selected_endorsements))
-            }
-
-            // If there's a checkout session ID, use it
-            if (guestSession.metadata.checkout_session_id) {
-                setExistingClientSecret(guestSession.metadata.checkout_session_id)
-            }
-
-            // Mark that restoration has happened
-            hasRestoredFromGuestSessionRef.current = true
-            console.log('Guest session restoration completed')
-        } else if (guestSession?.metadata?.checkout_progress && hasRestoredFromGuestSessionRef.current) {
-            console.log('Skipping guest session restoration - already restored')
-        } else if (guestSession?.metadata?.checkout_progress && hasUserSelectedEndorsements) {
-            console.log('Skipping guest session restoration - user has selected endorsements')
-        } else if (guestSession?.metadata?.checkout_progress && currentStep === 3) {
-            console.log('Skipping guest session restoration - user is on step 3 (endorsements)')
-        }
-    }, [guestSession, isAnyRestoring, hasUserSelectedTheory, hasUserSelectedEndorsements, currentStep])
 
     // Use static data for courses (Step 1)
     const courses = useMemo(() => {
@@ -194,7 +87,7 @@ export const useCheckout = () => {
 
     // Track checkout progress in guest session (only when meaningful changes occur)
     useEffect(() => {
-        if (guestSession && !isAnyRestoring) {
+        if (guestSession) {
             const currentState = {
                 step: currentStep,
                 course: selectedMainCourse,
@@ -226,11 +119,11 @@ export const useCheckout = () => {
                 })
             }
         }
-    }, [currentStep, selectedMainCourse, selectedTheoryOption, selectedEndorsements, guestSession, debouncedUpdateMetadata, isAnyRestoring])
+    }, [currentStep, selectedMainCourse, selectedTheoryOption, selectedEndorsements, guestSession, debouncedUpdateMetadata])
 
     // Separate effect for endorsements to avoid excessive updates
     useEffect(() => {
-        if (guestSession && selectedEndorsements.size > 0 && !isAnyRestoring) {
+        if (guestSession && selectedEndorsements.size > 0) {
             const currentEndorsements = Array.from(selectedEndorsements)
             const lastEndorsements = guestSession.metadata?.selected_endorsements || []
 
@@ -241,7 +134,7 @@ export const useCheckout = () => {
                 })
             }
         }
-    }, [selectedEndorsements, guestSession, debouncedUpdateMetadata, isAnyRestoring])
+    }, [selectedEndorsements, guestSession, debouncedUpdateMetadata])
 
     // Cleanup timeout on unmount
     useEffect(() => {
@@ -255,18 +148,6 @@ export const useCheckout = () => {
     // Prepare selected products for checkout session
     const selectedProducts = useMemo(() => {
         const selectedProductsArray: Array<{ sku: string; quantity: number }> = []
-
-        // Add CDL license type if not "endorsements only"
-        // if (selectedMainCourse && selectedMainCourse !== "Endorsements Only" && products) {
-        //     // Find the license product for the selected course using forCourse attribute
-        //     const licenseProduct = products.find(p =>
-        //         p.type === 'course' &&
-        //         p.forCourse === selectedMainCourse
-        //     )
-        //     if (licenseProduct) {
-        //         selectedProductsArray.push({ sku: licenseProduct.sku, quantity: 1 })
-        //     }
-        // }
 
         // Add theory option if selected (only one theory option allowed)
         if (selectedTheoryOption && products) {
@@ -428,8 +309,14 @@ export const useCheckout = () => {
 
     const setSelectedTheoryOptionWithInteraction = (theory: string) => {
         console.log('User selected theory option:', theory)
-        setSelectedTheoryOption(theory)
-        setHasUserSelectedTheory(true)
+        // Toggle the selection: if the same theory is clicked again, deselect it
+        if (selectedTheoryOption === theory) {
+            setSelectedTheoryOption("")
+            setHasUserSelectedTheory(false)
+        } else {
+            setSelectedTheoryOption(theory)
+            setHasUserSelectedTheory(true)
+        }
     }
 
     const setAccountDetailsWithInteraction = (details: AccountDetails) => {
@@ -462,7 +349,6 @@ export const useCheckout = () => {
         showVideoModal,
         currentVideoId,
         existingClientSecret,
-        isRestoring: isAnyRestoring,
 
         // Calculations
         theoryPrice,

@@ -38,6 +38,10 @@ export interface TheoryOption {
     imageUrl?: string
     isPopular?: boolean
     estimatedTime?: string
+    benefits?: Array<{
+        icon: React.ElementType;
+        title: string;
+    }>;
 }
 
 export interface Endorsement {
