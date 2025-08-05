@@ -3,13 +3,32 @@ import {
     Box,
     Button,
     Card,
+    CardActionArea,
     CardContent,
     Typography,
     Radio,
     Stack,
+    List,
+    ListItem,
+    ListItemIcon,
+    Divider,
 } from '@mui/material'
 import { PlayCircle, Film } from 'lucide-react'
 import { useTheme } from '@mui/material/styles'
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import {
+    DirectionsRun as DirectionsRunIcon,
+    AccessTime as AccessTimeIcon,
+    Verified as VerifiedIcon,
+    AssuredWorkload as AssuredWorkloadIcon,
+    Engineering as EngineeringIcon,
+    ThumbUp as ThumbUpIcon,
+    Devices as DevicesIcon,
+    Save as SaveIcon,
+    Star as StarIcon,
+    LocalOffer as LocalOfferIcon
+} from '@mui/icons-material'
 import type { Course, TheoryOption } from '../types'
 
 export const OptionCard = ({
@@ -27,129 +46,62 @@ export const OptionCard = ({
 
     return (
         <Card
+            variant="outlined"
             onClick={onSelect}
             sx={{
-                cursor: 'pointer',
-                transition: 'all 0.2s ease-in-out',
-                border: 2,
-                borderColor: isSelected ? theme.palette.success.main : 'grey.300',
-                backgroundColor: isSelected ? theme.palette.success.light + '10' : 'white',
-                borderRadius: 2,
-                '&:hover': {
-                    borderColor: isSelected ? theme.palette.success.main : 'grey.500',
-                    boxShadow: theme.shadows[4],
-                },
+                display: "flex",
+                flexDirection: "column",
+                height: "100%",
+                border: isSelected ? `4px solid ${theme.palette.success.main}` : "1px solid primary.main",
             }}
         >
-            <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
-                {('imageUrl' in item && item.imageUrl) && onPreview ? (
-                    // Layout for video courses - vertical on mobile, horizontal on desktop
-                    <Stack spacing={2}>
-                        <Stack direction="row" spacing={2} alignItems="center">
-                            <Radio
-                                checked={isSelected}
-                                readOnly
-                                color="success"
-                                sx={{ '& .MuiSvgIcon-root': { fontSize: 22 } }}
-                            />
-                            {('icon' in item && item.icon) && (
-                                <Box
-                                    sx={{
-                                        width: 60,
-                                        height: 60,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        flexShrink: 0,
-                                    }}
-                                >
-                                    {item.icon}
-                                </Box>
-                            )}
-                            <Box sx={{ flexGrow: 1 }}>
-                                {'price' in item ? (
-                                    // Theory options layout (with inline icon)
-                                    <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5, flexWrap: 'wrap', gap: 1 }}>
-                                        <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary">
-                                            {(item as Course | TheoryOption).title}
-                                        </Typography>
-                                        {('icon' in item && item.icon) && item.icon}
-                                    </Stack>
-                                ) : (
-                                    // Main course layout (block icon already shown above)
-                                    <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary" sx={{ mb: 0.5 }}>
-                                        {(item as Course | TheoryOption).title}
-                                    </Typography>
-                                )}
-
-                                {/* Most Popular badge on its own line for all courses */}
-                                {('isPopular' in item && item.isPopular) && (
-                                    <Box
-                                        sx={{
-                                            bgcolor: 'success.main',
-                                            color: 'white',
-                                            px: 1,
-                                            py: 0.25,
-                                            borderRadius: 1,
-                                            fontSize: '0.75rem',
-                                            fontWeight: 'bold',
-                                            textTransform: 'uppercase',
-                                            letterSpacing: '0.5px',
-                                            mb: 0.5,
-                                            display: 'inline-block',
-                                        }}
-                                    >
-                                        Most Popular
-                                    </Box>
-                                )}
-                                {('id' in item && item.id === 'video') && (
-                                    <Box
-                                        sx={{
-                                            bgcolor: '#ff9800',
-                                            color: 'white',
-                                            px: 1,
-                                            py: 0.25,
-                                            borderRadius: 1,
-                                            fontSize: '0.75rem',
-                                            fontWeight: 'bold',
-                                            textTransform: 'uppercase',
-                                            letterSpacing: '0.5px',
-                                            mb: 0.5,
-                                            display: 'inline-block',
-                                        }}
-                                    >
-                                        Unlock 10% Off Endorsements
-                                    </Box>
-                                )}
-                                <Typography variant="body2" color="text.secondary">
-                                    {(item as Course | TheoryOption).description}
+            <CardActionArea
+                sx={{ display: "flex", flexDirection: "column", height: "100%", pb: 2 }}
+                component="div"
+            >
+                <CardContent
+                    sx={{
+                        flexGrow: 1,
+                        display: "flex",
+                        flexDirection: "column",
+                    }}
+                >
+                    {('imageUrl' in item && item.imageUrl) && onPreview ? (
+                        // Layout for video courses - vertical on mobile, horizontal on desktop
+                        <Stack spacing={2}>
+                            {/* Price and title */}
+                            <div>
+                                <Typography variant="h6" textAlign="center">
+                                    {(item as Course | TheoryOption).title}
                                 </Typography>
-
-                                {('id' in item && item.id === 'reading') && (
-                                    <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block', fontStyle: 'italic' }}>
-                                        Save $25 vs Video Course (but miss out on 10% endorsement discount)
-                                    </Typography>
-                                )}
-                            </Box>
-                            {'price' in item && (
-                                <Box sx={{ textAlign: 'right' }}>
-                                    <Typography variant="h6" fontWeight="bold" color="primary.main">
+                                {'price' in item && (
+                                    <Typography variant="h3" textAlign="center">
                                         ${(item as TheoryOption).price}
                                     </Typography>
-                                </Box>
-                            )}
-                        </Stack>
-                        {/* Video preview section - separate row for better spacing */}
-                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                            <Stack spacing={1} alignItems="center">
+                                )}
+                                {/* Description moved below price */}
+                                <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ mt: 1 }}>
+                                    {(item as Course | TheoryOption).description}
+                                </Typography>
+                            </div>
+
+                            {/* Video preview section - positioned after pricing */}
+                            <Box sx={{ width: '100%' }}>
                                 <Box
                                     sx={{
                                         position: 'relative',
-                                        width: 120,
-                                        height: 67.5, // 16:9 aspect ratio
-                                        borderRadius: 1,
+                                        width: '100%',
+                                        height: 0,
+                                        paddingBottom: '56.25%', // 16:9 aspect ratio (9/16 = 0.5625)
+                                        borderRadius: 2,
                                         overflow: 'hidden',
                                         cursor: 'pointer',
+                                        boxShadow: theme.shadows[4],
+                                        '&:hover': {
+                                            boxShadow: theme.shadows[8],
+                                            transform: 'scale(1.01)',
+                                            transition: 'all 0.2s ease-in-out',
+                                        },
                                         '&:hover .play-overlay': {
                                             opacity: 1,
                                         },
@@ -191,8 +143,8 @@ export const OptionCard = ({
                                             gap: 1,
                                         }}
                                     >
-                                        <Film size={24} color="#666" />
-                                        <Typography variant="caption" color="text.secondary" textAlign="center">
+                                        <Film size={32} color="#666" />
+                                        <Typography variant="body2" color="text.secondary" textAlign="center">
                                             Video Course
                                         </Typography>
                                     </Box>
@@ -208,80 +160,266 @@ export const OptionCard = ({
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            bgcolor: 'rgba(0, 0, 0, 0.4)',
+                                            bgcolor: 'rgba(0, 0, 0, 0.6)',
                                             opacity: 0,
                                             transition: 'opacity 0.2s ease-in-out',
                                         }}
                                     >
                                         <Box
                                             sx={{
-                                                width: 32,
-                                                height: 32,
+                                                width: 64,
+                                                height: 64,
                                                 borderRadius: '50%',
-                                                bgcolor: 'rgba(255, 255, 255, 0.9)',
+                                                bgcolor: 'rgba(255, 255, 255, 0.95)',
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
+                                                boxShadow: theme.shadows[4],
                                             }}
                                         >
-                                            <PlayCircle size={20} color="#333" />
+                                            <PlayCircle size={36} color="#333" />
                                         </Box>
                                     </Box>
                                 </Box>
-                                <Button
-                                    size="small"
-                                    variant="outlined"
-                                    color="inherit"
-                                    onClick={(e) => {
-                                        e.stopPropagation()
-                                        onPreview && onPreview()
-                                    }}
-                                    startIcon={<PlayCircle size={16} />}
-                                    sx={{ fontSize: '0.75rem', fontWeight: 'bold' }}
-                                >
-                                    Preview
-                                </Button>
-                            </Stack>
-                        </Box>
-                    </Stack>
-                ) : (
-                    // Standard layout for non-video courses
-                    <Stack direction="row" spacing={2} alignItems="center">
-                        <Radio
-                            checked={isSelected}
-                            readOnly
-                            color="success"
-                            sx={{ '& .MuiSvgIcon-root': { fontSize: 22 } }}
-                        />
-                        {('icon' in item && item.icon) && (
-                            <Box
-                                sx={{
-                                    width: 60,
-                                    height: 60,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    flexShrink: 0,
-                                }}
-                            >
-                                {item.icon}
+                                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
+                                    <Button
+                                        size="small"
+                                        variant="outlined"
+                                        color="primary"
+                                        onClick={(e) => {
+                                            e.stopPropagation()
+                                            onPreview && onPreview()
+                                        }}
+                                        startIcon={<PlayCircle size={16} />}
+                                        sx={{
+                                            fontSize: '0.75rem',
+                                            fontWeight: 'bold',
+                                            px: 2,
+                                            py: 0.5,
+                                            borderRadius: 1,
+                                            textTransform: 'none',
+                                        }}
+                                    >
+                                        Watch Preview
+                                    </Button>
+                                </Box>
                             </Box>
-                        )}
-                        <Box sx={{ flexGrow: 1 }}>
-                            {'price' in item ? (
-                                // Theory options layout (with inline icon)
-                                <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 0.5, flexWrap: 'wrap', gap: 1 }}>
-                                    <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary">
-                                        {(item as Course | TheoryOption).title}
-                                    </Typography>
-                                    {('icon' in item && item.icon) && item.icon}
-                                </Stack>
-                            ) : (
-                                // Main course layout (block icon already shown above)
-                                <Typography variant="h6" component="h4" fontWeight="bold" color="text.primary" sx={{ mb: 0.5 }}>
-                                    {(item as Course | TheoryOption).title}
+
+                            {/* Enhanced badges with ribbon design */}
+                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'center' }}>
+                                {('isPopular' in item && item.isPopular) && (
+                                    <Box
+                                        sx={{
+                                            position: 'relative',
+                                            bgcolor: 'success.main',
+                                            color: 'white',
+                                            px: 2,
+                                            py: 0.75,
+                                            borderRadius: '0 8px 8px 0',
+                                            fontSize: '0.75rem',
+                                            fontWeight: 'bold',
+                                            textTransform: 'uppercase',
+                                            letterSpacing: '0.5px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 0.5,
+                                            boxShadow: theme.shadows[2],
+                                            '&::before': {
+                                                content: '""',
+                                                position: 'absolute',
+                                                left: -8,
+                                                top: 0,
+                                                width: 0,
+                                                height: 0,
+                                                borderStyle: 'solid',
+                                                borderWidth: '0 8px 8px 0',
+                                                borderColor: 'transparent',
+                                                borderRightColor: 'success.dark',
+                                            },
+                                            '&::after': {
+                                                content: '""',
+                                                position: 'absolute',
+                                                left: -8,
+                                                bottom: 0,
+                                                width: 0,
+                                                height: 0,
+                                                borderStyle: 'solid',
+                                                borderWidth: '8px 8px 0 0',
+                                                borderColor: 'transparent',
+                                                borderTopColor: 'success.dark',
+                                            },
+                                        }}
+                                    >
+                                        <StarIcon sx={{ fontSize: 16 }} />
+                                        Most Popular
+                                    </Box>
+                                )}
+                                {('id' in item && item.id === 'video') && (
+                                    <Box
+                                        sx={{
+                                            position: 'relative',
+                                            bgcolor: '#ff9800',
+                                            color: 'white',
+                                            px: 2,
+                                            py: 0.75,
+                                            borderRadius: '0 8px 8px 0',
+                                            fontSize: '0.75rem',
+                                            fontWeight: 'bold',
+                                            textTransform: 'uppercase',
+                                            letterSpacing: '0.5px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: 0.5,
+                                            boxShadow: theme.shadows[2],
+                                            '&::before': {
+                                                content: '""',
+                                                position: 'absolute',
+                                                left: -8,
+                                                top: 0,
+                                                width: 0,
+                                                height: 0,
+                                                borderStyle: 'solid',
+                                                borderWidth: '0 8px 8px 0',
+                                                borderColor: 'transparent',
+                                                borderRightColor: '#f57c00',
+                                            },
+                                            '&::after': {
+                                                content: '""',
+                                                position: 'absolute',
+                                                left: -8,
+                                                bottom: 0,
+                                                width: 0,
+                                                height: 0,
+                                                borderStyle: 'solid',
+                                                borderWidth: '8px 8px 0 0',
+                                                borderColor: 'transparent',
+                                                borderTopColor: '#f57c00',
+                                            },
+                                        }}
+                                    >
+                                        <LocalOfferIcon sx={{ fontSize: 16 }} />
+                                        Unlock 10% Off Endorsements
+                                    </Box>
+                                )}
+                            </Box>
+
+                            {('id' in item && item.id === 'reading') && (
+                                <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block', fontStyle: 'italic' }}>
+                                    Save $25 vs Video Course (but miss out on 10% endorsement discount)
                                 </Typography>
                             )}
+
+                            {/* Benefits section for theory options */}
+                            <List>
+                                {('id' in item && item.id === 'video') ? (
+                                    // Video course benefits
+                                    <>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <DirectionsRunIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Self-Paced</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <AccessTimeIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Available 24/7</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <VerifiedIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Includes certificate of completion</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <AssuredWorkloadIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Submits to TPR</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <EngineeringIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Learn by Watching Real CDL Instructors</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <ThumbUpIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Over 1,200 reviews and counting</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <DevicesIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">For Visual Learners</Typography>
+                                        </ListItem>
+                                    </>
+                                ) : (
+                                    // Reading course benefits
+                                    <>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <DirectionsRunIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Self-Paced</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <AccessTimeIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Available 24/7</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <VerifiedIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Includes certificate of completion</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <AssuredWorkloadIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Submits to TPR</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <SaveIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Save $25 vs Video Course</Typography>
+                                        </ListItem>
+                                    </>
+                                )}
+                            </List>
+                        </Stack>
+                    ) : (
+                        // Standard layout for non-video courses
+                        <Stack spacing={2}>
+                            {/* Price and title at the top */}
+                            <div>
+                                <Typography variant="h6" textAlign="center">
+                                    {(item as Course | TheoryOption).title}
+                                </Typography>
+                                {'price' in item && (
+                                    <Typography variant="h3" textAlign="center">
+                                        ${(item as TheoryOption).price}
+                                    </Typography>
+                                )}
+                            </div>
 
                             {/* Most Popular badge on its own line for all courses */}
                             {('isPopular' in item && item.isPopular) && (
@@ -313,17 +451,122 @@ export const OptionCard = ({
                                     Save $25 vs Video Course (but miss out on 10% endorsement discount)
                                 </Typography>
                             )}
-                        </Box>
-                        {'price' in item && (
-                            <Box sx={{ textAlign: 'right' }}>
-                                <Typography variant="h6" fontWeight="bold" color="primary.main">
-                                    ${(item as TheoryOption).price}
-                                </Typography>
-                            </Box>
-                        )}
-                    </Stack>
-                )}
-            </CardContent>
+
+                            {/* Benefits section for theory options */}
+                            <List>
+                                {('id' in item && item.id === 'video') ? (
+                                    // Video course benefits
+                                    <>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <DirectionsRunIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Self-Paced</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <AccessTimeIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Available 24/7</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <VerifiedIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Includes certificate of completion</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <AssuredWorkloadIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Submits to TPR</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <EngineeringIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Learn by Watching Real CDL Instructors</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <ThumbUpIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Over 1,200 reviews and counting</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <DevicesIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">For Visual Learners</Typography>
+                                        </ListItem>
+                                    </>
+                                ) : (
+                                    // Reading course benefits
+                                    <>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <DirectionsRunIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Self-Paced</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <AccessTimeIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Available 24/7</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <VerifiedIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Includes certificate of completion</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <AssuredWorkloadIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Submits to TPR</Typography>
+                                        </ListItem>
+                                        <Divider />
+                                        <ListItem>
+                                            <ListItemIcon>
+                                                <SaveIcon style={{ maxHeight: "23px", maxWidth: "50px" }} />
+                                            </ListItemIcon>
+                                            <Typography variant="body1">Save $25 vs Video Course</Typography>
+                                        </ListItem>
+                                    </>
+                                )}
+                            </List>
+                        </Stack>
+                    )}
+                </CardContent>
+                <Button
+                    variant="contained"
+                    color={isSelected ? "error" : "secondary"}
+                    size="medium"
+                    sx={{ fontWeight: "bold" }}
+                    startIcon={
+                        isSelected ? <RemoveShoppingCartIcon /> : <ShoppingCartIcon />
+                    }
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        onSelect()
+                    }}
+                >
+                    {isSelected ? "Remove from Cart" : "Add to Cart"}
+                </Button>
+            </CardActionArea>
         </Card>
     );
 }; 
