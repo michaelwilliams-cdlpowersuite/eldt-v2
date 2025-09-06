@@ -24,12 +24,11 @@ interface CheckoutStepperProps { }
 const CheckoutRegistrationStepper: React.FC<CheckoutStepperProps> = () => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const [skipped, setSkipped] = React.useState(new Set<number>());
-    const [isLoading, setIsLoading] = React.useState(false);
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [skipped, setSkipped] = React.useState(new Set<number>());
     const validateCurrentStep = useValidateCurrentStep();
     const { values, setTouched } = useFormikContext<CheckoutRegistrationFormValues>();
-    const submitStep = useCheckoutRegistration();
+    const { mutate: submitStep, isPending: isSubmitting } = useCheckoutRegistration();
 
     const checkoutSessionId = searchParams.get("checkout_session_id");
 
@@ -96,27 +95,24 @@ const CheckoutRegistrationStepper: React.FC<CheckoutStepperProps> = () => {
                 isLastStep // isComplete = true on last step
             );
 
-            setIsLoading(true);
-
-            // Submit the step if it is valid
-            submitStep.mutate(
-                { checkoutSessionId, data: apiData },
-                {
-                    // Go to next step if successful, or complete the flow
-                    onSuccess: () => {
-                        setIsLoading(false);
-                        if (isLastStep) {
-                            // Complete the registration flow and redirect to ELDT
-                            setActiveStep((prev) => prev + 1);
-                        } else {
-                            setActiveStep((prev) => prev + 1);
-                        }
-                    },
-                    onError: () => {
-                        setIsLoading(false);
-                    }
-                }
-            );
+      // Submit the step if it is valid
+      submitStep(
+        { checkoutSessionId, data: apiData },
+        {
+          // Go to next step if successful, or complete the flow
+          onSuccess: () => {
+            if (isLastStep) {
+              // Complete the registration flow and redirect to ELDT
+              setActiveStep((prev) => prev + 1);
+            } else {
+              setActiveStep((prev) => prev + 1);
+            }
+          },
+          onError: () => {
+            // Error handling is now done in the hook
+          }
+        }
+      );
         } else {
             // step was not valid
             enqueueSnackbar(
@@ -169,7 +165,7 @@ const CheckoutRegistrationStepper: React.FC<CheckoutStepperProps> = () => {
                         activeStep={activeStep}
                         isStepOptional={isStepOptional}
                         isLastStep={isLastStep}
-                        isLoading={isLoading}
+                        isLoading={isSubmitting}
                     />
                 </React.Fragment>
             )}

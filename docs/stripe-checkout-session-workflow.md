@@ -74,15 +74,15 @@ This document outlines the implementation plan for the post-purchase user verifi
 - **Payload:**
   ```json
   {
-    "firstName": "",
-    "lastName": "",
-    "phone": "",
-    "language": "",
-    "nameOfTrainer": "",
-    "typeOfWork": "",
-    "marketingOptIn": "",
-    "referralSource": "",
-    "isComplete": true|false
+    "firstName": "John",
+    "lastName": "Doe", 
+    "phone": "5551234567",
+    "language": "English",
+    "nameOfTrainer": "ABC Driving School",
+    "typeOfWork": "Local, Regional",
+    "marketingOptIn": true,
+    "referralSource": "Google Search",
+    "isComplete": true
   }
   ```
 - **isComplete logic:**

@@ -1,15 +1,15 @@
 import { CheckoutRegistrationFormValues } from "./checkoutValidationSchema";
 
 interface CheckoutRegistrationData {
-    firstName: string;
-    lastName: string;
-    phone: string;
-    language: string;
-    nameOfTrainer: string;
-    typeOfWork: string[];
-    marketingOptIn: boolean;
-    referralSource: string[];
-    isComplete: boolean;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  language: string;
+  nameOfTrainer: string;
+  typeOfWork: string;
+  marketingOptIn: boolean;
+  referralSource: string;
+  isComplete: boolean;
 }
 
 export const transformCheckoutFormikToApi = (
@@ -24,9 +24,9 @@ export const transformCheckoutFormikToApi = (
         phone: step2?.phone || "",
         language: step2?.language?.label || "",
         nameOfTrainer: step2?.where || "",
-        typeOfWork: step3?.workType?.map(work => work.value) || [],
+        typeOfWork: step3?.workType?.map(work => work.value).join(", ") || "",
         marketingOptIn: step3?.optIn || false,
-        referralSource: step3?.referralSource ? [step3.referralSource.value] : [],
+        referralSource: step3?.referralSource?.value || "",
         isComplete,
     };
 };

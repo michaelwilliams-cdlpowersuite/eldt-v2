@@ -26,6 +26,9 @@ import SignUpSide from "../views/sign-up/SignUpSide";
 import CheckEmailToVerify from "../views/verify-email/CheckEmailToVerify";
 import VerifyEmail from "../views/verify-email/VerifyEmail";
 import OAuthHandoff from "../views/Auth/OAuthHandoff";
+import CheckoutComplete from "../views/checkout-complete/CheckoutComplete";
+import VerifyCheckoutEmail from "../views/checkout-complete/VerifyCheckoutEmail";
+import CheckoutRegistration from "../views/checkout-complete/CheckoutRegistration";
 
 export default function RouterWrapper() {
   const { isAuthenticated } = useAuth();
@@ -105,6 +108,18 @@ export default function RouterWrapper() {
       {
         path: "/checkout",
         element: <CheckoutFlow />,
+      },
+      {
+        path: "/checkout/complete",
+        element: <CheckoutComplete disableCustomTheme />,
+      },
+      {
+        path: "/checkout/verify-email",
+        element: <VerifyCheckoutEmail />,
+      },
+      {
+        path: "/checkout/complete-registration",
+        element: <CheckoutRegistration />,
       },
     ]);
   }, [isAuthenticated, me?.emailVerifiedAt, isMeLoading, sentryCreateBrowserRouter]);

@@ -1,48 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import apiClient from '../../../api/apiClient';
 
-interface CheckoutSessionData {
-    sessionId: string;
-    email: string;
-    status: string;
-    // Add other properties as needed
+export interface CheckoutSessionData {
+    sessionId: string;           // The Stripe checkout session ID
+    email: string;              // Customer's email address from checkout
+    requiresEmailVerification: boolean;    // Whether email verification is required
+    requiresRegistrationCompletion: boolean; // Whether additional registration is needed
 }
 
+const fetchCheckoutSession = async (sessionId: string): Promise<CheckoutSessionData> => {
+    const response = await apiClient.get(`/eldt/v2/checkout-sessions/${sessionId}`);
+    return response.data;
+};
+
 export const useCheckoutSession = (sessionId: string | null) => {
-    const [session, setSession] = useState<CheckoutSessionData | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<Error | null>(null);
-
-    useEffect(() => {
-        if (!sessionId) return;
-
-        const fetchSession = async () => {
-            setLoading(true);
-            setError(null);
-
-            try {
-                // Note: This endpoint might need to be implemented on the backend
-                const response = await apiClient.get(`/api/eldt/v2/checkout-sessions/${sessionId}`);
-                setSession(response.data);
-            } catch (err) {
-                setError(err as Error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchSession();
-    }, [sessionId]);
-
-    return {
-        session,
-        loading,
-        error,
-        refetch: () => {
-            if (sessionId) {
-                // Re-trigger the effect
-                setSession(null);
-            }
-        }
-    };
+    return useQuery({
+        queryKey: ['checkout-session', sessionId],
+        queryFn: () => fetchCheckoutSession(sessionId!),
+        enabled: !!sessionId, // Only run query if sessionId exists
+        retry: 2,
+    });
 };

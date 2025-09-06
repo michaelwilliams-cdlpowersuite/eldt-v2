@@ -2,48 +2,45 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { enqueueSnackbar } from 'notistack';
 import apiClient from '../../../api/apiClient';
 
-interface UpdateEmailRequest {
+interface ResendEmailRequest {
     checkoutSessionId: string;
-    email: string;
 }
 
-interface UpdateEmailResponse {
+interface ResendEmailResponse {
     success: boolean;
     message?: string;
 }
 
-const updateCheckoutEmail = async ({ checkoutSessionId, email }: UpdateEmailRequest): Promise<UpdateEmailResponse> => {
-    const response = await apiClient.post(`/eldt/v2/checkout-sessions/${checkoutSessionId}/update-email`, {
-        email
-    });
+const resendCheckoutEmail = async ({ checkoutSessionId }: ResendEmailRequest): Promise<ResendEmailResponse> => {
+    const response = await apiClient.post(`/eldt/v2/checkout-sessions/${checkoutSessionId}/resend-email`);
     return response.data;
 };
 
-export const useCheckoutEmailUpdate = () => {
+export const useCheckoutEmailResend = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: updateCheckoutEmail,
+        mutationFn: resendCheckoutEmail,
         onSuccess: (data, variables) => {
-            // Invalidate and refetch checkout session data
+            // Invalidate checkout session data to reflect any updates
             queryClient.invalidateQueries({
                 queryKey: ['checkout-session', variables.checkoutSessionId]
             });
 
             // Show success message
-            enqueueSnackbar('Email address updated successfully', {
+            enqueueSnackbar('Verification email sent! Please check your inbox.', {
                 variant: 'success'
             });
 
-            console.log('Email updated successfully:', data);
+            console.log('Email resent successfully:', data);
         },
         onError: (error) => {
             // Show error message
-            enqueueSnackbar('Failed to update email address. Please try again.', {
+            enqueueSnackbar('Failed to send verification email. Please try again.', {
                 variant: 'error'
             });
 
-            console.error('Failed to update email:', error);
+            console.error('Failed to resend email:', error);
         }
     });
 };

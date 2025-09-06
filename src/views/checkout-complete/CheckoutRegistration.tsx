@@ -1,6 +1,10 @@
-import { Formik } from "formik";
+import { Box, Container } from "@mui/system";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { Form, Formik } from "formik";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import RegistrationAppBar from "../registration/components/AppBar";
 import CheckoutRegistrationStepper from "./CheckoutRegistrationStepper";
 import {
     checkoutValidationSchema,
@@ -22,15 +26,24 @@ const CheckoutRegistration = () => {
     const initialValues = buildCheckoutInitialValues();
 
     return (
-        <Formik
-            initialValues={initialValues}
-            validationSchema={checkoutValidationSchema}
-            onSubmit={() => {
-                // This won't be used as we handle submission in the stepper
-            }}
-        >
-            <CheckoutRegistrationStepper />
-        </Formik>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <RegistrationAppBar />
+            <Container disableGutters sx={{ pt: 1 }}>
+                <Box>
+                    <Formik
+                        initialValues={initialValues}
+                        validationSchema={checkoutValidationSchema}
+                        onSubmit={() => {
+                            // This won't be used as we handle submission in the stepper
+                        }}
+                    >
+                        <Form>
+                            <CheckoutRegistrationStepper />
+                        </Form>
+                    </Formik>
+                </Box>
+            </Container>
+        </LocalizationProvider>
     );
 };
 

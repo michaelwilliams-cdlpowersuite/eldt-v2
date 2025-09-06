@@ -1,9 +1,9 @@
-import Step2 from "../../registration/Step2";
-import Step3 from "../../registration/Step3";
+import CheckoutStep2 from "./CheckoutStep2";
+import CheckoutStep3 from "./CheckoutStep3";
 
 export const checkoutSteps: CheckoutStepProps[] = [
-    { label: "Personal Info", component: Step2 },
-    { label: "Additional Info", component: Step3 },
+    { label: "Personal Info", component: CheckoutStep2 },
+    { label: "Additional Info", component: CheckoutStep3 },
 ];
 
 interface CheckoutStepProps {
