@@ -1,41 +1,169 @@
-We need to build a workflow for the user to verify and finish setting up their account after they complete a purchase.
+# Stripe Checkout Session Post-Purchase Workflow
 
-The workflow is:
-- User completes a purchase using the code in src/views/checkout
-- The user will get redirected to /checkout/complete?checkout_session_id={checkout session id here} after completion.
+## Overview
+This document outlines the implementation plan for the post-purchase user verification and account completion workflow after users complete a Stripe checkout session.
 
-Let's build a plan to implement these changes.
+## User Flow
+1. User completes purchase using `src/views/checkout`
+2. User is redirected to `/checkout/complete?checkout_session_id={session_id}`
+3. User verifies their email address
+4. User completes registration steps (Personal Info & Additional Info)
+5. User is handed off to the ELDT system
 
-Some information on where code is:
-- The new checkout process code is in src/views/checkout
-- The existing registration code is in src/views/registration. It uses Formik to validate which we will want to do as well.
+## Implementation Plan
 
-We need to:
-[ ] Create a page that shows them they need to validate their email address. This page can look exaclty like src/views/verify-email but it needs to be a little different. 1) we will use a different API endpoint to update their email address in case they need to change it. This endpoint will be POST api/eldt/v2/checkout-sessions/{checkoutSession}/update-email with payload of `{ "email": "new email address"}`. Setup the routing for this page to handle url like http://localhost:3001/checkout/complete?checkout_session_id=cs_test_b1QI5wpgz8Nl6x9gnqQf4aHAPrM3FD5PeBOnaif2wQOsNJuzJARkkuwBmW
-[ ] We need a page that handles the email verification, this is the link that gets included in the email that is sent to them. We can model after the src/views/verify-email/VerifyEmail.tsx component. The difference is that we will call a different endpoint to verify the email address. This endpoint to call in the API is api/eldt/v2/checkout-sessions/{checkoutSession}/complete-purchase. This will return a response like: `{ "accessToken": "", "requiresRegistrationCompletion": false|true }`. apiToken should be saved to localstorage like it's done in other spots. If requiresRegistrationCompletion is set to true then we need to redirect them to the new personal info and additional info pages to complete their profile. If requiresRegistrationCompletion is false then we can skip to the eldt handoff logic 
-[ ] Once they have verified their email then we need to present them with some pages from the registration view workflow found in src/views/registration. We need the Personal Info step and the additional info step. We will save data to a different endpoint so stub out the API logic to save the data that is presented. The UI should function the same and save state as the user progresses through each step.
-[ ] When entering personal info and additional info, the API endpoint POST '' should be used. It's payload format is:
-    ```json
-    {
-        "firstName": "",
-        "lastName": "",
-        "phone": "",
-        "language": "",
-        "nameOfTrainer": "",
-        "typeOfWork": "",
-        "marketingOptIn": "",
-        "referralSource": "",
-        "isComplete": true|false
-    }
-    ```
-    isComplete should be true when the user presses submit on the additional info page, otherwise it's false
-[ ] Once the user completes the last step on additional info, then should be handed off to the via this snippet of code in src/views/registration/Stepper.tsx
+### 1. Checkout Completion Landing Page
+**Route:** `/checkout/complete?checkout_session_id={session_id}`
+**File:** `src/views/checkout-complete/CheckoutComplete.tsx`
+
+- **Purpose:** Show email verification requirement after purchase
+- **Model after:** `src/views/verify-email/CheckEmailToVerify.tsx`
+- **Key differences:**
+  - Uses checkout session ID from URL parameters
+  - Different API endpoint for email updates
+  - Custom messaging for post-purchase context
+
+**API Integration:**
+- **Update Email Endpoint:** `POST /api/eldt/v2/checkout-sessions/{checkoutSession}/update-email`
+- **Payload:** `{ "email": "new@email.com" }`
+
+### 2. Email Verification Handler
+**Route:** `/checkout/verify-email?checkout_session_id={session_id}&token={token}`
+**File:** `src/views/checkout-complete/VerifyCheckoutEmail.tsx`
+
+- **Purpose:** Handle email verification link from email
+- **Model after:** `src/views/verify-email/VerifyEmail.tsx`
+- **Key differences:**
+  - Uses checkout session ID instead of user ID
+  - Calls different verification endpoint
+  - Handles conditional registration completion flow
+
+**API Integration:**
+- **Verification Endpoint:** `POST /api/eldt/v2/checkout-sessions/{checkoutSession}/complete-purchase`
+- **Response:**
+  ```json
+  {
+    "accessToken": "jwt_token_here",
+    "requiresRegistrationCompletion": true|false
+  }
+  ```
+- **Logic:**
+  - Save `accessToken` to localStorage as `apiToken`
+  - If `requiresRegistrationCompletion` is `true` → redirect to registration steps
+  - If `requiresRegistrationCompletion` is `false` → redirect to ELDT handoff
+
+### 3. Post-Purchase Registration Stepper
+**Route:** `/checkout/complete-registration`
+**File:** `src/views/checkout-complete/CheckoutRegistrationStepper.tsx`
+
+- **Purpose:** Handle Personal Info and Additional Info steps for post-purchase users
+- **Model after:** `src/views/registration/Stepper.tsx`
+- **Steps:** Only Personal Info (Step 2) and Additional Info (Step 3) from existing registration
+- **Key differences:**
+  - Simplified stepper with only 2 steps
+  - Different API endpoint for data submission
+  - Custom completion flow
+
+**Components to reuse:**
+- `src/views/registration/Step2.tsx` (Personal Info)
+- `src/views/registration/Step3.tsx` (Additional Info)
+- Form validation and UI components from registration
+
+**API Integration:**
+- **Data Submission Endpoint:** `POST /api/eldt/v2/checkout-sessions/{checkoutSession}/registration-data`
+- **Payload:**
+  ```json
+  {
+    "firstName": "",
+    "lastName": "",
+    "phone": "",
+    "language": "",
+    "nameOfTrainer": "",
+    "typeOfWork": "",
+    "marketingOptIn": "",
+    "referralSource": "",
+    "isComplete": true|false
+  }
+  ```
+- **isComplete logic:**
+  - `false` when saving progress (step navigation)
+  - `true` when submitting final Additional Info step
+
+### 4. ELDT Handoff
+After completing the Additional Info step, redirect using existing handoff logic:
 ```tsx
 const handleAuthRedirect = async () => {
-    await prepareHandoff()
+    await prepareHandoff();
     localStorage.removeItem('apiToken');
     window.location.replace(config.angularClientUrl + '/eldt-handoff');
 };
 ```
 
-The structure and behavior of the stepper component used for registration is good. We just need a new versio that covers this registration after purchase workflow.
+## File Structure
+```
+src/views/checkout-complete/
+├── CheckoutComplete.tsx           # Landing page after purchase
+├── VerifyCheckoutEmail.tsx        # Email verification handler
+├── CheckoutRegistrationStepper.tsx # Registration completion stepper
+├── hooks/
+│   ├── useCheckoutSession.ts      # Hook for checkout session operations
+│   ├── useCheckoutEmailUpdate.ts  # Hook for email updates
+│   └── useCheckoutRegistration.ts # Hook for registration data submission
+└── components/
+    └── CheckoutSteps.ts           # Step configuration for checkout flow
+```
+
+## Router Updates
+Add new routes to `src/routes/RouterWrapper.tsx`:
+```tsx
+{
+  path: "/checkout/complete",
+  element: <CheckoutComplete />,
+},
+{
+  path: "/checkout/verify-email", 
+  element: <VerifyCheckoutEmail />,
+},
+{
+  path: "/checkout/complete-registration",
+  element: <CheckoutRegistrationStepper />,
+},
+```
+
+## Key Technical Considerations
+
+### State Management
+- Use Formik for form validation (consistent with existing registration)
+- Maintain checkout session ID throughout the flow
+- Handle authentication state with localStorage token management
+
+### Error Handling
+- Invalid/expired checkout session IDs
+- Failed email verification attempts
+- Network errors during API calls
+- Graceful fallbacks for each step
+
+### UI/UX Consistency
+- Maintain visual consistency with existing registration flow
+- Reuse existing components and styling patterns
+- Provide clear progress indicators
+- Include helpful error messages and support contact information
+
+### API Error Handling
+- Handle 404 errors for invalid checkout sessions
+- Handle 403 errors for expired or already-used sessions
+- Provide user-friendly error messages
+- Include fallback contact information
+
+## Implementation Priority
+1. **Phase 1:** Checkout completion landing page and email verification
+2. **Phase 2:** Registration stepper and data submission
+3. **Phase 3:** Error handling and edge cases
+4. **Phase 4:** Testing and refinement
+
+## Testing Considerations
+- Test with valid and invalid checkout session IDs
+- Test email verification flow end-to-end
+- Test registration completion with various data inputs
+- Test error scenarios and edge cases
+- Verify proper handoff to ELDT system
