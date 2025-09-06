@@ -14,7 +14,7 @@ import {
 const CheckoutRegistration = () => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const checkoutSessionId = searchParams.get("checkout_session_id");
+    const checkoutSessionId = searchParams.get("checkoutSessionId");
 
     useEffect(() => {
         if (!checkoutSessionId) {

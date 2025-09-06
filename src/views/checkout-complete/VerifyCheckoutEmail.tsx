@@ -8,8 +8,9 @@ import { prepareHandoff } from "../../api/api";
 const VerifyCheckoutEmail = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const checkoutSessionId = searchParams.get("checkout_session_id");
-    const token = searchParams.get("token");
+    const checkoutSessionId = searchParams.get("checkoutSessionId");
+    const signature = searchParams.get("signature");
+    const expires = searchParams.get("expires");
     const emailVerificationMutation = useCheckoutEmailVerification();
 
     const handleAuthRedirect = async () => {
@@ -19,18 +20,18 @@ const VerifyCheckoutEmail = () => {
     };
 
     useEffect(() => {
-        if (!checkoutSessionId || !token) {
+        if (!checkoutSessionId || !signature || !expires) {
             navigate("/");
             return;
         }
 
         emailVerificationMutation.mutate(
-            { checkoutSessionId, token },
+            { checkoutSessionId, signature, expires },
             {
                 onSuccess: (data) => {
                     if (data.requiresRegistrationCompletion) {
                         // Redirect to registration completion flow
-                        navigate(`/checkout/complete-registration?checkout_session_id=${checkoutSessionId}`);
+                        navigate(`/checkout/complete-registration?checkoutSessionId=${checkoutSessionId}`);
                     } else {
                         // Skip registration and go directly to ELDT handoff
                         handleAuthRedirect();
@@ -39,11 +40,11 @@ const VerifyCheckoutEmail = () => {
                 onError: (error) => {
                     console.error("Email verification failed:", error);
                     // Redirect back to checkout complete page with error
-                    navigate(`/checkout/complete?checkout_session_id=${checkoutSessionId}&error=verification_failed`);
+                    navigate(`/checkout/complete?checkoutSessionId=${checkoutSessionId}&error=verification_failed`);
                 },
             }
         );
-    }, [checkoutSessionId, token, navigate]);
+    }, [checkoutSessionId, signature, expires, navigate]);
 
     return <FullpageLoader loadingText="Verifying your email..." />;
 };

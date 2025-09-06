@@ -4,7 +4,8 @@ import apiClient from '../../../api/apiClient';
 
 interface VerifyEmailRequest {
     checkoutSessionId: string;
-    token: string;
+    signature: string;
+    expires: string;
 }
 
 interface VerifyEmailResponse {
@@ -12,10 +13,8 @@ interface VerifyEmailResponse {
     requiresRegistrationCompletion: boolean;
 }
 
-const verifyCheckoutEmail = async ({ checkoutSessionId, token }: VerifyEmailRequest): Promise<VerifyEmailResponse> => {
-    const response = await apiClient.post(`/eldt/v2/checkout-sessions/${checkoutSessionId}/complete-purchase`, {
-        token
-    });
+const verifyCheckoutEmail = async ({ checkoutSessionId, signature, expires }: VerifyEmailRequest): Promise<VerifyEmailResponse> => {
+    const response = await apiClient.post(`/eldt/v2/checkout-sessions/${checkoutSessionId}/complete-purchase?signature=${signature}&expires=${expires}`);
     return response.data;
 };
 

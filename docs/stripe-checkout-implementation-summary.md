@@ -35,7 +35,7 @@ The following routes have been added to `RouterWrapper.tsx`:
 ## 🔄 User Flow Implementation
 
 ### 1. Purchase Completion
-- User completes purchase and is redirected to `/checkout/complete?checkout_session_id={id}`
+- User completes purchase and is redirected to `/checkout/complete?checkoutSessionId={id}`
 - `CheckoutComplete` component displays email verification requirement
 - Shows purchased email address and verification instructions
 - Provides options to resend email or update email address

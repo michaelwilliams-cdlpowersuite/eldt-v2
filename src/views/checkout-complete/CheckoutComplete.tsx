@@ -19,7 +19,7 @@ const CheckoutComplete: React.FC<CheckoutCompleteProps> = (props) => {
     const navigate = useNavigate();
     const [isRedirecting, setIsRedirecting] = React.useState(false);
 
-    const checkoutSessionId = searchParams.get("checkout_session_id");
+    const checkoutSessionId = searchParams.get("checkoutSessionId");
     const { data: session, isLoading: loading, error } = useCheckoutSession(checkoutSessionId);
     const { mutate: updateEmail, isPending: isPendingUpdateEmail } = useCheckoutEmailUpdate();
     const { mutate: resendEmail, isPending: isPendingResendEmail } = useCheckoutEmailResend();
@@ -60,7 +60,7 @@ const CheckoutComplete: React.FC<CheckoutCompleteProps> = (props) => {
 
             if (session.requiresRegistrationCompletion) {
                 // Redirect to registration completion flow
-                navigate(`/checkout/complete-registration?checkout_session_id=${checkoutSessionId}`);
+                navigate(`/checkout/complete-registration?checkoutSessionId=${checkoutSessionId}`);
             } else {
                 // Skip registration and go directly to ELDT handoff
                 handleAuthRedirect();

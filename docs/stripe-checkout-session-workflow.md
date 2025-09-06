@@ -5,7 +5,7 @@ This document outlines the implementation plan for the post-purchase user verifi
 
 ## User Flow
 1. User completes purchase using `src/views/checkout`
-2. User is redirected to `/checkout/complete?checkout_session_id={session_id}`
+2. User is redirected to `/checkout/complete?checkoutSessionId={session_id}`
 3. User verifies their email address
 4. User completes registration steps (Personal Info & Additional Info)
 5. User is handed off to the ELDT system
@@ -13,7 +13,7 @@ This document outlines the implementation plan for the post-purchase user verifi
 ## Implementation Plan
 
 ### 1. Checkout Completion Landing Page
-**Route:** `/checkout/complete?checkout_session_id={session_id}`
+**Route:** `/checkout/complete?checkoutSessionId={session_id}`
 **File:** `src/views/checkout-complete/CheckoutComplete.tsx`
 
 - **Purpose:** Show email verification requirement after purchase
@@ -28,7 +28,7 @@ This document outlines the implementation plan for the post-purchase user verifi
 - **Payload:** `{ "email": "new@email.com" }`
 
 ### 2. Email Verification Handler
-**Route:** `/checkout/verify-email?checkout_session_id={session_id}&token={token}`
+**Route:** `/checkout/verify-email?checkoutSessionId={session_id}&signature={signature}&expires={expires}`
 **File:** `src/views/checkout-complete/VerifyCheckoutEmail.tsx`
 
 - **Purpose:** Handle email verification link from email

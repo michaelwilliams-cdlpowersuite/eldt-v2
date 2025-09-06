@@ -1,15 +1,15 @@
 import { CheckoutRegistrationFormValues } from "./checkoutValidationSchema";
 
 interface CheckoutRegistrationData {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  language: string;
-  nameOfTrainer: string;
-  typeOfWork: string;
-  marketingOptIn: boolean;
-  referralSource: string;
-  isComplete: boolean;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    language: string;
+    nameOfTrainer: string;
+    typeOfWork: string;
+    marketingOptIn: boolean;
+    referralSource: string;
+    isComplete: boolean;
 }
 
 export const transformCheckoutFormikToApi = (
