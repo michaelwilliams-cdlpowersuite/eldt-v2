@@ -1,13 +1,11 @@
 import Stack from "@mui/material/Stack";
 import AppTheme from "../../styles/shared-theme/AppTheme";
-import ColorModeSelect from "../../styles/shared-theme/ColorModeSelect";
 import Content from "./Content";
 import SignUpCard from "./SignUpCard";
 
 export default function SignInSide(props: { disableCustomTheme?: boolean }) {
   return (
     <AppTheme {...props}>
-      <ColorModeSelect sx={{ position: "fixed", top: "1rem", right: "1rem" }} />
       <Stack
         direction="column"
         component="main"
