@@ -241,8 +241,6 @@ export const createCheckoutSession = async (products: Array<{ sku: string; quant
   }
 };
 
-
-
 // Guest Session API
 export const createGuestSession = async () => {
   try {

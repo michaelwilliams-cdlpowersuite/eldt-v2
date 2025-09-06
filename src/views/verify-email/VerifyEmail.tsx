@@ -1,10 +1,10 @@
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import FullpageLoader from "../../components/FullpageLoader";
 import { useVerifyEmail } from "../../hooks/useVerifyEmail";
 import { useMe } from "../../hooks/useMe";
-import {useAuth} from "../../auth/AuthProvider";
-import {useQueryClient} from "@tanstack/react-query";
+import { useAuth } from "../../auth/AuthProvider";
+import { useQueryClient } from "@tanstack/react-query";
 
 const EmailVerify = () => {
   const navigate = useNavigate();

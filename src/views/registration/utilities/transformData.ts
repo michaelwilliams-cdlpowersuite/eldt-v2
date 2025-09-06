@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
-import {RegistrationFormUIValues} from "./validationSchema";
-import {courses, endorsements} from "./products";
+import { RegistrationFormUIValues } from "./validationSchema";
+import { courses, endorsements } from "./products";
 import config from "../../../config";
-import {CustomAttribute} from "../../../types/customAttribute";
-import {getBlankReferralSource, getBlankWhere} from "./customAttributes";
+import { CustomAttribute } from "../../../types/customAttribute";
+import { getBlankReferralSource, getBlankWhere } from "./customAttributes";
 
 interface ApiData {
   firstName?: string;
@@ -90,18 +90,18 @@ export const transformFormikToApi = (
 
     // CDL Completion Hack
     // enrollment completed
-      switch (selectedCourseId) {
-        case "1":
-          apiData.enrollmentClassAComplete = true;
-          break;
-        case "2":
-          apiData.enrollmentClassBComplete = true;
-          break;
-        case "3":
-          apiData.enrollmentClassAComplete = true;
-          apiData.enrollmentClassBComplete = true;
-          break;
-      }
+    switch (selectedCourseId) {
+      case "1":
+        apiData.enrollmentClassAComplete = true;
+        break;
+      case "2":
+        apiData.enrollmentClassBComplete = true;
+        break;
+      case "3":
+        apiData.enrollmentClassAComplete = true;
+        apiData.enrollmentClassBComplete = true;
+        break;
+    }
 
     // endorsements completed
     if (formikValues.step1.selectedEndorsements) {
@@ -157,7 +157,7 @@ export const transformFormikToApi = (
     apiData.enrollmentDesiredWorkIDC = formikValues.step3.workType?.some(
       (workType: { value: string }) => workType.value.includes("idc")
     );
-    if(formikValues.step3.referralSource){
+    if (formikValues.step3.referralSource) {
       // @ts-ignore
       apiData.customAttributes = [getBlankReferralSource(formikValues.step3.referralSource)];
     }
